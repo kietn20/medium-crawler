@@ -6,24 +6,20 @@ import lombok.ToString;
 
 import java.util.List;
 
+
 @Entity
 @Data
-public class Media {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String title;
-    private String type; // e.g., movie, book, anime, manga, tv show
-    private String description;
+    private String name;
+    private String email;
+    private String profilePicture;
 
-    @Column(name = "\"year\"") // Explicitly quoting the 'year' column
-    private int year;
-
-    private int rating;
-
-    @ManyToMany(mappedBy = "media")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @ToString.Exclude // Prevent recursion
     private List<WatchList> watchLists;
 }
