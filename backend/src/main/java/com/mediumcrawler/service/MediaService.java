@@ -19,7 +19,25 @@ public class MediaService {
         return mediaRepository.findAll();
     }
 
-    public Media addMedia(Media media) {
+    public Media getMediaById(Long id) {
+        return mediaRepository.findById(id).orElseThrow(() -> new RuntimeException("Media not found"));
+    }
+
+    public Media createMedia(Media media) {
         return mediaRepository.save(media);
+    }
+
+    public Media updateMedia(Long id, Media updatedMedia) {
+        Media existingMedia = mediaRepository.findById(id).orElseThrow(() -> new RuntimeException("Media not found"));
+        existingMedia.setTitle(updatedMedia.getTitle());
+        existingMedia.setType(updatedMedia.getType());
+        existingMedia.setDescription(updatedMedia.getDescription());
+        existingMedia.setYear(updatedMedia.getYear());
+        existingMedia.setRating(updatedMedia.getRating());
+        return mediaRepository.save(existingMedia);
+    }
+
+    public void deleteMedia(Long id) {
+        mediaRepository.deleteById(id);
     }
 }

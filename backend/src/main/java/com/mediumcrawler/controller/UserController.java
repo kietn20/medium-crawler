@@ -2,6 +2,7 @@ package com.mediumcrawler.controller;
 
 import com.mediumcrawler.model.User;
 import com.mediumcrawler.repository.UserRepository;
+import com.mediumcrawler.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,38 +11,34 @@ import java.util.List;
 @RequestMapping("/api/users")
 public class UserController {
 
-    private final UserRepository userRepository;
+    private final UserService userService;
 
-    public UserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping
     public List<User> getAllUsers() {
-        return userRepository.findAll();
-    }
-
-    @PostMapping
-    public User createUser(@RequestBody User user) {
-        return userRepository.save(user);
+        return userService.getAllUsers();
     }
 
     @GetMapping("/{id}")
     public User getUserByI(@PathVariable Long id) {
-        return userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found."));
+        return userService.getUserById(id);
+    }
+
+    @PostMapping
+    public User createUser(@RequestBody User user) {
+        return userService.createUser(user);
     }
 
     @PutMapping("/{id}")
     public User updateUser(@PathVariable Long id, @RequestBody User updatedUser) {
-        User existingUser = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found."));
-        existingUser.setName(updatedUser.getName());
-        existingUser.setEmail(updatedUser.getEmail());
-        existingUser.setProfilePicture(updatedUser.getProfilePicture());
-        return userRepository.save(existingUser);
+        return userService.updateUser(id, updatedUser);
     }
 
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable Long id) {
-        userRepository.deleteById(id);
+        userService.deleteUser(id);
     }
 }

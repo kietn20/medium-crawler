@@ -21,9 +21,24 @@ public class MediaController {
         return mediaService.getAllMedia();
     }
 
+    @GetMapping("/{id}")
+    public Media getMediaById(@PathVariable Long id) {
+        return mediaService.getMediaById(id);
+    }
+
     @PostMapping
-    public Media addMedia(@RequestBody Media media) {
-        System.out.println("Received Media: " + media);
-        return mediaService.addMedia(media);
+    public Media createMedia(@RequestBody Media media) {
+//        System.out.println("Received Media: " + media);
+        return mediaService.createMedia(media);
+    }
+
+    @PutMapping("/{id}")
+    public Media updateMedia(@PathVariable Long id, @RequestBody Media updatedMedia) {
+        return mediaService.updateMedia(id, updatedMedia);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteMedia(@PathVariable Long id) {
+        mediaService.deleteMedia(id);
     }
 }
