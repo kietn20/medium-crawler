@@ -1,5 +1,6 @@
 package com.mediumcrawler.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.ToString;
@@ -21,7 +22,8 @@ public class WatchList {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     @ToString.Exclude // Prevent recursion
-    @NotNull(message = "User is require.")
+//    @NotNull(message = "User is require.")
+    @JsonBackReference // Prevent serialization of the user reference in WatchList
     private User user;
 
     @ManyToMany

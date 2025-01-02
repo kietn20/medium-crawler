@@ -1,5 +1,6 @@
 package com.mediumcrawler.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,5 +26,6 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @ToString.Exclude // Prevent recursion
+    @JsonManagedReference // Serialize WatchLists, but not their user references
     private List<WatchList> watchLists;
 }
