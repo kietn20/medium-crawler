@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.ToString;
 
 import java.util.List;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Data
@@ -20,6 +21,7 @@ public class WatchList {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     @ToString.Exclude // Prevent recursion
+    @NotNull(message = "User is require.")
     private User user;
 
     @ManyToMany
@@ -29,5 +31,6 @@ public class WatchList {
             inverseJoinColumns = @JoinColumn(name = "media_id")
     )
     @ToString.Exclude // Prevent recursion
+    @NotNull(message = "User is require.")
     private List<Media> media;
 }

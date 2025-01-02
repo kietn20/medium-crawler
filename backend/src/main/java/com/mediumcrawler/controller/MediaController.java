@@ -28,7 +28,6 @@ public class MediaController {
 
     @PostMapping
     public Media createMedia(@RequestBody Media media) {
-//        System.out.println("Received Media: " + media);
         return mediaService.createMedia(media);
     }
 

@@ -1,7 +1,9 @@
 package com.mediumcrawler.service;
 
+import com.mediumcrawler.model.User;
 import com.mediumcrawler.model.WatchList;
 import com.mediumcrawler.repository.WatchListRepository;
+import com.mediumcrawler.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,9 +12,11 @@ import java.util.List;
 public class WatchListService {
 
     private final WatchListRepository watchListRepository;
+    private final UserRepository userRepository;
 
-    public WatchListService(WatchListRepository watchListRepository) {
+    public WatchListService(WatchListRepository watchListRepository, UserRepository userRepository) {
         this.watchListRepository = watchListRepository;
+        this.userRepository = userRepository;
     }
 
     public List<WatchList> getAllWatchLists() {
@@ -24,6 +28,9 @@ public class WatchListService {
     }
 
     public WatchList createWatchList(WatchList watchList) {
+        // Ensure the user exists
+        User user = userRepository.findById(watchList.getUser().getId()).orElseThrow(() -> new RuntimeException("User does not exist."));
+        watchList.setUser(user);
         return watchListRepository.save(watchList);
     }
 
@@ -39,4 +46,3 @@ public class WatchListService {
         watchListRepository.deleteById(id);
     }
 }
-

@@ -1,8 +1,8 @@
 package com.mediumcrawler.controller;
 
 import com.mediumcrawler.model.WatchList;
-import com.mediumcrawler.repository.WatchListRepository;
 import com.mediumcrawler.service.WatchListService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,7 +27,10 @@ public class WatchListController {
     }
 
     @PostMapping
-    public WatchList createWatchList(@RequestBody WatchList watchList) {
+    public WatchList createWatchList(@Valid @RequestBody WatchList watchList) {
+        if (watchList.getUser() == null || watchList.getUser().getId() == null) {
+            throw new IllegalArgumentException("User must be provided with a valid ID.");
+        }
         return watchListService.createWatchList(watchList);
     }
 
