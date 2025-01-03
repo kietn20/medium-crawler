@@ -3,6 +3,7 @@ package com.mediumcrawler.controller;
 import com.mediumcrawler.model.User;
 import com.mediumcrawler.service.UserService;
 import jakarta.validation.Valid;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,7 +34,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public User updateUser(@PathVariable Long id,@Valid  @RequestBody User updatedUser) {
+    public User updateUser(@PathVariable Long id, @Valid @RequestBody User updatedUser) {
         return userService.updateUser(id, updatedUser);
     }
 
