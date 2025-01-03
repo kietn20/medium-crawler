@@ -1,25 +1,68 @@
 package com.mediumcrawler.bootstrap;
 
+import com.mediumcrawler.model.Media;
 import com.mediumcrawler.model.User;
+import com.mediumcrawler.model.WatchList;
+import com.mediumcrawler.repository.MediaRepository;
 import com.mediumcrawler.repository.UserRepository;
+import com.mediumcrawler.repository.WatchListRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+
+import java.util.Arrays;
 
 @Component
 public class DataSeeder implements CommandLineRunner {
 
     private final UserRepository userRepository;
+    private final MediaRepository mediaRepository;
+    private final WatchListRepository watchListRepository;
 
-    public DataSeeder(UserRepository userRepository) {
+    public DataSeeder(UserRepository userRepository, MediaRepository mediaRepository, WatchListRepository watchListRepository) {
         this.userRepository = userRepository;
+        this.mediaRepository = mediaRepository;
+        this.watchListRepository = watchListRepository;
     }
 
     @Override
     public void run(String... args) throws Exception {
+        seedUsers();
+        seedMedia();
+        seedWatchLists();
+    }
+
+    private void seedUsers() {
         if (userRepository.count() == 0) {
-            userRepository.save(new User(null, "John Doe", "john@example.com", "https://example.com/john.png", null));
-            userRepository.save(new User(null, "Jane Smith", "jane@example.com", "https://example.com/jane.png", null));
+            User john = new User(null, "John Doe", "john@example.com", "https://example.com/john.png", null);
+            User jane = new User(null, "Jane Smith", "jane@example.com", "https://example.com/jane.png", null);
+
+            userRepository.saveAll(Arrays.asList(john, jane));
         }
     }
-}
 
+    private void seedMedia() {
+        if (mediaRepository.count() == 0) {
+            Media inception = new Media(null, "Inception", "Movie", "A mind-bending thriller", 2010, 9, null);
+            Media theDarkKnight = new Media(null, "The Dark Knight", "Movie", "A gritty superhero film", 2008, 10, null);
+            Media harryPotter = new Media(null, "Harry Potter", "Book", "A wizard's journey", 1997, 8, null);
+
+            mediaRepository.saveAll(Arrays.asList(inception, theDarkKnight, harryPotter));
+        }
+    }
+
+    private void seedWatchLists() {
+        if (watchListRepository.count() == 0) {
+            User john = userRepository.findByEmail("john@example.com").orElseThrow(() -> new RuntimeException("User not found"));
+            User jane = userRepository.findByEmail("jane@example.com").orElseThrow(() -> new RuntimeException("User not found"));
+
+            Media inception = mediaRepository.findByTitle("Inception").orElseThrow(() -> new RuntimeException("Media not found"));
+            Media theDarkKnight = mediaRepository.findByTitle("The Dark Knight").orElseThrow(() -> new RuntimeException("Media not found"));
+
+            WatchList johnsList = new WatchList(null, "John's Favorite Movies", "John's top picks", john, Arrays.asList(inception, theDarkKnight));
+            WatchList janesList = new WatchList(null, "Jane's WatchList", "Jane's must-watch list", jane, Arrays.asList(inception));
+
+            watchListRepository.saveAll(Arrays.asList(johnsList, janesList));
+        }
+    }
+
+}

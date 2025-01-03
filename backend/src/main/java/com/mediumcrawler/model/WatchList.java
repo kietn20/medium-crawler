@@ -2,7 +2,9 @@ package com.mediumcrawler.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.util.List;
@@ -10,6 +12,8 @@ import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class WatchList {
 
     @Id
