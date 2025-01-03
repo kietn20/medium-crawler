@@ -28,9 +28,6 @@ public class WatchListController {
 
     @PostMapping
     public WatchList createWatchList(@Valid @RequestBody WatchList watchList) {
-        if (watchList.getUser() == null || watchList.getUser().getId() == null) {
-            throw new IllegalArgumentException("User must be provided with a valid ID.");
-        }
         return watchListService.createWatchList(watchList);
     }
 

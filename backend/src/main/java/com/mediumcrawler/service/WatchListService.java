@@ -36,6 +36,12 @@ public class WatchListService {
 
     public WatchList updateWatchList(Long id, WatchList updatedWatchList) {
         WatchList existingWatchList = watchListRepository.findById(id).orElseThrow(() -> new RuntimeException("WatchList not found"));
+
+        if (updatedWatchList.getUser() != null && updatedWatchList.getUser().getId() != null) {
+            User user = userRepository.findById(updatedWatchList.getUser().getId()).orElseThrow(() -> new RuntimeException("User does not exist."));
+            existingWatchList.setUser(user);
+        }
+
         existingWatchList.setName(updatedWatchList.getName());
         existingWatchList.setDescription(updatedWatchList.getDescription());
         existingWatchList.setMedia(updatedWatchList.getMedia());

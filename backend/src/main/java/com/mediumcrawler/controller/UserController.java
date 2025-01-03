@@ -1,7 +1,6 @@
 package com.mediumcrawler.controller;
 
 import com.mediumcrawler.model.User;
-import com.mediumcrawler.repository.UserRepository;
 import com.mediumcrawler.service.UserService;
 import org.springframework.web.bind.annotation.*;
 

@@ -22,7 +22,7 @@ public class WatchList {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     @ToString.Exclude // Prevent recursion
-//    @NotNull(message = "User is require.")
+    @NotNull(message = "User is require.")
     @JsonBackReference // Prevent serialization of the user reference in WatchList
     private User user;
 
@@ -33,6 +33,5 @@ public class WatchList {
             inverseJoinColumns = @JoinColumn(name = "media_id")
     )
     @ToString.Exclude // Prevent recursion
-    @NotNull(message = "User is require.")
     private List<Media> media;
 }
