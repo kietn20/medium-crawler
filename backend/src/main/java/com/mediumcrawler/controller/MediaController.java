@@ -2,6 +2,7 @@ package com.mediumcrawler.controller;
 
 import com.mediumcrawler.model.Media;
 import com.mediumcrawler.service.MediaService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,12 +28,12 @@ public class MediaController {
     }
 
     @PostMapping
-    public Media createMedia(@RequestBody Media media) {
+    public Media createMedia(@Valid @RequestBody Media media) {
         return mediaService.createMedia(media);
     }
 
     @PutMapping("/{id}")
-    public Media updateMedia(@PathVariable Long id, @RequestBody Media updatedMedia) {
+    public Media updateMedia(@PathVariable Long id,@Valid @RequestBody Media updatedMedia) {
         return mediaService.updateMedia(id, updatedMedia);
     }
 
