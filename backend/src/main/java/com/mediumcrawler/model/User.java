@@ -35,7 +35,7 @@ public class User {
     private String profilePicture;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    @ToString.Exclude // Prevent recursion
+    @ToString.Exclude
     @JsonManagedReference // Serialize WatchLists, but not their user references
     private List<WatchList> watchLists;
 }

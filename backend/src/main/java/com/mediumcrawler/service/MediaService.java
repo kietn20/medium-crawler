@@ -34,6 +34,7 @@ public class MediaService {
         existingMedia.setDescription(updatedMedia.getDescription());
         existingMedia.setYear(updatedMedia.getYear());
         existingMedia.setRating(updatedMedia.getRating());
+        existingMedia.setImageUrl(updatedMedia.getImageUrl());
         return mediaRepository.save(existingMedia);
     }
 

@@ -36,10 +36,10 @@ public class Media {
     @Max(value = 10, message = "Rating must not exceed 10.")
     private int rating;
 
+    @Pattern(
+            regexp = "^(https?|ftp)://[^\\s/$.?#].[^\\s]*$",
+            message = "Image URL must be a valid URL."
+    )
     @Size(max = 2083, message = "URL must not exceed 2083 characters.")
     private String imageUrl;
-
-    @ManyToMany(mappedBy = "media")
-    @ToString.Exclude // Prevent recursion
-    private List<WatchList> watchLists;
 }

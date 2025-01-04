@@ -42,9 +42,9 @@ public class DataSeeder implements CommandLineRunner {
 
     private void seedMedia() {
         if (mediaRepository.count() == 0) {
-            Media inception = new Media(null, "Inception", "Movie", "A mind-bending thriller", 2010, 9, null);
-            Media theDarkKnight = new Media(null, "The Dark Knight", "Movie", "A gritty superhero film", 2008, 10, null);
-            Media harryPotter = new Media(null, "Harry Potter", "Book", "A wizard's journey", 1997, 8, null);
+            Media inception = new Media(null, "Inception", "Movie", "A mind-bending thriller", 2010, 9, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQC0J0IKeAxdnCKSdAUNTmHmuwdQGrLCcdXHM3TqrXK_jjhFSw0WiYa8dpb4YXufJ4dYTtbQw");
+            Media theDarkKnight = new Media(null, "The Dark Knight", "Movie", "A gritty superhero film", 2008, 10,"https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_FMjpg_UX1000_.jpg");
+            Media harryPotter = new Media(null, "Harry Potter", "Book", "A wizard's journey", 1997, 8,"https://m.media-amazon.com/images/I/718OJKgQOcL.jpg");
 
             mediaRepository.saveAll(Arrays.asList(inception, theDarkKnight, harryPotter));
         }
