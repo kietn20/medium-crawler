@@ -1,7 +1,7 @@
 package com.mediumcrawler.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.mediumcrawler.dto.MovieDTO;
+import com.mediumcrawler.dto.MediaDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -22,36 +22,44 @@ public class TMDbService {
         this.webClient = webClientBuilder.baseUrl("https://api.themoviedb.org/3").build();
     }
 
-    public Mono<List<MovieDTO>> searchMovies(String query) {
-        return webClient.get().uri(uriBuilder -> uriBuilder
-                .path("/search/movie")
-                .queryParam("api_key", apiKey)
-                .queryParam("query", query)
-                .build())
+    // Search movies
+    public Mono<List<MediaDTO>> searchMovies(String query) {
+        return webClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/search/movie")
+                        .queryParam("api_key", apiKey)
+                        .queryParam("query", query)
+                        .build())
                 .retrieve()
-                .bodyToMono(JsonNode.class) // Map JSON response
-                .map(jsonNode -> {
-                    List<MovieDTO> movies = new ArrayList<>();
-                    jsonNode.get("results").forEach(result -> {
-                        MovieDTO movie = new MovieDTO();
-                        movie.setTitle(result.get("title").asText());
-                        movie.setOverview(result.get("overview").asText());
-                        movie.setReleaseDate(result.get("release_date").asText());
-                        movie.setPosterPath("https://image.tmdb.org/t/p/w500" + result.get("poster_path").asText());
-                        movies.add(movie);
-                    });
-                    return movies;
-                });
+                .bodyToMono(JsonNode.class)
+                .map(jsonNode -> parseMediaList(jsonNode, "title", "overview", "release_date", "poster_path"));
     }
 
-    public Mono<Object> searchTvShows(String query) {
-        return webClient.get().uri(uriBuilder -> uriBuilder
-                .path("/search/tv")
-                .queryParam("api_key", apiKey)
-                .queryParam("query", query)
-                .build())
+    // Search TV shows
+    public Mono<List<MediaDTO>> searchTvShows(String query) {
+        return webClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/search/tv")
+                        .queryParam("api_key", apiKey)
+                        .queryParam("query", query)
+                        .build())
                 .retrieve()
-                .bodyToMono(Object.class);
+                .bodyToMono(JsonNode.class)
+                .map(jsonNode -> parseMediaList(jsonNode, "name", "overview", "first_air_date", "poster_path"));
+    }
+
+    // Helper method to parse API response
+    private List<MediaDTO> parseMediaList(JsonNode jsonNode, String titleField, String descriptionField, String releaseDateField, String posterPathField) {
+        List<MediaDTO> mediaList = new ArrayList<>();
+        jsonNode.get("results").forEach(result -> {
+            MediaDTO media = new MediaDTO();
+            media.setTitle(result.get(titleField).asText());
+            media.setDescription(result.get(descriptionField).asText());
+            media.setReleaseDate(result.has(releaseDateField) ? result.get(releaseDateField).asText() : null);
+            media.setPosterPath("https://image.tmdb.org/t/p/w500" + result.get(posterPathField).asText());
+            mediaList.add(media);
+        });
+        return mediaList;
     }
 
 }
