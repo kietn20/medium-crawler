@@ -1,10 +1,7 @@
 package com.mediumcrawler.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -38,6 +35,9 @@ public class Media {
     @Min(value = 1, message = "Rating must be at least 1.")
     @Max(value = 10, message = "Rating must not exceed 10.")
     private int rating;
+
+    @Size(max = 2083, message = "URL must not exceed 2083 characters.")
+    private String imageUrl;
 
     @ManyToMany(mappedBy = "media")
     @ToString.Exclude // Prevent recursion
