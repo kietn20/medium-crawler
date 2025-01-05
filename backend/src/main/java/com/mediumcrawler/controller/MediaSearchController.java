@@ -25,6 +25,16 @@ public class MediaSearchController {
     public Mono<List<MediaDTO>> searchMedia(@RequestBody Map<String, String> request) {
         String query = request.get("query");
         String type = request.get("type");
+
+        // Validate request parameters
+        if (query == null || query.isBlank()) {
+            throw new IllegalArgumentException("Query parameter must not be empty.");
+        }
+
+        if (type == null || type.isBlank()) {
+            throw new IllegalArgumentException("Type parameter must not be empty.");
+        }
+
         return mediaSearchService.searchMedia(query, type);
     }
 }
