@@ -23,7 +23,7 @@ public class Media {
     private String title;
 
     @NotBlank(message = "Type is required.")
-    private String type; // e.g., movie, book, anime, manga, tv show
+    private String type; // "movie", "tv", "book", "anime", "manga", or "game"
     private String description;
 
     @Column(name = "\"year\"") // Explicitly quoting the 'year' column
