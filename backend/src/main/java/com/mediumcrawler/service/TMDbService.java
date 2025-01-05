@@ -29,6 +29,7 @@ public class TMDbService {
                         .path("/search/movie")
                         .queryParam("api_key", apiKey)
                         .queryParam("query", query)
+                        .queryParam("limit", 10)
                         .build())
                 .retrieve()
                 .bodyToMono(JsonNode.class)
@@ -42,21 +43,22 @@ public class TMDbService {
                         .path("/search/tv")
                         .queryParam("api_key", apiKey)
                         .queryParam("query", query)
+                        .queryParam("limit", 10)
                         .build())
                 .retrieve()
-                .bodyToMono(JsonNode.class)
-                .map(jsonNode -> parseMediaList(jsonNode, "name", "overview", "first_air_date", "poster_path"));
-    }
+                    .bodyToMono(JsonNode.class)
+                    .map(jsonNode -> parseMediaList(jsonNode, "name", "overview", "first_air_date", "poster_path"));
+                }
 
-    // Helper method to parse API response
-    private List<MediaDTO> parseMediaList(JsonNode jsonNode, String titleField, String descriptionField, String releaseDateField, String posterPathField) {
-        List<MediaDTO> mediaList = new ArrayList<>();
-        jsonNode.get("results").forEach(result -> {
-            MediaDTO media = new MediaDTO();
-            media.setTitle(result.get(titleField).asText());
-            media.setDescription(result.get(descriptionField).asText());
-            media.setReleaseDate(result.has(releaseDateField) ? result.get(releaseDateField).asText() : null);
-            media.setPosterPath("https://image.tmdb.org/t/p/w500" + result.get(posterPathField).asText());
+                // Helper method to parse API response
+        private List<MediaDTO> parseMediaList(JsonNode jsonNode, String titleField, String descriptionField, String releaseDateField, String posterPathField) {
+            List<MediaDTO> mediaList = new ArrayList<>();
+            jsonNode.get("results").forEach(result -> {
+                MediaDTO media = new MediaDTO();
+                media.setTitle(result.get(titleField).asText());
+                media.setDescription(result.get(descriptionField).asText());
+                media.setReleaseDate(result.has(releaseDateField) ? result.get(releaseDateField).asText() : null);
+                media.setPosterPath("https://image.tmdb.org/t/p/w500" + result.get(posterPathField).asText());
             mediaList.add(media);
         });
         return mediaList;
