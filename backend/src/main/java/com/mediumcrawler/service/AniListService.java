@@ -8,6 +8,7 @@ import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class AniListService {
@@ -40,21 +41,17 @@ public class AniListService {
                 }
                 """;
 
+        // Create request body
+        Map<String, Object> requestBody = Map.of(
+                "query", graphqlQuery,
+                "variables", Map.of("search", query)
+        );
+
         return webClient.post()
-                .bodyValue(createRequestBody(graphqlQuery, query))
+                .bodyValue(requestBody)
                 .retrieve()
                 .bodyToMono(JsonNode.class)
                 .map(this::parseAnimeList);
-    }
-
-    private JsonNode createRequestBody(String query, String search) {
-        return WebClient.create()
-                .post()
-                .uri("https://graphql.anilist.co")
-                .bodyValue("{\"query\":\"" + query + "\",\"variables\":{\"search\":\"" + search + "\"}}")
-                .retrieve()
-                .bodyToMono(JsonNode.class)
-                .block();
     }
 
     private List<MediaDTO> parseAnimeList(JsonNode jsonNode) {
@@ -70,3 +67,4 @@ public class AniListService {
         return animeList;
     }
 }
+
