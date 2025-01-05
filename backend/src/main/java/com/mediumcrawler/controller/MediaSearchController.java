@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/media/search")
+@RequestMapping("/api/media-search")
 public class MediaSearchController {
 
     private final MediaSearchService mediaSearchService;
