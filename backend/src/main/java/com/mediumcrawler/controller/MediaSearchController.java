@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/media")
+@RequestMapping("/api/media/search")
 public class MediaSearchController {
 
     private final MediaSearchService mediaSearchService;
@@ -21,7 +21,7 @@ public class MediaSearchController {
         this.mediaSearchService = mediaSearchService;
     }
 
-    @PostMapping("/search")
+    @PostMapping()
     public Mono<List<MediaDTO>> searchMedia(@RequestBody Map<String, String> request) {
         String query = request.get("query");
         String type = request.get("type");
