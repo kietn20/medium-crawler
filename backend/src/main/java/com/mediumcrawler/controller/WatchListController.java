@@ -36,6 +36,11 @@ public class WatchListController {
         return watchListService.updateWatchList(id, updatedWatchList);
     }
 
+    @PutMapping("/{id}/reorder")
+    public WatchList reorderMedia(@PathVariable Long id, @RequestBody List<Long> newOrder) {
+        return watchListService.reorderMedia(id, newOrder);
+    }
+
     @DeleteMapping("/{id}")
     public void deleteWatchList(@PathVariable long id) {
         watchListService.deleteWatchList(id);

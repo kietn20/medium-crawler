@@ -1,5 +1,6 @@
 package com.mediumcrawler.service;
 
+import com.mediumcrawler.model.Media;
 import com.mediumcrawler.model.User;
 import com.mediumcrawler.model.WatchList;
 import com.mediumcrawler.repository.WatchListRepository;
@@ -91,5 +92,20 @@ public class WatchListService {
             default: // GUEST
                 return 8;
         }
+    }
+
+    public WatchList reorderMedia(Long watchListId, List<Long> newOrder) {
+        WatchList watchList = watchListRepository.findById(watchListId)
+                .orElseThrow(() -> new RuntimeException("WatchList not found"));
+
+        List<Media> reorderedMedia = newOrder.stream()
+                .map(mediaId -> watchList.getMedia().stream()
+                        .filter(media -> media.getId().equals(mediaId))
+                        .findFirst()
+                        .orElseThrow(() -> new RuntimeException("Media item not found in the watchlist")))
+                .toList();
+
+        watchList.setMedia(reorderedMedia);
+        return watchListRepository.save(watchList);
     }
 }
