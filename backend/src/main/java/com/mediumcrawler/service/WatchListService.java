@@ -28,27 +28,68 @@ public class WatchListService {
     }
 
     public WatchList createWatchList(WatchList watchList) {
-        // Ensure the user exists
-        User user = userRepository.findById(watchList.getUser().getId()).orElseThrow(() -> new RuntimeException("User does not exist."));
+        User user = userRepository.findById(watchList.getUser().getId())
+                .orElseThrow(() -> new RuntimeException("User does not exist."));
+        int maxWatchlists = getMaxWatchlistsForUser(user);
+
+        // Enforce watchlist limits
+        if (watchListRepository.countByUserId(user.getId()) >= maxWatchlists) {
+            throw new RuntimeException("User has reached the maximum number of watchlists allowed.");
+        }
+
+        int maxMediaItems = getMaxMediaItemsForUser(user);
+        if (watchList.getMedia().size() > maxMediaItems) {
+            throw new RuntimeException("Watchlist exceeds the maximum number of media items allowed.");
+        }
+
         watchList.setUser(user);
         return watchListRepository.save(watchList);
     }
 
     public WatchList updateWatchList(Long id, WatchList updatedWatchList) {
-        WatchList existingWatchList = watchListRepository.findById(id).orElseThrow(() -> new RuntimeException("WatchList not found"));
+        WatchList existingWatchList = watchListRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("WatchList not found"));
 
-        if (updatedWatchList.getUser() != null && updatedWatchList.getUser().getId() != null) {
-            User user = userRepository.findById(updatedWatchList.getUser().getId()).orElseThrow(() -> new RuntimeException("User does not exist."));
-            existingWatchList.setUser(user);
+        User user = userRepository.findById(updatedWatchList.getUser().getId())
+                .orElseThrow(() -> new RuntimeException("User does not exist."));
+
+        // Enforce media item limits during update
+        int maxMediaItems = getMaxMediaItemsForUser(user);
+        if (updatedWatchList.getMedia().size() > maxMediaItems) {
+            throw new RuntimeException("Watchlist exceeds the maximum number of media items allowed.");
         }
 
         existingWatchList.setName(updatedWatchList.getName());
         existingWatchList.setDescription(updatedWatchList.getDescription());
         existingWatchList.setMedia(updatedWatchList.getMedia());
+        existingWatchList.setUser(user);
+
         return watchListRepository.save(existingWatchList);
     }
 
     public void deleteWatchList(Long id) {
         watchListRepository.deleteById(id);
+    }
+
+    private int getMaxWatchlistsForUser(User user) {
+        switch (user.getRole()) {
+            case "PREMIUM":
+                return 10;
+            case "AUTHENTICATED":
+                return 5;
+            default: // GUEST
+                return 1;
+        }
+    }
+
+    private int getMaxMediaItemsForUser(User user) {
+        switch (user.getRole()) {
+            case "PREMIUM":
+                return 40;
+            case "AUTHENTICATED":
+                return 20;
+            default: // GUEST
+                return 8;
+        }
     }
 }

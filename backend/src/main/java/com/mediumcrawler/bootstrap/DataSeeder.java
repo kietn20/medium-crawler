@@ -33,10 +33,11 @@ public class DataSeeder implements CommandLineRunner {
 
     private void seedUsers() {
         if (userRepository.count() == 0) {
-            User john = new User(null, "John Doe", "john@example.com", "https://example.com/john.png", null);
-            User jane = new User(null, "Jane Smith", "jane@example.com", "https://example.com/jane.png", null);
+            User john = new User(null, "John Doe", "john@example.com", "https://example.com/john.png", "GUEST", null);
+            User jane = new User(null, "Jane Smith", "jane@example.com", "https://example.com/jane.png", "AUTHENTICATED", null);
+            User alice = new User(null, "Alice Premium", "alice@example.com", "https://example.com/alice.png", "PREMIUM", null);
 
-            userRepository.saveAll(Arrays.asList(john, jane));
+            userRepository.saveAll(Arrays.asList(john, jane, alice));
         }
     }
 

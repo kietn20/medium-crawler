@@ -34,6 +34,10 @@ public class User {
     @Size(max = 255, message = "Profile picture URL must not exceed 255 characters.")
     private String profilePicture;
 
+    @NotBlank(message = "Role is required.")
+    @Column(nullable = false)
+    private String role; // "GUEST", "AUTHENTICATED", "PREMIUM"
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @ToString.Exclude
     @JsonManagedReference // Serialize WatchLists, but not their user references
