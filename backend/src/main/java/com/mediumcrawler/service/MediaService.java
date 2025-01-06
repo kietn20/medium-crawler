@@ -24,6 +24,11 @@ public class MediaService {
     }
 
     public Media createMedia(Media media) {
+        List<String> allowedTypes = List.of("movie", "tv", "book", "anime", "manga", "game");
+        if (!allowedTypes.contains(media.getType().toLowerCase())) {
+            throw new IllegalArgumentException("Invalid media type. Allowed types are: movie, tv, book, anime, manga, game.");
+        }
+
         return mediaRepository.save(media);
     }
 
