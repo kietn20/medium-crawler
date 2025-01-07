@@ -3,7 +3,6 @@ package com.mediumcrawler.controller;
 import com.mediumcrawler.model.User;
 import com.mediumcrawler.service.UserService;
 import jakarta.validation.Valid;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
