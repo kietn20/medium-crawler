@@ -28,7 +28,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<Map<String, String>> handleRuntimeException(RuntimeException ex) {
         Map<String, String> error = new HashMap<>();
-        error.put("message", ex.getMessage());
+        error.put("message", ex.getMessage() != null ? ex.getMessage() : "An unexpected runtime error occurred.");
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 

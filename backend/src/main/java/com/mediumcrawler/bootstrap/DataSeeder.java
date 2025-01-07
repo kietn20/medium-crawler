@@ -58,8 +58,9 @@ public class DataSeeder implements CommandLineRunner {
 
             Media inception = mediaRepository.findByTitle("Inception").orElseThrow(() -> new RuntimeException("Media not found"));
             Media theDarkKnight = mediaRepository.findByTitle("The Dark Knight").orElseThrow(() -> new RuntimeException("Media not found"));
+            Media harryPotter = mediaRepository.findByTitle("Harry Potter").orElseThrow(() -> new RuntimeException("Media not found"));
 
-            WatchList johnsList = new WatchList(null, "John's Favorite Movies", "John's top picks", john, Arrays.asList(inception, theDarkKnight));
+            WatchList johnsList = new WatchList(null, "John's Favorite Movies", "John's top picks", john, Arrays.asList(inception, theDarkKnight, harryPotter));
             WatchList janesList = new WatchList(null, "Jane's WatchList", "Jane's must-watch list", jane, Arrays.asList(inception));
 
             watchListRepository.saveAll(Arrays.asList(johnsList, janesList));

@@ -38,6 +38,7 @@ public class WatchListController {
 
     @PutMapping("/{id}/reorder")
     public WatchList reorderMedia(@PathVariable Long id, @RequestBody List<Long> newOrder) {
+        System.out.println("New Order: " + newOrder);
         return watchListService.reorderMedia(id, newOrder);
     }
 
