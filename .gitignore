@@ -1,0 +1,54 @@
+# Ignore target directory
+target/
+
+# Ignore Maven wrapper files
+!.mvn/wrapper/maven-wrapper.jar
+
+# Ignore IntelliJ IDEA files
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# Ignore Eclipse files
+.classpath
+.project
+.settings/
+
+# Ignore NetBeans files
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore log files
+*.log
+
+# Ignore temporary files
+*.tmp
+
+# Ignore environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env*
+
+# Ignore build artifacts
+/target/
+/build/
+
+# Ignore node_modules
+node_modules/
+
+# Ignore yarn.lock
+yarn.lock
+
+# Vscode
+.vscode/
