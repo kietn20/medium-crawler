@@ -16,8 +16,8 @@ const images = [
 
 export default function ImageStack() {
   const [currentIndex, setCurrentIndex] = useState(0)
-  const [isSpread, setIsSpread] = useState(false) // Changed state variable name
-  const animationDuration = Number(0.5) || 1000
+  const [isSpread, setIsSpread] = useState(false) // State to spread images
+  const animationDuration = 0.5
 
   useEffect(() => {
     if (currentIndex < images.length - 1) {
@@ -47,7 +47,7 @@ export default function ImageStack() {
         {images.slice(0, currentIndex + 1).map((src, index) => (
           <motion.div
             key={index}
-            className="absolute inset-0 flex items-center justify-center" // Updated class name
+            className="absolute inset-0 flex items-center justify-center"
             initial={{ 
               scale: 0.3,
               opacity: 0,
@@ -58,14 +58,13 @@ export default function ImageStack() {
               opacity: 1,
               rotate: isSpread ? -15 : (index - (images.length - 1) / 2) * 5,
               x: `${getSpreadPosition(index)}%`,
-              y: isSpread ? '0%' : 0
             }}
             transition={{
               duration: animationDuration / 1000,
               ease: [0.32, 0.72, 0, 1], // Custom easing for warping effect
               type: "spring",
               stiffness: 260,
-              damping: 20
+              damping: 20,
             }}
           >
             <div className="relative w-64 h-96 max-w-sm mx-auto">
