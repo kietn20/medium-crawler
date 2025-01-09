@@ -10,7 +10,7 @@ const images = [
     'src/assets/media15.png',
     'src/assets/media14.png',
     'src/assets/media12.png',
-    'src/assets/media9.png',
+    'src/assets/media17.png',
     'src/assets/media7.png',
 ]
 
@@ -42,7 +42,7 @@ export default function ImageStack() {
   }
 
   return (
-    <div className="relative w-screen h-screen overflow-hidden border border-red-500">
+    <div className="relative w-screen h-screen overflow-hidden">
       <AnimatePresence>
         {images.slice(0, currentIndex + 1).map((src, index) => (
           <motion.div
