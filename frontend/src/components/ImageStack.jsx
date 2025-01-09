@@ -4,13 +4,13 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useState, useEffect } from 'react'
 
 const images = [
-    'src/assets/media4.png',
     'src/assets/media0.png',
-    'src/assets/media10.png',
+    'src/assets/media16.png',
     'src/assets/media2.png',
-    'src/assets/media11.png',
+    'src/assets/media15.png',
+    'src/assets/media14.png',
+    'src/assets/media12.png',
     'src/assets/media9.png',
-    'src/assets/media6.png',
     'src/assets/media7.png',
 ]
 
@@ -36,7 +36,7 @@ export default function ImageStack() {
   const getSpreadPosition = (index) => {
     if (!isSpread) return 0
     const totalImages = images.length
-    const spreadWidth = 85 // percentage of container width to spread across
+    const spreadWidth = 87 // percentage of container width to spread across
     const step = spreadWidth / (totalImages - 1)
     return (index - (totalImages - 1) / 2) * step
   }
