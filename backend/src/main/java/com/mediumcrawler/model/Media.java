@@ -24,7 +24,7 @@ public class Media {
     private String description;
 
     @Column(name = "\"year\"") // Explicitly quoting the 'year' column
-    @NotNull(message = "Year is required.")
+    // @NotNull(message = "Year is required.")
     @Min(value = 1900, message = "Year must be after 1900.")
     @Max(value = 2100, message = "Year must be before 2100.")
     private int year;
