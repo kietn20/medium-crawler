@@ -1,0 +1,86 @@
+'use client'
+
+import { motion, AnimatePresence } from 'framer-motion'
+import { useState, useEffect } from 'react'
+
+const images = [
+    'src/assets/media4.png',
+    'src/assets/media0.png',
+    'src/assets/media10.png',
+    'src/assets/media2.png',
+    'src/assets/media11.png',
+    'src/assets/media9.png',
+    'src/assets/media6.png',
+    'src/assets/media7.png',
+]
+
+export default function ImageStack() {
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [isSpread, setIsSpread] = useState(false) // Changed state variable name
+  const animationDuration = Number(0.5) || 1000
+
+  useEffect(() => {
+    if (currentIndex < images.length - 1) {
+      const timer = setTimeout(() => {
+        setCurrentIndex(prev => prev + 1)
+      }, animationDuration + 500) // Add 500ms delay between animations
+      return () => clearTimeout(timer)
+    } else {
+      const spreadTimer = setTimeout(() => {
+        setIsSpread(true)
+      }, animationDuration + 1000) // Add 1s delay before spreading
+      return () => clearTimeout(spreadTimer)
+    }
+  }, [currentIndex, animationDuration])
+
+  const getSpreadPosition = (index) => {
+    if (!isSpread) return 0
+    const totalImages = images.length
+    const spreadWidth = 85 // percentage of container width to spread across
+    const step = spreadWidth / (totalImages - 1)
+    return (index - (totalImages - 1) / 2) * step
+  }
+
+  return (
+    <div className="relative w-screen h-screen overflow-hidden border border-red-500">
+      <AnimatePresence>
+        {images.slice(0, currentIndex + 1).map((src, index) => (
+          <motion.div
+            key={index}
+            className="absolute inset-0 flex items-center justify-center" // Updated class name
+            initial={{ 
+              scale: 0.3,
+              opacity: 0,
+              rotate: 0
+            }}
+            animate={{ 
+              scale: 1,
+              opacity: 1,
+              rotate: isSpread ? -15 : (index - (images.length - 1) / 2) * 5,
+              x: `${getSpreadPosition(index)}%`,
+              y: isSpread ? '0%' : 0
+            }}
+            transition={{
+              duration: animationDuration / 1000,
+              ease: [0.32, 0.72, 0, 1], // Custom easing for warping effect
+              type: "spring",
+              stiffness: 260,
+              damping: 20
+            }}
+          >
+            <div className="relative w-64 h-96 max-w-sm mx-auto">
+                <img
+                    src={src}
+                    alt={`Poster ${index + 1}`}
+                    className="object-cover w-full h-full rounded-3xl shadow-lg"
+                    style={{ width: '100%', height: '100%' }}
+                    loading={index === 0 ? 'eager' : 'lazy'}
+                />
+            </div>
+          </motion.div>
+        ))}
+      </AnimatePresence>
+    </div>
+  )
+}
+

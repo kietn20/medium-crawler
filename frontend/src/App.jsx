@@ -1,11 +1,18 @@
 import { useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Homepage } from "./pages/Homepage";
+
 
 export default function App() {
 	return (
-		<div className="flex justify-center items-center h-screen bg-gray-100">
-			<h1 className="text-4xl font-bold text-blue-600">
-				Welcome to Medium Crawler!
-			</h1>
-		</div>
-	);
+		<Router>
+			{/* <Navbar /> */}
+			<Routes>
+				<Route path="/" element={<Homepage />} />
+				{/* <Route path="profile" element={<Profile />} /> */}
+				{/* <Route path="login" element={<Login />} /> */}
+				{/* <Route path="register" element={<Register />} /> */}
+			</Routes>
+		</Router>
+		);
 }
