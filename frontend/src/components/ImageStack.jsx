@@ -128,7 +128,7 @@ export default function ImageStack() {
             <motion.div
               className="absolute bottom-0 left-0 right-0 flex justify-center mb-8"
               initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
+              animate={{ opacity: 1, y: 0, duration: 0.5 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.5 }}
             >
