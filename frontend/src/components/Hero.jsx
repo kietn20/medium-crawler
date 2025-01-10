@@ -1,13 +1,27 @@
-import { motion } from "framer-motion";
+import { motion, useAnimation, useInView } from "framer-motion";
+import { useEffect, useRef } from "react";
 
 export const Hero = () => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { amount: 0.5 });
+  const controls = useAnimation();
+
+  useEffect(() => {
+    if (isInView) {
+      controls.start("visible");
+    }
+  }, [isInView, controls]);
+
   return (
-    <div className="flex flex-col justify-center items-center w-screen h-screen overflow-hidden bg-[#B1FA63] relative">
+    <div ref={ref} className="flex flex-col justify-center items-center w-screen h-screen overflow-hidden bg-[#B1FA63] relative">
       <motion.div
         className="flex flex-col items-center absolute top-24"
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2.2, duration: 1.5 }}
+        animate={controls}
+        variants={{
+          visible: { opacity: 1 }
+        }}
+        transition={{ delay: 1, duration: 1.5 }}
       >
         <span className="font-heading text-[30px]">welcome to</span>
         <span className="font-heading text-9xl">medium crawler</span>
@@ -16,9 +30,12 @@ export const Hero = () => {
         src="src/assets/hero.svg"
         alt="hero"
         initial={{ y: 0, opacity: 1 }}
-        animate={{ y: 50 }}
-        transition={{ duration: 1.5, delay: 1.5 }}
-        className="absolute mt-20"
+        animate={controls}
+        variants={{
+          visible: { y: 50 }
+        }}
+        transition={{ delay: 0.1, duration: 1.5 }}
+        className="absolute mt-36"
       />
     </div>
   );
