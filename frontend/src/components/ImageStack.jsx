@@ -18,6 +18,7 @@ export default function ImageStack() {
 	const [currentIndex, setCurrentIndex] = useState(0);
 	const [isSpread, setIsSpread] = useState(false); // State to spread images
 	const [setshowArrow, setSetshowArrow] = useState(false);
+  const [hoveredIndex, setHoveredIndex] = useState(null);
 	const animationDuration = 0.5;
 
 	useEffect(() => {
@@ -43,7 +44,7 @@ export default function ImageStack() {
 	const getSpreadPosition = (index) => {
 		if (!isSpread) return 0;
 		const totalImages = images.length;
-		const spreadWidth = 650; // percentage of container width to spread across
+		const spreadWidth = 550; // percentage of container width to spread across
 		const step = spreadWidth / (totalImages - 1);
 		return (index - (totalImages - 1) / 2) * step;
 	};
@@ -62,12 +63,13 @@ export default function ImageStack() {
 								rotate: 0,
 							}}
 							animate={{
-								scale: 1,
-								opacity: 1,
-								rotate: isSpread
-									? -15
-									: (index - (images.length - 1) / 2) * 5,
-								x: `${getSpreadPosition(index)}%`,
+								scale: hoveredIndex === index && isSpread ? 1.2 : 1,
+                opacity: 1,
+                rotate: isSpread ? (hoveredIndex === index ? 0 : -15) : (index - (images.length - 1) / 2) * 5,
+                x: `calc(${getSpreadPosition(index)}% - 32px)`, // Subtracting half the width of the image
+                x: `${getSpreadPosition(index)}%`,
+                y: isSpread && hoveredIndex === index ? '-5%' : '0%',
+                zIndex: isSpread && hoveredIndex === index ? 10 : 1,
 							}}
 							transition={{
 								duration: animationDuration / 1000,
@@ -76,6 +78,8 @@ export default function ImageStack() {
 								stiffness: 260,
 								damping: 20,
 							}}
+              onMouseEnter={() => isSpread && setHoveredIndex(index)}
+              onMouseLeave={() => setHoveredIndex(null)}
 						>
 							<div className="w-64 h-96">
 								<img
