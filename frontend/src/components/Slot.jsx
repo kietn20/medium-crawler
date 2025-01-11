@@ -1,4 +1,9 @@
+import { useState } from "react";
+
 export const Slot = () => {
+	const [mediaItem, setMediaItem] = useState(null);
+	const [setshowForm, setSetshowForm] = useState(false);
+
 	return (
 		<div
 			className="w-[165px] h-[280px] border border-[#B1FA63] rounded-[30px] flex items-center justify-center text-[#B1FA63] text-9xl font-heading opacity-35 cursor-pointer"
