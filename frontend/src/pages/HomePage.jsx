@@ -1,6 +1,7 @@
 import React from 'react';
 import ImageStack from '../components/ImageStack';
 import { Hero } from '../components/Hero';
+import { Collage } from '../components/Collage';
 
 export const Homepage = () => {
     return (
@@ -10,6 +11,9 @@ export const Homepage = () => {
             </div>
             <div className="snap-center h-screen flex items-center justify-center">
                 <Hero />
+            </div>
+            <div className="snap-center h-screen flex items-center justify-center">
+                <Collage />
             </div>
         </div>
     );
