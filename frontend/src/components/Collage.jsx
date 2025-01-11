@@ -1,11 +1,30 @@
 import { ChartNoAxesColumnDecreasing, Share } from "lucide-react";
 import { Navbar } from "./Navbar";
 import { Slot } from "./Slot";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export const Collage = () => {
   const [showHelp, setShowHelp] = useState(false);
   const [page, setPage] = useState(1);
+  const modalRef = useRef(null);
+
+  const handleClickOutside = (event) => {
+    if (modalRef.current && !modalRef.current.contains(event.target)) {
+      setShowHelp(false);
+    }
+  };
+  useEffect(() => {
+    if (showHelp) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showHelp]);
+
   return (
     <div className="relative flex flex-col items-center justify-start w-screen h-screen overflow-hidden bg-[#0A0B06]">
       <Navbar />
@@ -15,6 +34,7 @@ export const Collage = () => {
         </span>
       </div>
       <div
+        ref={modalRef}
         className={`absolute top-56 w-[840px] h-[614px] bg-[#B1FA63] flex-col rounded-[30px] border-8 border-[#142120] justify-center z-10 transition-opacity duration-300 ${
           showHelp
             ? "opacity-100 pointer-events-auto"
@@ -131,7 +151,6 @@ export const Collage = () => {
           onClick={() => {
             setPage(1);
             setShowHelp(!showHelp);
-            console.log("click");
           }}
           style={{ cursor: "pointer", opacity: showHelp && 1 }}
         >
