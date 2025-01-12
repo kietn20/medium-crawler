@@ -2,12 +2,16 @@ import { ChartNoAxesColumnDecreasing, Share } from "lucide-react";
 import { Navbar } from "./Navbar";
 import { Slot } from "./Slot";
 import { useEffect, useRef, useState } from "react";
+import { useMediaStore } from "../store/mediaStore";
 
 export const Collage = () => {
   const [showHelp, setShowHelp] = useState(false);
   const [page, setPage] = useState(1);
   const modalRef = useRef(null);
   const helpButtonRef = useRef(null);
+
+  const mediaItems = useMediaStore((state) => state.mediaItems);
+  const setMediaItem = useMediaStore((state) => state.setMediaItem);
 
   const handleClickOutside = (event) => {
     if (
