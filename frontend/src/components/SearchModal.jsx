@@ -7,6 +7,7 @@ import {
   BadgeJapaneseYen,
   Gamepad2,
   BookMarked,
+  BadgePlus,
 } from "lucide-react";
 
 export const SearchModal = () => {
@@ -71,7 +72,7 @@ export const SearchModal = () => {
           ) && <p className="p-4 text-sm text-gray-500">No results found.</p>}
         <div className="p-2">
           <div className="px-2 py-1.5 text-xs font-semibold text-gray-600">
-            Suggestions
+            Choose a type of media
           </div>
           <div className="space-y-1">
             <div
@@ -151,7 +152,7 @@ export const SearchModal = () => {
         <div className="h-px bg-gray-200 mx-2" />
         <div className="p-2">
           <div className="px-2 py-1.5 text-xs font-semibold text-gray-600">
-            Settings
+            Manually add media item
           </div>
           <div className="space-y-1">
             <div
@@ -159,9 +160,8 @@ export const SearchModal = () => {
               role="button"
               tabIndex={0}
             >
-              <User className="mr-2 h-4 w-4" />
-              <span>Profile</span>
-              <kbd className="ml-auto text-xs text-gray-400">⌘P</kbd>
+              <BadgePlus className="mr-2 h-4 w-4" />
+              <span>Add Media</span>
             </div>
             <div
               className="flex items-center p-2 rounded-md cursor-pointer hover:bg-gray-50"
