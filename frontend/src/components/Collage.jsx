@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { useMediaStore } from "../store/mediaStore";
 import { useHelpModalStore } from "../store/helpModalStore";
 import { HelpModal } from "./HelpModal";
+import { SearchModal } from "./SearchModal";
 
 export const Collage = () => {
   const [showHelp, setShowHelp] = useState(false);
@@ -48,17 +49,24 @@ export const Collage = () => {
       </div>
       <div
         ref={modalRef}
-        className={`absolute top-56 w-[840px] h-[614px] bg-[#B1FA63] flex-col rounded-[30px] border-8 border-[#142120] justify-center z-10 transition-opacity duration-300 ${
+        className={`absolute top-56 w-[840px] h-[614px] flex-col rounded-[30px] border-8 border-[#142120] justify-center z-10 transition-opacity duration-300 ${
           showHelp
-            ? "opacity-100 pointer-events-auto"
+            ? "opacity-100 pointer-events-auto bg-[#B1FA63]"
             : "opacity-0 pointer-events-none"
-        }`}
+        } `}
       >
-        <HelpModal />
+        {showHelp && <HelpModal />}
+        <SearchModal />
       </div>
       <div className="mt-10 w-[822px] h-[614px] grid grid-cols-4 gap-x-[20px] gap-y-[30px] items-center place-items-center place-content-center">
-        {Array.from({ length: 8 }, (_, i) => (
-          <Slot key={i} />
+        {mediaItems.map((mediaItem, index) => (
+          <Slot
+            key={index}
+            mediaItem={mediaItem}
+            setMediaItem={(newMediaItem) => {
+              setMediaItem(index, newMediaItem);
+            }}
+          />
         ))}
       </div>
       <div className="text-[#B1FA63] flex gap-2 absolute bottom-5 left-5">

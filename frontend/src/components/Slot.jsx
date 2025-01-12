@@ -1,8 +1,9 @@
 import { useState } from "react";
+import { useSearchModalStore } from "../store/searchModal";
 
 export const Slot = () => {
-	const [mediaItem, setMediaItem] = useState(null);
-	const [setshowForm, setSetshowForm] = useState(false);
+	const showSearchModal = useSearchModalStore((state) => state.showSearchModal);
+	const setShowSearchModal = useSearchModalStore((state) => state.setShowSearchModal);
 
 	return (
 		<div
@@ -11,6 +12,7 @@ export const Slot = () => {
 				borderStyle: "dashed",
 				borderWidth: "2px",
 			}}
+			onClick={() => setShowSearchModal(!showSearchModal)}
 		>
 			<div className="mb-10">+</div>
 		</div>
