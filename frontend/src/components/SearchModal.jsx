@@ -19,8 +19,13 @@ export const SearchModal = () => {
   const modalRef = useRef(null);
 
   // Local states
-  const [selectedSuggestion, setSelectedSuggestion] = useState("calendar");
+  const [selectedSuggestion, setSelectedSuggestion] =
+    useState("Movie & TV Show");
   const [searchQuery, setSearchQuery] = useState("");
+
+  const handleSuggestionClick = (option) => {
+    setSelectedSuggestion(option);
+  };
 
   const handleClickOutside = (event) => {
     if (modalRef.current && !modalRef.current.contains(event.target)) {
@@ -61,12 +66,11 @@ export const SearchModal = () => {
       <div className="max-h-[300px] overflow-y-auto">
         {searchQuery &&
           ![
-            "calendar",
-            "emoji",
-            "calculator",
-            "profile",
-            "billing",
-            "settings",
+            "Movie & TV Show",
+            "Anime & Manga",
+            "Video Game",
+            "Book",
+            "Add Media",
           ].some((item) =>
             item.toLowerCase().includes(searchQuery.toLowerCase())
           ) && <p className="p-4 text-sm text-gray-500">No results found.</p>}
@@ -77,16 +81,16 @@ export const SearchModal = () => {
           <div className="space-y-1">
             <div
               className={`flex items-center p-2 rounded-md cursor-pointer transition-colors ${
-                selectedSuggestion === "calendar"
-                  ? "bg-gray-100"
-                  : "hover:bg-gray-50"
+                selectedSuggestion === "Movie & TV Show"
+                  ? "bg-[#B1FA63]"
+                  : "hover:bg-[#B1FA63] hover:bg-opacity-50"
               }`}
-              onClick={() => handleSuggestionClick("calendar")}
+              onClick={() => handleSuggestionClick("Movie & TV Show")}
               role="button"
               tabIndex={0}
               onKeyDown={(e) => {
                 if (e.key === "Enter" || e.key === " ") {
-                  handleSuggestionClick("calendar");
+                  handleSuggestionClick("Movie & TV Show");
                 }
               }}
             >
@@ -95,16 +99,16 @@ export const SearchModal = () => {
             </div>
             <div
               className={`flex items-center p-2 rounded-md cursor-pointer transition-colors ${
-                selectedSuggestion === "emoji"
-                  ? "bg-gray-100"
-                  : "hover:bg-gray-50"
+                selectedSuggestion === "Anime & Manga"
+                  ? "bg-[#B1FA63]"
+                  : "hover:bg-[#B1FA63] hover:bg-opacity-50"
               }`}
-              onClick={() => handleSuggestionClick("emoji")}
+              onClick={() => handleSuggestionClick("Anime & Manga")}
               role="button"
               tabIndex={0}
               onKeyDown={(e) => {
                 if (e.key === "Enter" || e.key === " ") {
-                  handleSuggestionClick("emoji");
+                  handleSuggestionClick("Anime & Manga");
                 }
               }}
             >
@@ -113,16 +117,16 @@ export const SearchModal = () => {
             </div>
             <div
               className={`flex items-center p-2 rounded-md cursor-pointer transition-colors ${
-                selectedSuggestion === "emoji"
-                  ? "bg-gray-100"
-                  : "hover:bg-gray-50"
+                selectedSuggestion === "Video Game"
+                  ? "bg-[#B1FA63]"
+                  : "hover:bg-[#B1FA63] hover:bg-opacity-50"
               }`}
-              onClick={() => handleSuggestionClick("emoji")}
+              onClick={() => handleSuggestionClick("Video Game")}
               role="button"
               tabIndex={0}
               onKeyDown={(e) => {
                 if (e.key === "Enter" || e.key === " ") {
-                  handleSuggestionClick("emoji");
+                  handleSuggestionClick("Video Game");
                 }
               }}
             >
@@ -131,16 +135,16 @@ export const SearchModal = () => {
             </div>
             <div
               className={`flex items-center p-2 rounded-md cursor-pointer transition-colors ${
-                selectedSuggestion === "emoji"
-                  ? "bg-gray-100"
-                  : "hover:bg-gray-50"
+                selectedSuggestion === "Book"
+                  ? "bg-[#B1FA63]"
+                  : "hover:bg-[#B1FA63] hover:bg-opacity-50"
               }`}
-              onClick={() => handleSuggestionClick("emoji")}
+              onClick={() => handleSuggestionClick("Book")}
               role="button"
               tabIndex={0}
               onKeyDown={(e) => {
                 if (e.key === "Enter" || e.key === " ") {
-                  handleSuggestionClick("emoji");
+                  handleSuggestionClick("Book");
                 }
               }}
             >
@@ -162,15 +166,6 @@ export const SearchModal = () => {
             >
               <BadgePlus className="mr-2 h-4 w-4" />
               <span>Add Media</span>
-            </div>
-            <div
-              className="flex items-center p-2 rounded-md cursor-pointer hover:bg-gray-50"
-              role="button"
-              tabIndex={0}
-            >
-              <Settings className="mr-2 h-4 w-4" />
-              <span>Settings</span>
-              <kbd className="ml-auto text-xs text-gray-400">⌘S</kbd>
             </div>
           </div>
         </div>
