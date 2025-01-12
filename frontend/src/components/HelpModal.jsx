@@ -1,11 +1,46 @@
+import { useEffect, useRef } from "react";
 import { useHelpModalStore } from "../store/helpModalStore";
 
 export const HelpModal = () => {
+  const showHelp = useHelpModalStore((state) => state.showHelp);
+  const setShowHelp = useHelpModalStore((state) => state.setShowHelp);
   const page = useHelpModalStore((state) => state.page);
   const setPage = useHelpModalStore((state) => state.setPage);
+  const modalRef = useRef(null);
+  const helpButtonRef = useHelpModalStore((state) => state.helpButtonRef);
+
+  const handleClickOutside = (event) => {
+    if (
+      modalRef.current &&
+      !modalRef.current.contains(event.target) &&
+      helpButtonRef.current &&
+      !helpButtonRef.current.contains(event.target)
+    ) {
+      setShowHelp(false);
+    }
+  };
+  
+  useEffect(() => {
+    if (showHelp) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showHelp]);
 
   return (
-    <div>
+    <div
+      ref={modalRef}
+      className={`absolute top-56 w-[840px] h-[614px] bg-[#B1FA63] flex-col rounded-[30px] border-8 border-[#142120] justify-center z-10 transition-opacity duration-300 ${
+        showHelp
+          ? "opacity-100 pointer-events-auto"
+          : "opacity-0 pointer-events-none"
+      } `}
+    >
       {page == 1 ? (
         <span className="font-heading text-4xl mt-3 flex justify-center items-center p-7">
           What is medium crawler?

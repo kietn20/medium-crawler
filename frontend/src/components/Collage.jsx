@@ -8,36 +8,20 @@ import { HelpModal } from "./HelpModal";
 import { SearchModal } from "./SearchModal";
 
 export const Collage = () => {
-  const [showHelp, setShowHelp] = useState(false);
-  const modalRef = useRef(null);
-  const helpButtonRef = useRef(null);
-
+  // Help Modal State Store
+  const showHelp = useHelpModalStore((state) => state.showHelp);
+  const setShowHelp = useHelpModalStore((state) => state.setShowHelp);
   const page = useHelpModalStore((state) => state.page);
   const setPage = useHelpModalStore((state) => state.setPage);
+  const helpButtonRef = useRef(null);
+  const setHelpButtonRef = useHelpModalStore((state) => state.setHelpButtonRef);
+
   const mediaItems = useMediaStore((state) => state.mediaItems);
   const setMediaItem = useMediaStore((state) => state.setMediaItem);
 
-  const handleClickOutside = (event) => {
-    if (
-      modalRef.current &&
-      !modalRef.current.contains(event.target) &&
-      helpButtonRef.current &&
-      !helpButtonRef.current.contains(event.target)
-    ) {
-      setShowHelp(false);
-    }
-  };
   useEffect(() => {
-    if (showHelp) {
-      document.addEventListener("mousedown", handleClickOutside);
-    } else {
-      document.removeEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [showHelp]);
+    setHelpButtonRef(helpButtonRef);
+  }, [setHelpButtonRef]);
 
   return (
     <div className="relative flex flex-col items-center justify-start w-screen h-screen overflow-hidden bg-[#0A0B06]">
@@ -47,17 +31,7 @@ export const Collage = () => {
           medium crawler
         </span>
       </div>
-      <div
-        ref={modalRef}
-        className={`absolute top-56 w-[840px] h-[614px] flex-col rounded-[30px] border-8 border-[#142120] justify-center z-10 transition-opacity duration-300 ${
-          showHelp
-            ? "opacity-100 pointer-events-auto bg-[#B1FA63]"
-            : "opacity-0 pointer-events-none"
-        } `}
-      >
-        {showHelp && <HelpModal />}
-        <SearchModal />
-      </div>
+      <HelpModal />
       <div className="mt-10 w-[822px] h-[614px] grid grid-cols-4 gap-x-[20px] gap-y-[30px] items-center place-items-center place-content-center">
         {mediaItems.map((mediaItem, index) => (
           <Slot
