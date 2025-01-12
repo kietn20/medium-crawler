@@ -1,8 +1,9 @@
 import { useHelpModalStore } from "../store/helpModalStore";
 
 export const HelpModal = () => {
-    const page = useHelpModalStore((state) => state.page);
-    
+  const page = useHelpModalStore((state) => state.page);
+  const setPage = useHelpModalStore((state) => state.setPage);
+
   return (
     <div>
       {page == 1 ? (
@@ -77,6 +78,31 @@ export const HelpModal = () => {
           </div>
         </div>
       )}
+      <div className="w-full flex justify-end items-start absolute bottom-2 right-0">
+        <span className="font-heading text-2xl mr-5">
+          <span
+            className="cursor-pointer text-3xl"
+            onClick={() => {
+              if (page == 2) {
+                setPage(1);
+              }
+            }}
+          >
+            &lt;&nbsp;
+          </span>
+          <span>{page} / 2</span>
+          <span
+            className="cursor-pointer text-3xl"
+            onClick={() => {
+              if (page == 1) {
+                setPage(2);
+              }
+            }}
+          >
+            &nbsp;&gt;
+          </span>
+        </span>
+      </div>
     </div>
   );
 };

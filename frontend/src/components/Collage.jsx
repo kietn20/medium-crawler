@@ -55,31 +55,6 @@ export const Collage = () => {
         }`}
       >
         <HelpModal />
-        <div className="w-full flex justify-end items-start absolute bottom-2 right-0">
-          <span className="font-heading text-2xl mr-5">
-            <span
-              className="cursor-pointer text-3xl"
-              onClick={() => {
-                if (page == 2) {
-                  setPage(1);
-                }
-              }}
-            >
-              &lt;&nbsp;
-            </span>
-            <span>{page} / 2</span>
-            <span
-              className="cursor-pointer text-3xl"
-              onClick={() => {
-                if (page == 1) {
-                  setPage(2);
-                }
-              }}
-            >
-              &nbsp;&gt;
-            </span>
-          </span>
-        </div>
       </div>
       <div className="mt-10 w-[822px] h-[614px] grid grid-cols-4 gap-x-[20px] gap-y-[30px] items-center place-items-center place-content-center">
         {Array.from({ length: 8 }, (_, i) => (
