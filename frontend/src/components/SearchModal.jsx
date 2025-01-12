@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { useSearchModalStore } from "../store/searchModal";
 import {
-  Calculator,
-  Calendar,
-  CreditCard,
+  Film,
   Settings,
-  Smile,
   User,
+  BadgeJapaneseYen,
+  Gamepad2,
+  BookMarked,
 } from "lucide-react";
 
 export const SearchModal = () => {
@@ -42,122 +42,135 @@ export const SearchModal = () => {
   return (
     <div
       ref={modalRef}
-      className={`absolute top-80 w-[700px] h-[400px] bg-[#0A0B06] flex-col rounded-[30px] border-8 border-[#142120] justify-center z-10 transition-opacity duration-300 ${
+      className={`absolute top-80 w-[700px] flex-col justify-center z-10 transition-opacity duration-300 shadow-md md:min-w-[450px] bg-white rounded-xl ${
         showSearchModal
           ? "opacity-100 pointer-events-auto"
           : "opacity-0 pointer-events-none"
       } `}
     >
-      <div>
-        <div className="rounded-lg border shadow-md md:min-w-[450px] bg-white">
-          <div className="relative">
-            <input
-              type="text"
-              className="w-full px-4 py-3 text-sm outline-none border-b"
-              placeholder="Type a command or search..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
+      <div className="relative rounded-xl">
+        <input
+          type="text"
+          className="w-full px-4 py-3 text-sm outline-none border-b rounded-xl"
+          placeholder="Type a command or search..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+      </div>
+      <div className="max-h-[300px] overflow-y-auto">
+        {searchQuery &&
+          ![
+            "calendar",
+            "emoji",
+            "calculator",
+            "profile",
+            "billing",
+            "settings",
+          ].some((item) =>
+            item.toLowerCase().includes(searchQuery.toLowerCase())
+          ) && <p className="p-4 text-sm text-gray-500">No results found.</p>}
+        <div className="p-2">
+          <div className="px-2 py-1.5 text-xs font-semibold text-gray-600">
+            Suggestions
           </div>
-          <div className="max-h-[300px] overflow-y-auto">
-            {searchQuery &&
-              ![
-                "calendar",
-                "emoji",
-                "calculator",
-                "profile",
-                "billing",
-                "settings",
-              ].some((item) =>
-                item.toLowerCase().includes(searchQuery.toLowerCase())
-              ) && (
-                <p className="p-4 text-sm text-gray-500">No results found.</p>
-              )}
-            <div className="p-2">
-              <div className="px-2 py-1.5 text-xs font-semibold text-gray-600">
-                Suggestions
-              </div>
-              <div className="space-y-1">
-                <div
-                  className={`flex items-center p-2 rounded-md cursor-pointer transition-colors ${
-                    selectedSuggestion === "calendar"
-                      ? "bg-gray-100"
-                      : "hover:bg-gray-50"
-                  }`}
-                  onClick={() => handleSuggestionClick("calendar")}
-                  role="button"
-                  tabIndex={0}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" || e.key === " ") {
-                      handleSuggestionClick("calendar");
-                    }
-                  }}
-                >
-                  <Calendar className="mr-2 h-4 w-4" />
-                  <span>Calendar</span>
-                </div>
-                <div
-                  className={`flex items-center p-2 rounded-md cursor-pointer transition-colors ${
-                    selectedSuggestion === "emoji"
-                      ? "bg-gray-100"
-                      : "hover:bg-gray-50"
-                  }`}
-                  onClick={() => handleSuggestionClick("emoji")}
-                  role="button"
-                  tabIndex={0}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" || e.key === " ") {
-                      handleSuggestionClick("emoji");
-                    }
-                  }}
-                >
-                  <Smile className="mr-2 h-4 w-4" />
-                  <span>Search Emoji</span>
-                </div>
-                <div
-                  className="flex items-center p-2 rounded-md cursor-not-allowed opacity-50"
-                  role="button"
-                  aria-disabled="true"
-                >
-                  <Calculator className="mr-2 h-4 w-4" />
-                  <span>Calculator</span>
-                </div>
-              </div>
+          <div className="space-y-1">
+            <div
+              className={`flex items-center p-2 rounded-md cursor-pointer transition-colors ${
+                selectedSuggestion === "calendar"
+                  ? "bg-gray-100"
+                  : "hover:bg-gray-50"
+              }`}
+              onClick={() => handleSuggestionClick("calendar")}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  handleSuggestionClick("calendar");
+                }
+              }}
+            >
+              <Film className="mr-2 h-4 w-4" />
+              <span>Movie & TV Show</span>
             </div>
-            <div className="h-px bg-gray-200 mx-2" />
-            <div className="p-2">
-              <div className="px-2 py-1.5 text-xs font-semibold text-gray-600">
-                Settings
-              </div>
-              <div className="space-y-1">
-                <div
-                  className="flex items-center p-2 rounded-md cursor-pointer hover:bg-gray-50"
-                  role="button"
-                  tabIndex={0}
-                >
-                  <User className="mr-2 h-4 w-4" />
-                  <span>Profile</span>
-                  <kbd className="ml-auto text-xs text-gray-400">⌘P</kbd>
-                </div>
-                <div
-                  className="flex items-center p-2 rounded-md cursor-pointer hover:bg-gray-50"
-                  role="button"
-                  tabIndex={0}
-                >
-                  <CreditCard className="mr-2 h-4 w-4" />
-                  <span>Billing</span>
-                  <kbd className="ml-auto text-xs text-gray-400">⌘B</kbd>
-                </div>
-                <div
-                  className="flex items-center p-2 rounded-md cursor-pointer hover:bg-gray-50"
-                  role="button"
-                  tabIndex={0}
-                >
-                  <Settings className="mr-2 h-4 w-4" />
-                  <span>Settings</span>
-                  <kbd className="ml-auto text-xs text-gray-400">⌘S</kbd>
-                </div>
-              </div>
+            <div
+              className={`flex items-center p-2 rounded-md cursor-pointer transition-colors ${
+                selectedSuggestion === "emoji"
+                  ? "bg-gray-100"
+                  : "hover:bg-gray-50"
+              }`}
+              onClick={() => handleSuggestionClick("emoji")}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  handleSuggestionClick("emoji");
+                }
+              }}
+            >
+              <BadgeJapaneseYen className="mr-2 h-4 w-4" />
+              <span>Anime & Manga</span>
+            </div>
+            <div
+              className={`flex items-center p-2 rounded-md cursor-pointer transition-colors ${
+                selectedSuggestion === "emoji"
+                  ? "bg-gray-100"
+                  : "hover:bg-gray-50"
+              }`}
+              onClick={() => handleSuggestionClick("emoji")}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  handleSuggestionClick("emoji");
+                }
+              }}
+            >
+              <Gamepad2 className="mr-2 h-4 w-4" />
+              <span>Video Game</span>
+            </div>
+            <div
+              className={`flex items-center p-2 rounded-md cursor-pointer transition-colors ${
+                selectedSuggestion === "emoji"
+                  ? "bg-gray-100"
+                  : "hover:bg-gray-50"
+              }`}
+              onClick={() => handleSuggestionClick("emoji")}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  handleSuggestionClick("emoji");
+                }
+              }}
+            >
+              <BookMarked className="mr-2 h-4 w-4" />
+              <span>Books</span>
+            </div>
+          </div>
+        </div>
+        <div className="h-px bg-gray-200 mx-2" />
+        <div className="p-2">
+          <div className="px-2 py-1.5 text-xs font-semibold text-gray-600">
+            Settings
+          </div>
+          <div className="space-y-1">
+            <div
+              className="flex items-center p-2 rounded-md cursor-pointer hover:bg-gray-50"
+              role="button"
+              tabIndex={0}
+            >
+              <User className="mr-2 h-4 w-4" />
+              <span>Profile</span>
+              <kbd className="ml-auto text-xs text-gray-400">⌘P</kbd>
+            </div>
+            <div
+              className="flex items-center p-2 rounded-md cursor-pointer hover:bg-gray-50"
+              role="button"
+              tabIndex={0}
+            >
+              <Settings className="mr-2 h-4 w-4" />
+              <span>Settings</span>
+              <kbd className="ml-auto text-xs text-gray-400">⌘S</kbd>
             </div>
           </div>
         </div>
