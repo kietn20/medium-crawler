@@ -16,6 +16,9 @@ export const Collage = () => {
   const helpButtonRef = useRef(null);
   const setHelpButtonRef = useHelpModalStore((state) => state.setHelpButtonRef);
 
+  // Search Modal State Store
+  
+
   const mediaItems = useMediaStore((state) => state.mediaItems);
   const setMediaItem = useMediaStore((state) => state.setMediaItem);
 
@@ -32,6 +35,7 @@ export const Collage = () => {
         </span>
       </div>
       <HelpModal />
+      <SearchModal />
       <div className="mt-10 w-[822px] h-[614px] grid grid-cols-4 gap-x-[20px] gap-y-[30px] items-center place-items-center place-content-center">
         {mediaItems.map((mediaItem, index) => (
           <Slot

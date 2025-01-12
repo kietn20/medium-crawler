@@ -12,7 +12,7 @@ export const Slot = () => {
 				borderStyle: "dashed",
 				borderWidth: "2px",
 			}}
-			onClick={() => setShowSearchModal(!showSearchModal)}
+			onClick={() => {!showSearchModal && setShowSearchModal(true)}}
 		>
 			<div className="mb-10">+</div>
 		</div>
