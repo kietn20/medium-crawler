@@ -6,6 +6,7 @@ import { useMediaStore } from "../store/mediaStore";
 import { useHelpModalStore } from "../store/helpModalStore";
 import { HelpModal } from "./HelpModal";
 import { SearchModal } from "./SearchModal";
+import { EditModal } from "./EditModal";
 
 export const Collage = () => {
   // Help Modal State Store
@@ -36,6 +37,7 @@ export const Collage = () => {
       </div>
       <HelpModal />
       <SearchModal />
+      <EditModal />
       <div className="mt-10 w-[822px] h-[614px] grid grid-cols-4 gap-x-[20px] gap-y-[30px] items-center place-items-center place-content-center">
         {mediaItems.map((mediaItem, index) => (
           <Slot

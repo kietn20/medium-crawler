@@ -48,7 +48,7 @@ export const SearchModal = () => {
   return (
     <div
       ref={modalRef}
-      className={`absolute top-80 w-[700px] flex-col justify-center z-10 transition-opacity duration-300 shadow-md md:min-w-[450px] bg-white rounded-xl ${
+      className={`absolute top-80 w-[800px] flex-col justify-center z-10 transition-opacity duration-300 shadow-md md:min-w-[450px] bg-white rounded-xl font-heading ${
         showSearchModal
           ? "opacity-100 pointer-events-auto"
           : "opacity-0 pointer-events-none"
