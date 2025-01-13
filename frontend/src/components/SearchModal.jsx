@@ -58,7 +58,7 @@ export const SearchModal = () => {
         <input
           type="text"
           className="w-full px-4 py-3 text-sm outline-none border-b rounded-xl"
-          placeholder="Type a command or search..."
+          placeholder="Type in the title of media to search"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
@@ -160,7 +160,7 @@ export const SearchModal = () => {
           </div>
           <div className="space-y-1">
             <div
-              className="flex items-center p-2 rounded-md cursor-pointer hover:bg-gray-50"
+              className="flex items-center p-2 rounded-md cursor-pointer hover:bg-[#B1FA63]"
               role="button"
               tabIndex={0}
             >

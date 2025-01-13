@@ -17,7 +17,7 @@ export const Collage = () => {
   const setHelpButtonRef = useHelpModalStore((state) => state.setHelpButtonRef);
 
   // Search Modal State Store
-  
+
 
   const mediaItems = useMediaStore((state) => state.mediaItems);
   const setMediaItem = useMediaStore((state) => state.setMediaItem);
@@ -40,10 +40,7 @@ export const Collage = () => {
         {mediaItems.map((mediaItem, index) => (
           <Slot
             key={index}
-            mediaItem={mediaItem}
-            setMediaItem={(newMediaItem) => {
-              setMediaItem(index, newMediaItem);
-            }}
+            index={index}
           />
         ))}
       </div>
