@@ -1,12 +1,18 @@
 import { useEffect, useRef } from "react";
 import { Slot } from "./Slot";
 import { useEditModalStore } from "../store/editStore";
+import { useMediaStore } from "../store/mediaStore";
 
 export const EditModal = () => {
 
   // Edit Modal State Store
   const showEditModal = useEditModalStore((state) => state.showEditModal);
   const setShowEditModal = useEditModalStore((state) => state.setShowEditModal);
+
+  // Media Item State Store
+  const currentEditIndex = useEditModalStore((state) => state.currentEditIndex);
+  const mediaItem = useMediaStore((state) => state.mediaItems[currentEditIndex]);
+
 
   const editModalRef = useRef(null);
 
@@ -60,6 +66,7 @@ export const EditModal = () => {
                     type="text"
                     placeholder="Parasite"
                     className="w-64 text-black"
+                    value={mediaItem?.title}
                   />
                 </div>
                 <div className="flex-col w-20">
@@ -90,6 +97,12 @@ export const EditModal = () => {
             </form>
           </div>
           <div className="flex justify-end gap-5 items-center h-10 p-1">
+            <button
+              className="w-32 bg-red-600 bg-opacity-50 hover:bg-opacity-100 duration-150 border rounded-[30px] p-2"
+              onClick={() => {setShowEditModal(false); setmed}}
+            >
+              Delete
+            </button>
             <button
               className="w-32 bg-red-600 bg-opacity-50 hover:bg-opacity-100 duration-150 border rounded-[30px] p-2"
               onClick={() => setShowEditModal(false)}

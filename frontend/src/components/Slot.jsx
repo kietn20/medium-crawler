@@ -13,6 +13,10 @@ export const Slot = ({ index }) => {
   // Edit Modal State Store
   const showEditModal = useEditModalStore((state) => state.showEditModal);
   const setShowEditModal = useEditModalStore((state) => state.setShowEditModal);
+  const setCurrentEditIndex = useEditModalStore(
+    (state) => state.setCurrentEditIndex
+  );
+
 
   // Media Item State Store
   const mediaItem = useMediaStore((state) => state.mediaItems[index]);
@@ -27,6 +31,7 @@ export const Slot = ({ index }) => {
       onClick={() => {
         if (mediaItem) {
           setShowEditModal(true);
+          setCurrentEditIndex(index);
         } else {
           setShowSearchModal(true);
         }
