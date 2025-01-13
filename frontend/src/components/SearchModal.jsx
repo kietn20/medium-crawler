@@ -2,8 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { useSearchModalStore } from "../store/searchModal";
 import {
   Film,
-  Settings,
-  User,
   BadgeJapaneseYen,
   Gamepad2,
   BookMarked,

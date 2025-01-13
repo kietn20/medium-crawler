@@ -21,6 +21,11 @@ export const EditModal = () => {
   const [description, setDescription] = useState("");
   const [imageUrl, setImageUrl] = useState("");
 
+  // Local state for validation errors
+  const [titleError, setTitleError] = useState("");
+  const [ratingError, setRatingError] = useState("");
+  const [imageUrlError, setImageUrlError] = useState("");
+
   const editModalRef = useRef(null);
 
   const handleClickOutside = (event) => {
@@ -51,16 +56,52 @@ export const EditModal = () => {
     }
   }, [mediaItem]);
 
+  // Check input validations
+  const validateTitle = (value) => {
+    if (!value) {
+      setTitleError("Title is required");
+      return false;
+    }
+    setTitleError("");
+    return true;
+  };
+
+  const validateRating = (value) => {
+    if (value && (isNaN(value) || value < 0 || value > 10)) {
+      setRatingError("Rating must be a number between 0 and 10");
+      return false;
+    }
+    setRatingError("");
+    return true;
+  };
+
+  const validateImageUrl = (value) => {
+    if (value && !/^https?:\/\/.+\.(jpg|jpeg|png|gif)$/.test(value)) {
+      setImageUrlError(
+        "Image URL must be a valid URL ending with .jpg, .jpeg, .png, or .gif"
+      );
+      return false;
+    }
+    setImageUrlError("");
+    return true;
+  };
+
   const handleSave = () => {
-    const updatedMediaItem = {
-      ...mediaItem,
-      title,
-      rating,
-      description,
-      imageUrl,
-    };
-    setMediaItem(currentEditIndex, updatedMediaItem);
-    setShowEditModal(false);
+    const isTitleValid = validateTitle(title);
+    const isRatingValid = validateRating(rating);
+    const isImageUrlValid = validateImageUrl(imageUrl);
+
+    if (isTitleValid && isRatingValid && isImageUrlValid) {
+      const updatedMediaItem = {
+        ...mediaItem,
+        title,
+        rating,
+        description,
+        imageUrl,
+      };
+      setMediaItem(currentEditIndex, updatedMediaItem);
+      setShowEditModal(false);
+    }
   };
 
   return (
