@@ -17,13 +17,12 @@ export const Slot = ({ index }) => {
     (state) => state.setCurrentEditIndex
   );
 
-
   // Media Item State Store
   const mediaItem = useMediaStore((state) => state.mediaItems[index]);
 
   return (
     <div
-      className="w-[165px] h-[280px] border border-[#B1FA63] rounded-[30px] flex items-center justify-center text-[#B1FA63] text-9xl font-heading opacity-35 cursor-pointer"
+      className={`w-[165px] h-[280px] border border-[#B1FA63] rounded-[30px] flex items-center justify-center text-[#B1FA63] text-9xl font-heading cursor-pointer opacity-35 hover:opacity-100 duration-300`}
       style={{
         borderStyle: "dashed",
         borderWidth: "2px",

@@ -3,6 +3,7 @@ import { Slot } from "./Slot";
 import { useEditModalStore } from "../store/editStore";
 import { useMediaStore } from "../store/mediaStore";
 import toast, { Toaster } from "react-hot-toast";
+import { motion, useAnimation } from "framer-motion";
 
 export const EditModal = () => {
   // Edit Modal State Store
@@ -23,10 +24,13 @@ export const EditModal = () => {
   const [imageUrl, setImageUrl] = useState("");
 
   const editModalRef = useRef(null);
+  const controls = useAnimation();
 
   const handleClickOutside = (event) => {
     if (editModalRef.current && !editModalRef.current.contains(event.target)) {
-      setShowEditModal(false);
+      if (validateTitle(title)) {
+        setShowEditModal(false);
+      }
     }
   };
 
@@ -44,7 +48,7 @@ export const EditModal = () => {
 
   useEffect(() => {
     if (mediaItem) {
-      setTitle(mediaItem.title || "");
+      setTitle(mediaItem.title);
       setRating(mediaItem.rating || "");
       setDescription(mediaItem.description || "");
       setImageUrl(mediaItem.imageUrl || "");
@@ -52,8 +56,14 @@ export const EditModal = () => {
   }, [mediaItem]);
 
   const validateTitle = (value) => {
+    console.log("validateTitle called with value:", value);
+    console.log("Current title state:", title);
     if (!value) {
       toast.error("Title is required");
+      controls.start({
+        x: [0, -10, 10, -10, 10, 0],
+        transition: { duration: 0.4 },
+      });
       return false;
     }
     return true;
@@ -62,6 +72,10 @@ export const EditModal = () => {
   const validateRating = (value) => {
     if (value && (isNaN(value) || value < 0 || value > 10)) {
       toast.error("Rating must be a number between 0 and 10");
+      controls.start({
+        x: [0, -10, 10, -10, 10, 0],
+        transition: { duration: 0.4 },
+      });
       setRating("");
       return false;
     }
@@ -73,6 +87,10 @@ export const EditModal = () => {
       toast.error(
         "Image URL must be a valid URL ending with .jpg, .jpeg, .png, or .gif"
       );
+      controls.start({
+        x: [0, -10, 10, -10, 10, 0],
+        transition: { duration: 0.4 },
+      });
       setImageUrl("");
       return false;
     }
@@ -98,15 +116,15 @@ export const EditModal = () => {
   };
 
   return (
-    <div
+    <motion.div
       ref={editModalRef}
-      className={`absolute top-72 w-[700px] h-[470px] bg-[B1FA63] bg-[#151518]  flex-col rounded-[30px] border-8 border-lime-900 justify-center z-10 transition-opacity duration-300 font-heading text-white ${
+      animate={controls}
+      className={`absolute top-72 w-[700px] h-[470px] bg-[B1FA63] bg-[#151518]  flex-col rounded-[30px] border-8 border-lime-900 justify-center z-20 transition-opacity duration-300 font-heading text-white ${
         showEditModal
           ? "opacity-100 pointer-events-auto"
           : "opacity-0 pointer-events-none"
       } `}
     >
-      <Toaster />
       <div className="flex justify-start items-center w-full h-16 bg-pink-200 bg-opacity-0 px-7 text-3xl">
         Edit Media
       </div>
@@ -196,6 +214,6 @@ export const EditModal = () => {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };

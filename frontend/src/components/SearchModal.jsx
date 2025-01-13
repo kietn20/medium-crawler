@@ -7,6 +7,8 @@ import {
   BookMarked,
   BadgePlus,
 } from "lucide-react";
+import { useEditModalStore } from "../store/editStore";
+import { useHelpModalStore } from "../store/helpModalStore";
 
 export const SearchModal = () => {
   // Search Modal State Store
@@ -15,6 +17,12 @@ export const SearchModal = () => {
     (state) => state.setShowSearchModal
   );
   const searchModalRef = useRef(null);
+
+  // Edit Modal State Store
+  const showEditModal = useEditModalStore((state) => state.showEditModal);
+
+  // Help Modal State Store
+  const showHelp = useHelpModalStore((state) => state.showHelp);
 
   // Local states
   const [selectedSuggestion, setSelectedSuggestion] =
@@ -26,7 +34,10 @@ export const SearchModal = () => {
   };
 
   const handleClickOutside = (event) => {
-    if (searchModalRef.current && !searchModalRef.current.contains(event.target)) {
+    if (
+      searchModalRef.current &&
+      !searchModalRef.current.contains(event.target)
+    ) {
       setShowSearchModal(false);
     }
   };
@@ -47,7 +58,7 @@ export const SearchModal = () => {
     <div
       ref={searchModalRef}
       className={`absolute top-80 w-[800px] flex-col justify-center z-10 transition-opacity duration-300 shadow-md md:min-w-[450px] bg-white rounded-xl font-heading ${
-        showSearchModal
+        (showSearchModal && !showEditModal && !showHelp)
           ? "opacity-100 pointer-events-auto"
           : "opacity-0 pointer-events-none"
       } `}

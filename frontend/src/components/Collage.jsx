@@ -7,6 +7,7 @@ import { useHelpModalStore } from "../store/helpModalStore";
 import { HelpModal } from "./HelpModal";
 import { SearchModal } from "./SearchModal";
 import { EditModal } from "./EditModal";
+import { Toaster } from "react-hot-toast";
 
 export const Collage = () => {
   // Help Modal State Store
@@ -19,7 +20,6 @@ export const Collage = () => {
 
   // Search Modal State Store
 
-
   const mediaItems = useMediaStore((state) => state.mediaItems);
   const setMediaItem = useMediaStore((state) => state.setMediaItem);
 
@@ -30,6 +30,9 @@ export const Collage = () => {
   return (
     <div className="relative flex flex-col items-center justify-start w-screen h-screen overflow-hidden bg-[#0A0B06]">
       <Navbar />
+      <div className="font-heading">
+        <Toaster />
+      </div>
       <div className="flex relative w-[1500px] h-32 bg-gray-0 items-center justify-center">
         <span className="font-heading text-9xl text-[#B1FA63]  absolute bottom-4">
           medium crawler
@@ -40,10 +43,7 @@ export const Collage = () => {
       <EditModal />
       <div className="mt-10 w-[822px] h-[614px] grid grid-cols-4 gap-x-[20px] gap-y-[30px] items-center place-items-center place-content-center">
         {mediaItems.map((mediaItem, index) => (
-          <Slot
-            key={index}
-            index={index}
-          />
+          <Slot key={index} index={index} />
         ))}
       </div>
       <div className="text-[#B1FA63] flex gap-2 absolute bottom-5 left-5">
