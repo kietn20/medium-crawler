@@ -22,7 +22,20 @@ export const EditModal = () => {
           </span>
         </div>
         <div className="flex-col justify-between items-center gap-5 w-[350px] h-96 bg-blue-300 bg-opacity-40">
-          <div className="flex-col p-1 bg-pink-400 bg-opacity-40 h-80"></div>
+          <div className="p-1 bg-pink-400 bg-opacity-40 h-80">
+            <form action="/" className="flex-col">
+              <div className="flex w-full bg-red-300 justify-between">
+                <div className="flex-col w-56">
+                  <label htmlFor="">Title*</label>
+                  <input type="text" placeholder="Parasite" className="w-56" />
+                </div>
+                <div className="flex-col w-20">
+                  <label htmlFor="">Rating</label>
+                  <input type="text" placeholder="8.5" className="w-14" />
+                </div>
+              </div>
+            </form>
+          </div>
           <div className="flex justify-end items-center h-10 bg-white bg-opacity-40 p-1">
             save
           </div>

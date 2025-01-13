@@ -40,3 +40,8 @@ body {
 ::-webkit-scrollbar-thumb:hover {
 	background: #555;
 }
+
+input {
+	border-radius: 10px;
+	padding: 0px 8px 0px 8px;
+}
