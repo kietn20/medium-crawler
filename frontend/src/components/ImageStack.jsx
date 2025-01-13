@@ -99,7 +99,7 @@ export default function ImageStack() {
                       ? 0
                       : -15
                     : (index - (displayMedia.length - 1) / 2) * 5,
-                  x: `calc(${getSpreadPosition(index)}% - 32px)`, // Subtracting half the width of the image
+                  // x: `calc(${getSpreadPosition(index)}% - 32px)`, // Subtracting half the width of the image
                   x: `${getSpreadPosition(index)}%`,
                   y: isSpread && hoveredIndex === index ? "-5%" : "0%",
                   zIndex: isSpread && hoveredIndex === index ? 10 : 1,

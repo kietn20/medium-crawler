@@ -16,7 +16,7 @@ export const SearchModal = () => {
   const setShowSearchModal = useSearchModalStore(
     (state) => state.setShowSearchModal
   );
-  const modalRef = useRef(null);
+  const searchModalRef = useRef(null);
 
   // Local states
   const [selectedSuggestion, setSelectedSuggestion] =
@@ -28,7 +28,7 @@ export const SearchModal = () => {
   };
 
   const handleClickOutside = (event) => {
-    if (modalRef.current && !modalRef.current.contains(event.target)) {
+    if (searchModalRef.current && !searchModalRef.current.contains(event.target)) {
       setShowSearchModal(false);
     }
   };
@@ -47,7 +47,7 @@ export const SearchModal = () => {
 
   return (
     <div
-      ref={modalRef}
+      ref={searchModalRef}
       className={`absolute top-80 w-[800px] flex-col justify-center z-10 transition-opacity duration-300 shadow-md md:min-w-[450px] bg-white rounded-xl font-heading ${
         showSearchModal
           ? "opacity-100 pointer-events-auto"

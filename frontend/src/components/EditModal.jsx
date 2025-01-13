@@ -1,13 +1,38 @@
+import { useEffect, useRef } from "react";
 import { Slot } from "./Slot";
+import { useEditModalStore } from "../store/editStore";
 
 export const EditModal = () => {
-  const modalRef = useRef(null);
-  
+
+  // Edit Modal State Store
+  const showEditModal = useEditModalStore((state) => state.showEditModal);
+  const setShowEditModal = useEditModalStore((state) => state.setShowEditModal);
+
+  const editModalRef = useRef(null);
+
+  const handleClickOutside = (event) => {
+    if (editModalRef.current && !editModalRef.current.contains(event.target)) {
+      setShowEditModal(false);
+    }
+  };
+
+  useEffect(() => {
+    if (showEditModal) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showEditModal]);
+
   return (
     <div
-      // ref={modalRef}
+      ref={editModalRef}
       className={`absolute top-72 w-[700px] h-[470px] bg-[B1FA63] bg-[#151518]  flex-col rounded-[30px] border-8 border-lime-900 justify-center z-10 transition-opacity duration-300 font-heading text-white ${
-        true
+        showEditModal
           ? "opacity-100 pointer-events-auto"
           : "opacity-0 pointer-events-none"
       } `}
@@ -65,7 +90,10 @@ export const EditModal = () => {
             </form>
           </div>
           <div className="flex justify-end gap-5 items-center h-10 p-1">
-            <button className="w-32 bg-red-600 bg-opacity-50 hover:bg-opacity-100 duration-150 border rounded-[30px] p-2">
+            <button
+              className="w-32 bg-red-600 bg-opacity-50 hover:bg-opacity-100 duration-150 border rounded-[30px] p-2"
+              onClick={() => setShowEditModal(false)}
+            >
               Cancel
             </button>
             <button className="w-32 bg-[#B1FA63] bg-opacity-50 hover:bg-opacity-100 duration-150 border rounded-[30px] p-2">

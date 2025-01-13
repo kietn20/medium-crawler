@@ -1,12 +1,18 @@
 import { useState } from "react";
 import { useSearchModalStore } from "../store/searchModal";
 import { useMediaStore } from "../store/mediaStore";
+import { useEditModalStore } from "../store/editStore";
 
-export const Slot = (index) => {
+export const Slot = ({ index }) => {
+  // Search Modal State Store
   const showSearchModal = useSearchModalStore((state) => state.showSearchModal);
   const setShowSearchModal = useSearchModalStore(
     (state) => state.setShowSearchModal
   );
+
+  // Edit Modal State Store
+  const showEditModal = useEditModalStore((state) => state.showEditModal);
+  const setShowEditModal = useEditModalStore((state) => state.setShowEditModal);
 
   // Media Item State Store
   const mediaItem = useMediaStore((state) => state.mediaItems[index]);
@@ -19,7 +25,12 @@ export const Slot = (index) => {
         borderWidth: "2px",
       }}
       onClick={() => {
-        !showSearchModal && !mediaItem && setShowSearchModal(true);
+        if (mediaItem) {
+          setShowEditModal(true);
+        } else {
+          setShowSearchModal(true);
+        }
+        console.log(mediaItem);
       }}
     >
       <div className="mb-10">+</div>
