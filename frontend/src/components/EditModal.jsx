@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Slot } from "./Slot";
 import { useEditModalStore } from "../store/editStore";
 import { useMediaStore } from "../store/mediaStore";
+import toast, { Toaster } from "react-hot-toast";
 
 export const EditModal = () => {
   // Edit Modal State Store
@@ -20,11 +21,6 @@ export const EditModal = () => {
   const [rating, setRating] = useState("");
   const [description, setDescription] = useState("");
   const [imageUrl, setImageUrl] = useState("");
-
-  // Local state for validation errors
-  const [titleError, setTitleError] = useState("");
-  const [ratingError, setRatingError] = useState("");
-  const [imageUrlError, setImageUrlError] = useState("");
 
   const editModalRef = useRef(null);
 
@@ -46,7 +42,6 @@ export const EditModal = () => {
     };
   }, [showEditModal]);
 
-  // Set input values to media item values
   useEffect(() => {
     if (mediaItem) {
       setTitle(mediaItem.title || "");
@@ -56,33 +51,31 @@ export const EditModal = () => {
     }
   }, [mediaItem]);
 
-  // Check input validations
   const validateTitle = (value) => {
     if (!value) {
-      setTitleError("Title is required");
+      toast.error("Title is required");
       return false;
     }
-    setTitleError("");
     return true;
   };
 
   const validateRating = (value) => {
     if (value && (isNaN(value) || value < 0 || value > 10)) {
-      setRatingError("Rating must be a number between 0 and 10");
+      toast.error("Rating must be a number between 0 and 10");
+      setRating("");
       return false;
     }
-    setRatingError("");
     return true;
   };
 
   const validateImageUrl = (value) => {
     if (value && !/^https?:\/\/.+\.(jpg|jpeg|png|gif)$/.test(value)) {
-      setImageUrlError(
+      toast.error(
         "Image URL must be a valid URL ending with .jpg, .jpeg, .png, or .gif"
       );
+      setImageUrl("");
       return false;
     }
-    setImageUrlError("");
     return true;
   };
 
@@ -113,6 +106,7 @@ export const EditModal = () => {
           : "opacity-0 pointer-events-none"
       } `}
     >
+      <Toaster />
       <div className="flex justify-start items-center w-full h-16 bg-pink-200 bg-opacity-0 px-7 text-3xl">
         Edit Media
       </div>
@@ -137,10 +131,8 @@ export const EditModal = () => {
                     placeholder="Parasite"
                     className="w-64 text-black"
                     value={title}
-                    onChange={(e) => {
-                      setTitle(e.target.value);
-                      validateTitle(e.target.value);
-                    }}
+                    onChange={(e) => setTitle(e.target.value)}
+                    onBlur={(e) => validateTitle(e.target.value)}
                   />
                 </div>
                 <div className="flex-col w-20">
@@ -152,10 +144,8 @@ export const EditModal = () => {
                     placeholder="8.5"
                     className="w-20"
                     value={rating}
-                    onChange={(e) => {
-                      setRating(e.target.value);
-                      validateRating(e.target.value);
-                    }}
+                    onChange={(e) => setRating(e.target.value)}
+                    onBlur={(e) => validateRating(e.target.value)}
                   />
                 </div>
               </div>
@@ -179,20 +169,15 @@ export const EditModal = () => {
                 className="w-full"
                 placeholder="https://www.imdb.com/title/tt6751668/"
                 value={imageUrl}
-                onChange={(e) => {
-                  setImageUrl(e.target.value);
-                  validateImageUrl(e.target.value);
-                }}
+                onChange={(e) => setImageUrl(e.target.value)}
+                onBlur={(e) => validateImageUrl(e.target.value)}
               />
             </form>
           </div>
           <div className="flex justify-end gap-5 items-center h-10 p-1">
             <button
               className="w-32 bg-red-600 bg-opacity-50 hover:bg-opacity-100 duration-150 border rounded-[30px] p-2"
-              onClick={() => {
-                setShowEditModal(false);
-                setMediaItem(currentEditIndex, null);
-              }}
+              onClick={() => setShowEditModal(false)}
             >
               Delete
             </button>
