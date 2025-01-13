@@ -47,7 +47,6 @@ export const Collage = () => {
         ))}
       </div>
       <div className="text-[#B1FA63] flex gap-2 absolute bottom-5 left-5">
-        {/* Instruction Modal */}
         <div
           ref={helpButtonRef}
           className="font-heading flex justify-center items-center text-3xl rounded-full bg-[#142120] w-[50px] h-[50px] opacity-50 hover:opacity-100 duration-200"
