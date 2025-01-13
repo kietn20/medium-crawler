@@ -1,18 +1,25 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Slot } from "./Slot";
 import { useEditModalStore } from "../store/editStore";
 import { useMediaStore } from "../store/mediaStore";
 
 export const EditModal = () => {
-
   // Edit Modal State Store
   const showEditModal = useEditModalStore((state) => state.showEditModal);
   const setShowEditModal = useEditModalStore((state) => state.setShowEditModal);
 
   // Media Item State Store
   const currentEditIndex = useEditModalStore((state) => state.currentEditIndex);
-  const mediaItem = useMediaStore((state) => state.mediaItems[currentEditIndex]);
+  const mediaItem = useMediaStore(
+    (state) => state.mediaItems[currentEditIndex]
+  );
+  const setMediaItem = useMediaStore((state) => state.setMediaItem);
 
+  // Local state for input values
+  const [title, setTitle] = useState("");
+  const [rating, setRating] = useState("");
+  const [description, setDescription] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
 
   const editModalRef = useRef(null);
 
@@ -33,6 +40,28 @@ export const EditModal = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [showEditModal]);
+
+  // Set input values to media item values
+  useEffect(() => {
+    if (mediaItem) {
+      setTitle(mediaItem.title || "");
+      setRating(mediaItem.rating || "");
+      setDescription(mediaItem.description || "");
+      setImageUrl(mediaItem.imageUrl || "");
+    }
+  }, [mediaItem]);
+
+  const handleSave = () => {
+    const updatedMediaItem = {
+      ...mediaItem,
+      title,
+      rating,
+      description,
+      imageUrl,
+    };
+    setMediaItem(currentEditIndex, updatedMediaItem);
+    setShowEditModal(false);
+  };
 
   return (
     <div
@@ -66,14 +95,21 @@ export const EditModal = () => {
                     type="text"
                     placeholder="Parasite"
                     className="w-64 text-black"
-                    value={mediaItem?.title}
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
                   />
                 </div>
                 <div className="flex-col w-20">
                   <label htmlFor="" className="p-1">
                     Rating
                   </label>
-                  <input type="text" placeholder="8.5" className="w-20" />
+                  <input
+                    type="text"
+                    placeholder="8.5"
+                    className="w-20"
+                    value={rating}
+                    onChange={(e) => setRating(e.target.value)}
+                  />
                 </div>
               </div>
 
@@ -85,6 +121,8 @@ export const EditModal = () => {
                 id=""
                 placeholder="Enter description here..."
                 className="w-full h-28"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
               ></textarea>
               <label htmlFor="" className="p-1">
                 Web Image URL
@@ -93,13 +131,18 @@ export const EditModal = () => {
                 type="text"
                 className="w-full"
                 placeholder="https://www.imdb.com/title/tt6751668/"
+                value={imageUrl}
+                onChange={(e) => setImageUrl(e.target.value)}
               />
             </form>
           </div>
           <div className="flex justify-end gap-5 items-center h-10 p-1">
             <button
               className="w-32 bg-red-600 bg-opacity-50 hover:bg-opacity-100 duration-150 border rounded-[30px] p-2"
-              onClick={() => {setShowEditModal(false); setmed}}
+              onClick={() => {
+                setShowEditModal(false);
+                setMediaItem(currentEditIndex, null);
+              }}
             >
               Delete
             </button>
@@ -109,7 +152,10 @@ export const EditModal = () => {
             >
               Cancel
             </button>
-            <button className="w-32 bg-[#B1FA63] bg-opacity-50 hover:bg-opacity-100 duration-150 border rounded-[30px] p-2">
+            <button
+              className="w-32 bg-[#B1FA63] bg-opacity-50 hover:bg-opacity-100 duration-150 border rounded-[30px] p-2"
+              onClick={handleSave}
+            >
               Save
             </button>
           </div>
