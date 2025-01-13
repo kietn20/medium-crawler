@@ -41,7 +41,8 @@ body {
 	background: #555;
 }
 
-input {
+input, textarea {
 	border-radius: 10px;
 	padding: 0px 8px 0px 8px;
+	color: black;
 }
