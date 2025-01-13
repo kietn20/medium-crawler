@@ -137,7 +137,10 @@ export const EditModal = () => {
                     placeholder="Parasite"
                     className="w-64 text-black"
                     value={title}
-                    onChange={(e) => setTitle(e.target.value)}
+                    onChange={(e) => {
+                      setTitle(e.target.value);
+                      validateTitle(e.target.value);
+                    }}
                   />
                 </div>
                 <div className="flex-col w-20">
@@ -149,7 +152,10 @@ export const EditModal = () => {
                     placeholder="8.5"
                     className="w-20"
                     value={rating}
-                    onChange={(e) => setRating(e.target.value)}
+                    onChange={(e) => {
+                      setRating(e.target.value);
+                      validateRating(e.target.value);
+                    }}
                   />
                 </div>
               </div>
@@ -173,7 +179,10 @@ export const EditModal = () => {
                 className="w-full"
                 placeholder="https://www.imdb.com/title/tt6751668/"
                 value={imageUrl}
-                onChange={(e) => setImageUrl(e.target.value)}
+                onChange={(e) => {
+                  setImageUrl(e.target.value);
+                  validateImageUrl(e.target.value);
+                }}
               />
             </form>
           </div>
