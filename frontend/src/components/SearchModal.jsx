@@ -7,9 +7,11 @@ import {
   BookMarked,
   BadgePlus,
   Search,
+  ListRestart,
 } from "lucide-react";
 import { useMediaStore } from "../store/mediaStore";
 import axios from "axios";
+import { Tooltip } from "./UI/Tooltip";
 
 export const SearchModal = () => {
   // Search Modal State Store
@@ -31,10 +33,13 @@ export const SearchModal = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
+  // Refs
+  const searchResultRef = useRef(null);
   const searchBarRef = useRef(null);
 
   const handleSuggestionClick = (option) => {
     setSelectedSuggestion(option);
+    setSearchResults([]);
   };
 
   const handleSearch = async () => {
@@ -55,6 +60,7 @@ export const SearchModal = () => {
         type: type,
       });
       setSearchResults(response.data);
+      scrollToTopSearchResults();
     } catch (error) {
       console.error("Error searching media:", error);
     }
@@ -79,6 +85,7 @@ export const SearchModal = () => {
           type: type,
         });
         setSearchResults(response.data);
+        scrollToTopSearchResults();
       } catch (error) {
         console.error("Error searching media:", error);
       }
@@ -97,20 +104,37 @@ export const SearchModal = () => {
     setSearchResults([]);
   };
 
+  const resetSearch = () => {
+    setSearchQuery("");
+    setSearchResults([]);
+    setSelectedSuggestion("Movie & TV Show");
+  };
+
   useEffect(() => {
     if (showSearchModal && searchBarRef.current) {
       setTimeout(() => {
         searchBarRef.current.focus();
+        setSelectedSuggestion("Movie & TV Show");
       }, 50);
     }
   }, [showSearchModal]);
+
+  const scrollToTopSearchResults = () => {
+    searchResultRef.current?.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
 
   return (
     <>
       {showSearchModal && (
         <div
           className="fixed inset-0 bg-black bg-opacity-50 z-10"
-          onClick={() => setShowSearchModal(false)}
+          onClick={() => {
+            setShowSearchModal(false);
+            resetSearch();
+          }}
         ></div>
       )}
       <div
@@ -125,20 +149,30 @@ export const SearchModal = () => {
           <input
             ref={searchBarRef}
             type="text"
-            className="w-full px-4 py-3 text-base outline-none border-b rounded-xl"
+            className="w-full px-4 py-3 text-base outline-none border-b border-r rounded-xl"
             placeholder="Type in the title of media to search"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             onKeyDown={handleKeyDown}
           />
-          <button
-            className="p-2 m-1 rounded-2xl hover:bg-[#B1FA63] duration-200"
-            onClick={handleSearch}
-          >
-            <Search className="w-6 h-6" />
-          </button>
+          <Tooltip text="Reset Search">
+            <button
+              className="p-3 m-1 rounded-xl hover:bg-[#B1FA63] duration-200 border-b border-r border-l"
+              onClick={resetSearch}
+            >
+              <ListRestart className="w-6 h-6" />
+            </button>
+          </Tooltip>
+          <Tooltip text="Search">
+            <button
+              className="p-3 mr-1 rounded-2xl hover:bg-[#B1FA63] duration-200 border-b border-r border-l"
+              onClick={handleSearch}
+            >
+              <Search className="w-6 h-6" />
+            </button>
+          </Tooltip>
         </div>
-        <div className="max-h-[300px] overflow-y-auto">
+        <div ref={searchResultRef} className="max-h-[350px] overflow-y-auto">
           {searchResults.map((media) => (
             <div
               key={media.title + media.releaseDate}
@@ -157,7 +191,7 @@ export const SearchModal = () => {
             </div>
           ))}
           <div className="p-2">
-            <div className="px-2 py-1.5 text-xs font-semibold text-gray-600">
+            <div className="px-2 pb-1.5 text-xs font-semibold text-gray-600">
               Choose a type of media
             </div>
             <div className="space-y-1">
@@ -177,7 +211,7 @@ export const SearchModal = () => {
                 }}
               >
                 <Film className="mr-2 h-4 w-4" />
-                <span>Movie & TV Show</span>
+                <span className="mb-1">Movie & TV Show</span>
               </div>
               <div
                 className={`flex items-center p-2 rounded-md cursor-pointer transition-colors ${
@@ -195,7 +229,7 @@ export const SearchModal = () => {
                 }}
               >
                 <BadgeJapaneseYen className="mr-2 h-4 w-4" />
-                <span>Anime & Manga</span>
+                <span className="mb-1">Anime & Manga</span>
               </div>
               <div
                 className={`flex items-center p-2 rounded-md cursor-pointer transition-colors ${
@@ -213,7 +247,7 @@ export const SearchModal = () => {
                 }}
               >
                 <Gamepad2 className="mr-2 h-4 w-4" />
-                <span>Video Game</span>
+                <span className="mb-1">Video Game</span>
               </div>
               <div
                 className={`flex items-center p-2 rounded-md cursor-pointer transition-colors ${
@@ -231,7 +265,7 @@ export const SearchModal = () => {
                 }}
               >
                 <BookMarked className="mr-2 h-4 w-4" />
-                <span>Books</span>
+                <span className="mb-1">Books</span>
               </div>
             </div>
           </div>
@@ -247,7 +281,7 @@ export const SearchModal = () => {
                 tabIndex={0}
               >
                 <BadgePlus className="mr-2 h-4 w-4" />
-                <span>Add Media</span>
+                <span className="mb-1">Add Media</span>
               </div>
             </div>
           </div>
