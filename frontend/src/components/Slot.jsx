@@ -37,7 +37,11 @@ export const Slot = ({ index }) => {
         console.log(mediaItem);
       }}
     >
-      <div className="mb-10">+</div>
+      {mediaItem ? (
+        <img src={mediaItem.imageUrl} alt="mediaItem" />
+      ) : (
+        <div className="mb-10">+</div>
+      )}
     </div>
   );
 };

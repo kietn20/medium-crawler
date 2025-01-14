@@ -6,9 +6,10 @@ import {
   Gamepad2,
   BookMarked,
   BadgePlus,
+  Search,
 } from "lucide-react";
-import { useEditModalStore } from "../store/editStore";
-import { useHelpModalStore } from "../store/helpModalStore";
+import { useMediaStore } from "../store/mediaStore";
+import axios from "axios";
 
 export const SearchModal = () => {
   // Search Modal State Store
@@ -18,41 +19,54 @@ export const SearchModal = () => {
   );
   const searchModalRef = useRef(null);
 
-  // Edit Modal State Store
-  const showEditModal = useEditModalStore((state) => state.showEditModal);
-
-  // Help Modal State Store
-  const showHelp = useHelpModalStore((state) => state.showHelp);
+  // Media Item State Store
+  const setMediaItem = useMediaStore((state) => state.setMediaItem);
+  const currentEditIndex = useSearchModalStore(
+    (state) => state.slotIndexClicked
+  );
 
   // Local states
   const [selectedSuggestion, setSelectedSuggestion] =
     useState("Movie & TV Show");
   const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
 
   const handleSuggestionClick = (option) => {
     setSelectedSuggestion(option);
   };
 
-  const handleClickOutside = (event) => {
-    if (
-      searchModalRef.current &&
-      !searchModalRef.current.contains(event.target)
-    ) {
-      setShowSearchModal(false);
+  const handleSearch = async () => {
+    if (searchQuery.trim() === "") return;
+
+    const typeMap = {
+      "Movie & TV Show": "movie",
+      "Anime & Manga": "anime",
+      "Video Game": "game",
+      Book: "book",
+    };
+
+    const type = typeMap[selectedSuggestion];
+
+    try {
+      const response = await axios.post("/api/media-search", {
+        query: searchQuery,
+        type: type,
+      });
+      setSearchResults(response.data);
+    } catch (error) {
+      console.error("Error searching media:", error);
     }
   };
 
-  useEffect(() => {
-    if (showSearchModal) {
-      document.addEventListener("mousedown", handleClickOutside);
-    } else {
-      document.removeEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [showSearchModal]);
+  const handleMediaSelect = (media) => {
+    setMediaItem(currentEditIndex, {
+      title: media.title,
+      imageUrl: media.posterPath,
+      description: media.description,
+      releaseDate: media.releaseDate,
+    });
+    setShowSearchModal(false);
+  };
 
   return (
     <>
@@ -70,7 +84,7 @@ export const SearchModal = () => {
             : "opacity-0 pointer-events-none"
         } `}
       >
-        <div className="relative rounded-xl">
+        <div className="relative rounded-xl flex justify-between items-center">
           <input
             type="text"
             className="w-full px-4 py-3 text-base outline-none border-b rounded-xl"
@@ -78,18 +92,31 @@ export const SearchModal = () => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
+          <button
+            className="p-2 m-1 rounded-2xl hover:bg-[#B1FA63] duration-200"
+            onClick={handleSearch}
+          >
+            <Search className="w-6 h-6" />
+          </button>
         </div>
         <div className="max-h-[300px] overflow-y-auto">
-          {searchQuery &&
-            ![
-              "Movie & TV Show",
-              "Anime & Manga",
-              "Video Game",
-              "Book",
-              "Add Media",
-            ].some((item) =>
-              item.toLowerCase().includes(searchQuery.toLowerCase())
-            ) && <p className="p-4 text-base text-gray-500">No results found.</p>}
+          {searchResults.map((media) => (
+            <div
+              key={media.id}
+              className="flex items-center p-2 cursor-pointer hover:bg-[#B1FA63] hover:bg-opacity-50"
+              onClick={() => handleMediaSelect(media)}
+            >
+              <img
+                src={media.posterPath}
+                alt={media.title}
+                className="w-12 h-16 mr-4"
+              />
+              <div>
+                <div className="font-bold">{media.title}</div>
+                <div className="text-sm text-gray-500">{media.releaseDate}</div>
+              </div>
+            </div>
+          ))}
           <div className="p-2">
             <div className="px-2 py-1.5 text-xs font-semibold text-gray-600">
               Choose a type of media
