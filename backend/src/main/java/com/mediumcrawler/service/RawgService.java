@@ -30,7 +30,7 @@ public class RawgService {
                         .path("/games")
                         .queryParam("key", apiKey)
                         .queryParam("search", query)
-                        .queryParam("page_size", 5)
+                        .queryParam("page_size", 10)
                         .build())
                 .retrieve()
                 .bodyToMono(JsonNode.class)
