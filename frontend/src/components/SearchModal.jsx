@@ -55,130 +55,138 @@ export const SearchModal = () => {
   }, [showSearchModal]);
 
   return (
-    <div
-      ref={searchModalRef}
-      className={`absolute top-80 w-[800px] flex-col justify-center z-10 transition-opacity duration-300 shadow-md md:min-w-[450px] bg-white rounded-xl font-heading ${
-        (showSearchModal && !showEditModal && !showHelp)
-          ? "opacity-100 pointer-events-auto"
-          : "opacity-0 pointer-events-none"
-      } `}
-    >
-      <div className="relative rounded-xl">
-        <input
-          type="text"
-          className="w-full px-4 py-3 text-sm outline-none border-b rounded-xl"
-          placeholder="Type in the title of media to search"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
-      </div>
-      <div className="max-h-[300px] overflow-y-auto">
-        {searchQuery &&
-          ![
-            "Movie & TV Show",
-            "Anime & Manga",
-            "Video Game",
-            "Book",
-            "Add Media",
-          ].some((item) =>
-            item.toLowerCase().includes(searchQuery.toLowerCase())
-          ) && <p className="p-4 text-sm text-gray-500">No results found.</p>}
-        <div className="p-2">
-          <div className="px-2 py-1.5 text-xs font-semibold text-gray-600">
-            Choose a type of media
+    <>
+      {showSearchModal && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 z-10"
+          onClick={() => setShowSearchModal(false)}
+        ></div>
+      )}
+      <div
+        ref={searchModalRef}
+        className={`fixed top-80 left-1/2 transform -translate-x-1/2 w-[800px] flex-col justify-center z-20 transition-opacity duration-300 shadow-md md:min-w-[450px] bg-white rounded-xl font-heading ${
+          showSearchModal
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
+        } `}
+      >
+        <div className="relative rounded-xl">
+          <input
+            type="text"
+            className="w-full px-4 py-3 text-sm outline-none border-b rounded-xl"
+            placeholder="Type in the title of media to search"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
+        <div className="max-h-[300px] overflow-y-auto">
+          {searchQuery &&
+            ![
+              "Movie & TV Show",
+              "Anime & Manga",
+              "Video Game",
+              "Book",
+              "Add Media",
+            ].some((item) =>
+              item.toLowerCase().includes(searchQuery.toLowerCase())
+            ) && <p className="p-4 text-sm text-gray-500">No results found.</p>}
+          <div className="p-2">
+            <div className="px-2 py-1.5 text-xs font-semibold text-gray-600">
+              Choose a type of media
+            </div>
+            <div className="space-y-1">
+              <div
+                className={`flex items-center p-2 rounded-md cursor-pointer transition-colors ${
+                  selectedSuggestion === "Movie & TV Show"
+                    ? "bg-[#B1FA63]"
+                    : "hover:bg-[#B1FA63] hover:bg-opacity-50"
+                }`}
+                onClick={() => handleSuggestionClick("Movie & TV Show")}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    handleSuggestionClick("Movie & TV Show");
+                  }
+                }}
+              >
+                <Film className="mr-2 h-4 w-4" />
+                <span>Movie & TV Show</span>
+              </div>
+              <div
+                className={`flex items-center p-2 rounded-md cursor-pointer transition-colors ${
+                  selectedSuggestion === "Anime & Manga"
+                    ? "bg-[#B1FA63]"
+                    : "hover:bg-[#B1FA63] hover:bg-opacity-50"
+                }`}
+                onClick={() => handleSuggestionClick("Anime & Manga")}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    handleSuggestionClick("Anime & Manga");
+                  }
+                }}
+              >
+                <BadgeJapaneseYen className="mr-2 h-4 w-4" />
+                <span>Anime & Manga</span>
+              </div>
+              <div
+                className={`flex items-center p-2 rounded-md cursor-pointer transition-colors ${
+                  selectedSuggestion === "Video Game"
+                    ? "bg-[#B1FA63]"
+                    : "hover:bg-[#B1FA63] hover:bg-opacity-50"
+                }`}
+                onClick={() => handleSuggestionClick("Video Game")}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    handleSuggestionClick("Video Game");
+                  }
+                }}
+              >
+                <Gamepad2 className="mr-2 h-4 w-4" />
+                <span>Video Game</span>
+              </div>
+              <div
+                className={`flex items-center p-2 rounded-md cursor-pointer transition-colors ${
+                  selectedSuggestion === "Book"
+                    ? "bg-[#B1FA63]"
+                    : "hover:bg-[#B1FA63] hover:bg-opacity-50"
+                }`}
+                onClick={() => handleSuggestionClick("Book")}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    handleSuggestionClick("Book");
+                  }
+                }}
+              >
+                <BookMarked className="mr-2 h-4 w-4" />
+                <span>Books</span>
+              </div>
+            </div>
           </div>
-          <div className="space-y-1">
-            <div
-              className={`flex items-center p-2 rounded-md cursor-pointer transition-colors ${
-                selectedSuggestion === "Movie & TV Show"
-                  ? "bg-[#B1FA63]"
-                  : "hover:bg-[#B1FA63] hover:bg-opacity-50"
-              }`}
-              onClick={() => handleSuggestionClick("Movie & TV Show")}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  handleSuggestionClick("Movie & TV Show");
-                }
-              }}
-            >
-              <Film className="mr-2 h-4 w-4" />
-              <span>Movie & TV Show</span>
+          <div className="h-px bg-gray-200 mx-2" />
+          <div className="p-2">
+            <div className="px-2 py-1.5 text-xs font-semibold text-gray-600">
+              Manually add media item
             </div>
-            <div
-              className={`flex items-center p-2 rounded-md cursor-pointer transition-colors ${
-                selectedSuggestion === "Anime & Manga"
-                  ? "bg-[#B1FA63]"
-                  : "hover:bg-[#B1FA63] hover:bg-opacity-50"
-              }`}
-              onClick={() => handleSuggestionClick("Anime & Manga")}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  handleSuggestionClick("Anime & Manga");
-                }
-              }}
-            >
-              <BadgeJapaneseYen className="mr-2 h-4 w-4" />
-              <span>Anime & Manga</span>
-            </div>
-            <div
-              className={`flex items-center p-2 rounded-md cursor-pointer transition-colors ${
-                selectedSuggestion === "Video Game"
-                  ? "bg-[#B1FA63]"
-                  : "hover:bg-[#B1FA63] hover:bg-opacity-50"
-              }`}
-              onClick={() => handleSuggestionClick("Video Game")}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  handleSuggestionClick("Video Game");
-                }
-              }}
-            >
-              <Gamepad2 className="mr-2 h-4 w-4" />
-              <span>Video Game</span>
-            </div>
-            <div
-              className={`flex items-center p-2 rounded-md cursor-pointer transition-colors ${
-                selectedSuggestion === "Book"
-                  ? "bg-[#B1FA63]"
-                  : "hover:bg-[#B1FA63] hover:bg-opacity-50"
-              }`}
-              onClick={() => handleSuggestionClick("Book")}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  handleSuggestionClick("Book");
-                }
-              }}
-            >
-              <BookMarked className="mr-2 h-4 w-4" />
-              <span>Books</span>
+            <div className="space-y-1">
+              <div
+                className="flex items-center p-2 rounded-md cursor-pointer hover:bg-[#B1FA63]"
+                role="button"
+                tabIndex={0}
+              >
+                <BadgePlus className="mr-2 h-4 w-4" />
+                <span>Add Media</span>
+              </div>
             </div>
           </div>
         </div>
-        <div className="h-px bg-gray-200 mx-2" />
-        <div className="p-2">
-          <div className="px-2 py-1.5 text-xs font-semibold text-gray-600">
-            Manually add media item
-          </div>
-          <div className="space-y-1">
-            <div
-              className="flex items-center p-2 rounded-md cursor-pointer hover:bg-[#B1FA63]"
-              role="button"
-              tabIndex={0}
-            >
-              <BadgePlus className="mr-2 h-4 w-4" />
-              <span>Add Media</span>
-            </div>
-          </div>
-        </div>
       </div>
-    </div>
+    </>
   );
 };
