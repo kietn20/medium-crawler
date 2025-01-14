@@ -2,6 +2,9 @@ import { useState } from "react";
 import { useSearchModalStore } from "../store/searchModal";
 import { useMediaStore } from "../store/mediaStore";
 import { useEditModalStore } from "../store/editStore";
+import { useDrag, useDrop } from "react-dnd";
+
+const ItemType = "SLOT";
 
 export const Slot = ({ index }) => {
   // Search Modal State Store
@@ -20,14 +23,37 @@ export const Slot = ({ index }) => {
 
   // Media Item State Store
   const mediaItem = useMediaStore((state) => state.mediaItems[index]);
+  const swapMediaItems = useMediaStore((state) => state.swapMediaItems);
+
+  const [{ isDragging }, drag] = useDrag({
+    type: ItemType,
+    item: { index },
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
+  });
+
+  const [, drop] = useDrop({
+    accept: ItemType,
+    hover: (draggedItem) => {
+      if (draggedItem.index !== index) {
+        swapMediaItems(draggedItem.index, index);
+        draggedItem.index = index;
+      }
+    },
+  });
 
   return (
     <div
+      ref={(node) => drag(drop(node))}
       className={`w-[165px] h-[280px] rounded-[30px] flex items-center justify-center text-[#B1FA63] text-9xl font-heading cursor-pointer hover:opacity-100 duration-300 overflow-hidden  ${
         mediaItem
           ? "opacity-100 border-transparent"
-          : "opacity-35 border-[#B1FA63 border-2 border-dashed"
+          : "opacity-35 border-[#B1FA63] border-2 border-dashed"
       }`}
+      style={{
+        opacity: isDragging ? 0.1 : 1,
+      }}
       onClick={() => {
         if (mediaItem) {
           setShowEditModal(true);
