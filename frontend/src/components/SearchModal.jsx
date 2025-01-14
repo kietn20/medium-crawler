@@ -31,6 +31,8 @@ export const SearchModal = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
+  const searchBarRef = useRef(null);
+
   const handleSuggestionClick = (option) => {
     setSelectedSuggestion(option);
   };
@@ -95,6 +97,14 @@ export const SearchModal = () => {
     setSearchResults([]);
   };
 
+  useEffect(() => {
+    if (showSearchModal && searchBarRef.current) {
+      setTimeout(() => {
+        searchBarRef.current.focus();
+      }, 50);
+    }
+  }, [showSearchModal]);
+
   return (
     <>
       {showSearchModal && (
@@ -113,6 +123,7 @@ export const SearchModal = () => {
       >
         <div className="relative rounded-xl flex justify-between items-center">
           <input
+            ref={searchBarRef}
             type="text"
             className="w-full px-4 py-3 text-base outline-none border-b rounded-xl"
             placeholder="Type in the title of media to search"
@@ -130,7 +141,7 @@ export const SearchModal = () => {
         <div className="max-h-[300px] overflow-y-auto">
           {searchResults.map((media) => (
             <div
-              key={media.id}
+              key={media.title + media.releaseDate}
               className="flex items-center p-2 cursor-pointer hover:bg-[#B1FA63] hover:bg-opacity-50"
               onClick={() => handleMediaSelect(media)}
             >
@@ -142,7 +153,6 @@ export const SearchModal = () => {
               <div>
                 <div className="font-bold">{media.title}</div>
                 <div className="text-sm text-gray-500">{media.releaseDate}</div>
-                <div className="text-sm text-gray-500">{media.id}</div>
               </div>
             </div>
           ))}
