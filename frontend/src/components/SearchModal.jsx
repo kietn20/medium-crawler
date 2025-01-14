@@ -58,6 +58,31 @@ export const SearchModal = () => {
     }
   };
 
+  const handleKeyDown = async (event) => {
+    if (event.key === "Enter") {
+      if (searchQuery.trim() === "") return;
+
+      const typeMap = {
+        "Movie & TV Show": "movie",
+        "Anime & Manga": "anime",
+        "Video Game": "game",
+        Book: "book",
+      };
+
+      const type = typeMap[selectedSuggestion];
+
+      try {
+        const response = await axios.post("/api/media-search", {
+          query: searchQuery,
+          type: type,
+        });
+        setSearchResults(response.data);
+      } catch (error) {
+        console.error("Error searching media:", error);
+      }
+    }
+  };
+
   const handleMediaSelect = (media) => {
     setMediaItem(currentEditIndex, {
       title: media.title,
@@ -66,6 +91,8 @@ export const SearchModal = () => {
       releaseDate: media.releaseDate,
     });
     setShowSearchModal(false);
+    setSearchQuery("");
+    setSearchResults([]);
   };
 
   return (
@@ -91,6 +118,7 @@ export const SearchModal = () => {
             placeholder="Type in the title of media to search"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
+            onKeyDown={handleKeyDown}
           />
           <button
             className="p-2 m-1 rounded-2xl hover:bg-[#B1FA63] duration-200"
@@ -114,6 +142,7 @@ export const SearchModal = () => {
               <div>
                 <div className="font-bold">{media.title}</div>
                 <div className="text-sm text-gray-500">{media.releaseDate}</div>
+                <div className="text-sm text-gray-500">{media.id}</div>
               </div>
             </div>
           ))}
