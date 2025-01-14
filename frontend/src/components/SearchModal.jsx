@@ -10,6 +10,7 @@ import {
   ListRestart,
 } from "lucide-react";
 import { useMediaStore } from "../store/mediaStore";
+import { useEditModalStore } from "../store/editStore";
 import axios from "axios";
 import { Tooltip } from "./UI/Tooltip";
 
@@ -26,6 +27,9 @@ export const SearchModal = () => {
   const currentEditIndex = useSearchModalStore(
     (state) => state.slotIndexClicked
   );
+
+  // Edit Modal State Store
+  const setShowEditModal = useEditModalStore((state) => state.setShowEditModal);
 
   // Local states
   const [selectedSuggestion, setSelectedSuggestion] =
@@ -100,8 +104,7 @@ export const SearchModal = () => {
       releaseDate: media.releaseDate,
     });
     setShowSearchModal(false);
-    setSearchQuery("");
-    setSearchResults([]);
+    resetSearch();
   };
 
   const resetSearch = () => {
@@ -279,6 +282,17 @@ export const SearchModal = () => {
                 className="flex items-center p-2 rounded-md cursor-pointer hover:bg-[#B1FA63]"
                 role="button"
                 tabIndex={0}
+                onClick={() => {
+                  setMediaItem(currentEditIndex, {
+                    title: "Temporarily Name",
+                    imageUrl: "",
+                    description: "",
+                    releaseDate: "",
+                  });
+                  setShowSearchModal(false);
+                  resetSearch();
+                  setShowEditModal(true);
+                }}
               >
                 <BadgePlus className="mr-2 h-4 w-4" />
                 <span className="mb-1">Add Media</span>
