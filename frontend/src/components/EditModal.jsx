@@ -100,6 +100,10 @@ export const EditModal = () => {
       };
       setMediaItem(currentEditIndex, updatedMediaItem);
       setShowEditModal(false);
+      setTitle("");
+      setRating("");
+      setDescription("");
+      setImageUrl("");
     }
   };
 
@@ -180,7 +184,7 @@ export const EditModal = () => {
                     </label>
                     <input
                       type="text"
-                      placeholder="8.5"
+                      placeholder="0.0"
                       className="w-20"
                       value={rating}
                       onChange={(e) => setRating(e.target.value)}
@@ -215,7 +219,7 @@ export const EditModal = () => {
             </div>
             <div className="flex justify-end gap-5 items-center h-10 p-1">
               <button
-                className="w-32 bg-red-600 bg-opacity-50 hover:bg-opacity-100 duration-150 border rounded-[30px] p-2"
+                className="w-32 bg-red-600 bg-opacity-50 hover:bg-opacity-100 duration-150 border rounded-[30px] p-2 hover:text-black"
                 onClick={() => {
                   setShowEditModal(false);
                   setMediaItem(currentEditIndex, null);
@@ -223,14 +227,8 @@ export const EditModal = () => {
               >
                 Delete
               </button>
-              {/* <button
-                className="w-32 bg-red-600 bg-opacity-50 hover:bg-opacity-100 duration-150 border rounded-[30px] p-2"
-                onClick={() => setShowEditModal(false)}
-              >
-                Cancel
-              </button> */}
               <button
-                className="w-32 bg-[#B1FA63] bg-opacity-50 hover:bg-opacity-100 duration-150 border rounded-[30px] p-2"
+                className="w-32 bg-[#B1FA63] bg-opacity-50 hover:bg-opacity-100 duration-300 border rounded-[30px] p-2 hover:text-black"
                 onClick={handleSave}
               >
                 Save
