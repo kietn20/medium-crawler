@@ -34,8 +34,9 @@ const displayMedia = [
     url: "https://store.steampowered.com/app/2358720/Black_Myth_Wukong/",
   },
   {
-    image: "src/assets/media7.png",
-    url: "https://letterboxd.com/film/godzilla-minus-one/",
+    image:
+      "https://a.ltrbxd.com/resized/sm/upload/8g/5p/p4/6b/8YWirGQidtZeSEmhqvQM5FrI6N1-0-2000-0-3000-crop.jpg?v=10e3695a0f",
+    url: "https://letterboxd.com/film/shin-godzilla-orthochromatic/",
   },
 ];
 
@@ -78,7 +79,7 @@ export default function ImageStack() {
   };
 
   return (
-    <div className="relative w-screen h-screen overflow-hidden">
+    <div className="relative w-screen h-screen overflow-hidden hover:cursor-pointer">
       {!loading && (
         <div className="absolute inset-0 flex items-center justify-center">
           <AnimatePresence>
