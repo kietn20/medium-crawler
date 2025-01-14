@@ -30,7 +30,7 @@ export const Collage = () => {
   return (
     <div className="relative flex flex-col items-center justify-start w-screen h-screen overflow-hidden bg-[#0A0B06]">
       <Navbar />
-      <div className="font-heading">
+      <div className="font-heading z-20">
         <Toaster />
       </div>
       <div className="flex relative w-[1500px] h-32 bg-gray-0 items-center justify-center">
