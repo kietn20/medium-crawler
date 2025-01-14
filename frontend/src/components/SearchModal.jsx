@@ -73,7 +73,7 @@ export const SearchModal = () => {
         <div className="relative rounded-xl">
           <input
             type="text"
-            className="w-full px-4 py-3 text-sm outline-none border-b rounded-xl"
+            className="w-full px-4 py-3 text-base outline-none border-b rounded-xl"
             placeholder="Type in the title of media to search"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -89,7 +89,7 @@ export const SearchModal = () => {
               "Add Media",
             ].some((item) =>
               item.toLowerCase().includes(searchQuery.toLowerCase())
-            ) && <p className="p-4 text-sm text-gray-500">No results found.</p>}
+            ) && <p className="p-4 text-base text-gray-500">No results found.</p>}
           <div className="p-2">
             <div className="px-2 py-1.5 text-xs font-semibold text-gray-600">
               Choose a type of media
