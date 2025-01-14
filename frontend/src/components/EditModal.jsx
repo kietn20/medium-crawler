@@ -81,6 +81,7 @@ export const EditModal = () => {
       setImageUrl("");
       return false;
     }
+    setImageUrl(value);
     return true;
   };
 
@@ -126,11 +127,36 @@ export const EditModal = () => {
         </div>
         <div className="flex px-7 justify-between">
           <div className="w-[250px] h-96 bg-orange-400 bg-opacity-0 flex justify-around items-center flex-col text-[14px]">
-            <Slot />
-            <span className="">
-              Drag & Drop an image from the web (e.g. Google Images) or paste
-              image link into web Web Image URL section
-            </span>
+            <div
+              className={`w-[165px] h-[280px] rounded-[30px] flex items-center justify-center text-[#B1FA63] text-9xl font-heading cursor-pointer duration-300 overflow-hidden border-white border ${
+                mediaItem ?? "border-transparent"
+              }`}
+              onClick={() =>
+                toast(
+                  'Drag & Drop an alternative image from the web (e.g. Google Images) into slot or paste image link into "Web Image URL" section. \n\n(.jpg, .jpeg, .png, .gif ONLY)\n\nHINT:\nRight-click on image -> "Copy Image Address"',
+                  {
+                    duration: 6000,
+                    style: {
+                      border: "2px solid #B1FA63",
+                      padding: "10px",
+                      color: "#151518",
+                      background: "#B1FA63",
+                    },
+                    id: "drag-drop-toast",
+                  }
+                )
+              }
+            >
+              {imageUrl ? (
+                <img
+                  src={imageUrl}
+                  alt=""
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <div className="mb-10">+</div>
+              )}
+            </div>
           </div>
           <div className="flex-col justify-start items-start gap-5 w-[350px] h-96 bg-blue-300 bg-opacity-0">
             <div className="p-1 bg-pink-0 bg-opacity-40 h-80 text-xl">
@@ -190,7 +216,10 @@ export const EditModal = () => {
             <div className="flex justify-end gap-5 items-center h-10 p-1">
               <button
                 className="w-32 bg-red-600 bg-opacity-50 hover:bg-opacity-100 duration-150 border rounded-[30px] p-2"
-                onClick={() => setShowEditModal(false)}
+                onClick={() => {
+                  setShowEditModal(false);
+                  setMediaItem(currentEditIndex, null);
+                }}
               >
                 Delete
               </button>
