@@ -54,7 +54,7 @@ export const Collage = () => {
             setShowHelp(!showHelp);
             setPage(1);
           }}
-          style={{ cursor: "pointer", opacity: showHelp && 1 }}
+          style={{ cursor: "pointer" }}
         >
           <span className="mb-1">?</span>
         </div>
