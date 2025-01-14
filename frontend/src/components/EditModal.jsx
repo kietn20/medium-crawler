@@ -70,9 +70,9 @@ export const EditModal = () => {
   };
 
   const validateImageUrl = (value) => {
-    if (value && !/^https?:\/\/.+\.(jpg|jpeg|png|gif)$/.test(value)) {
+    if (value && !/^https?:\/\/.+\.(jpg|jpeg|png|gif|webp)$/.test(value)) {
       toast.error(
-        "Image URL must be a valid URL ending with .jpg, .jpeg, .png, or .gif"
+        "Image URL must be a valid URL ending with .jpg, .jpeg, .png, .webp, or .gif"
       );
       controls.start({
         x: [0, -10, 10, -10, 10, 0],
