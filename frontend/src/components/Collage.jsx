@@ -21,50 +21,11 @@ export const Collage = () => {
   // Help Modal State Store
   const showHelp = useHelpModalStore((state) => state.showHelp);
   const setShowHelp = useHelpModalStore((state) => state.setShowHelp);
-  const page = useHelpModalStore((state) => state.page);
   const setPage = useHelpModalStore((state) => state.setPage);
 
   // Search Modal State Store
-
   const mediaItems = useMediaStore((state) => state.mediaItems);
-  const setMediaItem = useMediaStore((state) => state.setMediaItem);
 
-  const dockElements = [
-    {
-      title: "Instructions",
-      icon: (
-        <CircleHelp
-          onClick={() => {
-            setShowHelp(!showHelp);
-            setPage(1);
-          }}
-          className="h-full w-full text-neutral-600 dark:text-neutral-3001 text-[#8ac847]"
-        />
-      ),
-      href: "#",
-    },
-    {
-      title: "Toggle Sorting",
-      icon: (
-        <ListOrdered className="h-full w-full text-neutral-600 dark:text-neutral-3001 text-[#8ac847]" />
-      ),
-      href: "#",
-    },
-    {
-      title: "Share Collage",
-      icon: (
-        <Share className="h-full w-full text-neutral-600 dark:text-neutral-3001 text-[#8ac847]" />
-      ),
-      href: "#",
-    },
-    {
-      title: "Manage Media Lists",
-      icon: (
-        <ListFilterPlus className="h-full w-full text-neutral-600 dark:text-neutral-3001 text-[#8ac847]" />
-      ),
-      href: "#",
-    },
-  ];
 
   return (
     <div className="relative flex flex-col items-center justify-start w-screen h-screen overflow-hidden bg-[#0A0B06]">
