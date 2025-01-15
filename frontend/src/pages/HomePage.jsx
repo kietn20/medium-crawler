@@ -7,10 +7,10 @@ export const Homepage = () => {
     return (
         <div className="snap-y snap-mandatory h-screen overflow-y-scroll bg-[#0A0B06] select-none">
             <div className="snap-center h-screen flex items-center justify-center">
-                <ImageStack />
+                <Hero />
             </div>
             <div className="snap-center h-screen flex items-center justify-center">
-                <Hero />
+                <ImageStack />
             </div>
             <div className="snap-center h-screen flex items-center justify-center">
                 <Collage />
