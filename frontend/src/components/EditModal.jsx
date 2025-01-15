@@ -36,8 +36,6 @@ export const EditModal = () => {
   }, [mediaItem]);
 
   const validateTitle = (value) => {
-    console.log("validateTitle called with value:", value);
-    console.log("Current title state:", title);
     if (
       !title ||
       title.trim() === "" ||
