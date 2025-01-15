@@ -76,7 +76,10 @@ export const Collage = () => {
       <EditModal />
       <div className="mt-10 w-[822px] h-[614px] grid grid-cols-4 gap-x-[20px] gap-y-[30px] items-center place-items-center place-content-center">
         {mediaItems.map((mediaItem, index) => (
-          <Slot key={index} index={index} />
+          <div>
+            <Slot key={index} index={index} />
+            <div className="text-3xl text-white">{index + 1}</div>
+          </div>
         ))}
       </div>
       <div className="absolute bottom-2 left-1/2 max-w-full -translate-x-1/2 opacity-30 hover:opacity-100 duration-300">
