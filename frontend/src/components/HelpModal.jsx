@@ -9,24 +9,6 @@ export const HelpModal = () => {
   const modalRef = useRef(null);
   const helpButtonRef = useHelpModalStore((state) => state.helpButtonRef);
 
-  const handleClickOutside = (event) => {
-    if (modalRef.current && !modalRef.current.contains(event.target)) {
-      setShowHelp(false);
-    }
-  };
-
-  useEffect(() => {
-    if (showHelp) {
-      document.addEventListener("mousedown", handleClickOutside);
-    } else {
-      document.removeEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [showHelp]);
-
   return (
     <>
       {showHelp && (
@@ -37,7 +19,7 @@ export const HelpModal = () => {
       )}
       <div
         ref={modalRef}
-        className={`absolute top-56 w-[840px] h-[614px] bg-[#B1FA63] flex-col rounded-[30px] border-8 border-lime-900 justify-center z-50 transition-opacity duration-300 ${
+        className={`absolute top-44 w-[840px] h-[614px] bg-[#B1FA63] flex-col rounded-[30px] border-8 border-lime-900 justify-center z-50 transition-opacity duration-300 ${
           showHelp
             ? "opacity-100 pointer-events-auto"
             : "opacity-0 pointer-events-none"
