@@ -20,6 +20,43 @@ import { Dock, DockIcon, DockItem, DockLabel } from "./UI/Dock";
 export const Collage = () => {
   const mediaItems = useMediaStore((state) => state.mediaItems);
 
+  const dockElements = [
+    {
+      title: "Instructions",
+      icon: (
+        <CircleHelp
+          onClick={() => {
+            setShowHelp(!showHelp);
+            setPage(1);
+          }}
+          className="h-full w-full text-neutral-600 dark:text-neutral-3001 text-[#8ac847]"
+        />
+      ),
+      href: "#",
+    },
+    {
+      title: "Toggle Sorting",
+      icon: (
+        <ListOrdered className="h-full w-full text-neutral-600 dark:text-neutral-3001 text-[#8ac847]" />
+      ),
+      href: "#",
+    },
+    {
+      title: "Share Collage",
+      icon: (
+        <Share className="h-full w-full text-neutral-600 dark:text-neutral-3001 text-[#8ac847]" />
+      ),
+      href: "#",
+    },
+    {
+      title: "Manage Media Lists",
+      icon: (
+        <ListFilterPlus className="h-full w-full text-neutral-600 dark:text-neutral-3001 text-[#8ac847]" />
+      ),
+      href: "#",
+    },
+  ];
+
   return (
     <div className="relative flex flex-col items-center justify-start w-screen h-screen overflow-hidden bg-[#0A0B06]">
       <Navbar />
