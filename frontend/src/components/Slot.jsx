@@ -52,7 +52,7 @@ export const Slot = ({ index }) => {
           : "opacity-35 border-[#B1FA63] border-2 border-dashed"
       }`}
       style={{
-        opacity: isDragging ? 0.1 : 1,
+        opacity: isDragging ?? 0.1,
       }}
       onClick={() => {
         if (mediaItem) {
