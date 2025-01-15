@@ -23,17 +23,11 @@ export const Collage = () => {
   const setShowHelp = useHelpModalStore((state) => state.setShowHelp);
   const page = useHelpModalStore((state) => state.page);
   const setPage = useHelpModalStore((state) => state.setPage);
-  const helpButtonRef = useRef(null);
-  const setHelpButtonRef = useHelpModalStore((state) => state.setHelpButtonRef);
 
   // Search Modal State Store
 
   const mediaItems = useMediaStore((state) => state.mediaItems);
   const setMediaItem = useMediaStore((state) => state.setMediaItem);
-
-  useEffect(() => {
-    setHelpButtonRef(helpButtonRef);
-  }, [setHelpButtonRef]);
 
   const dockElements = [
     {
@@ -108,7 +102,7 @@ export const Collage = () => {
         </Dock>
       </div>
       <div className="text-[#B1FA63] flex gap-2 absolute bottom-5 left-5">
-        <div
+        {/* <div
           ref={helpButtonRef}
           className="font-heading flex justify-center items-center text-3xl rounded-full bg-[#142120] w-[50px] h-[50px] opacity-50 hover:opacity-100 duration-200"
           onClick={() => {
@@ -118,7 +112,7 @@ export const Collage = () => {
           style={{ cursor: "pointer" }}
         >
           <span className="mb-1">?</span>
-        </div>
+        </div> */}
 
         <div className="font-heading flex justify-center items-center text-3xl rounded-full bg-[#142120] w-[50px] h-[50px]">
           <span className="mb-1">
