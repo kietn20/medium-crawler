@@ -1,4 +1,4 @@
-import { ChartNoAxesColumnDecreasing, Share } from "lucide-react";
+import { ChartNoAxesColumnDecreasing, PencilLine, Share } from "lucide-react";
 import { Navbar } from "./Navbar";
 import { Slot } from "./Slot";
 import { useEffect, useRef, useState } from "react";
@@ -33,10 +33,15 @@ export const Collage = () => {
       <div className="absolute font-heading z-20 text-lg">
         <Toaster />
       </div>
-      <div className="flex relative w-[1500px] h-32 bg-gray-0 items-center justify-center">
-        <span className="font-heading text-9xl text-[#B1FA63]  absolute bottom-4">
-          medium crawler
-        </span>
+      <div
+        className="flex relative group h-32 items-center justify-center"
+      >
+        <input
+          type="text"
+          className="font-heading text-8xl text-[#B1FA63] bg-inherit text-center placeholder:text-[#B1FA63] w-[1200px] h-[120px] border-none pb-8"
+          placeholder="medium crawler"
+        />
+        <PencilLine className="absolute left-32 w-24 h-24 text-gray-400 opacity-0 group-hover:opacity-10 duration-150" />
       </div>
       <HelpModal />
       <SearchModal />
