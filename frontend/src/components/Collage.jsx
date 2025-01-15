@@ -87,7 +87,7 @@ export const Collage = () => {
         {mediaItems.map((mediaItem, index) => (
           <div key={index} className="relative">
             {showRanking && mediaItem && (
-              <div className="absolute text-3xl text-[#444C48] -bottom-5 -left-5 w-[50px] h-[50px] bg-white font-heading text-center rounded-lg flex justify-center items-end z-10">
+              <div className="absolute text-3xl text-[#444C48] -bottom-7 -left-7 w-[50px] h-[50px] bg-white font-heading text-center rounded-lg flex justify-center items-end z-10">
                 &nbsp;{index + 1}.
               </div>
             )}
