@@ -46,7 +46,7 @@ export const Slot = ({ index }) => {
   return (
     <div
       ref={(node) => drag(drop(node))}
-      className={`w-[165px] h-[280px] rounded-[30px] flex items-center justify-center text-[#B1FA63] text-9xl font-heading cursor-pointer hover:opacity-100 duration-300 overflow-hidden  ${
+      className={`w-[165px] h-[280px] rounded-[30px] flex items-center justify-center text-[#B1FA63] text-9xl font-heading cursor-pointer hover:opacity-100 duration-300 overflow-hidden z-100 ${
         mediaItem
           ? "opacity-100 border-transparent"
           : "opacity-35 border-[#B1FA63] border-2 border-dashed"
