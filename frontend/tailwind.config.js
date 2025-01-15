@@ -90,7 +90,10 @@ export default {
           950: '#090d11',
         },
       },
-
+      backgroundImage: {
+        'topography-texture': "url('src/assets/topography.svg')",
+        'jigsaw-texture': "url('src/assets/jigsaw.svg')",
+      }
     },
   },
   plugins: [],
