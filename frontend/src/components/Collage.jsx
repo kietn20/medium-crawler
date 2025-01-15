@@ -18,14 +18,7 @@ import { Toaster } from "react-hot-toast";
 import { Dock, DockIcon, DockItem, DockLabel } from "./UI/Dock";
 
 export const Collage = () => {
-  // Help Modal State Store
-  const showHelp = useHelpModalStore((state) => state.showHelp);
-  const setShowHelp = useHelpModalStore((state) => state.setShowHelp);
-  const setPage = useHelpModalStore((state) => state.setPage);
-
-  // Search Modal State Store
   const mediaItems = useMediaStore((state) => state.mediaItems);
-
 
   return (
     <div className="relative flex flex-col items-center justify-start w-screen h-screen overflow-hidden bg-[#0A0B06]">
