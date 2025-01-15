@@ -31,13 +31,13 @@ export const HelpModal = () => {
     <>
       {showHelp && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-10"
+          className="fixed inset-0 bg-black bg-opacity-70 z-30"
           onClick={() => setShowHelp(false)}
         ></div>
       )}
       <div
         ref={modalRef}
-        className={`absolute top-56 w-[840px] h-[614px] bg-[#B1FA63] flex-col rounded-[30px] border-8 border-lime-900 justify-center z-10 transition-opacity duration-300 ${
+        className={`absolute top-56 w-[840px] h-[614px] bg-[#B1FA63] flex-col rounded-[30px] border-8 border-lime-900 justify-center z-50 transition-opacity duration-300 ${
           showHelp
             ? "opacity-100 pointer-events-auto"
             : "opacity-0 pointer-events-none"
