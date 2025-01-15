@@ -1,9 +1,7 @@
-import { create } from "zustand"; 
+import { create } from "zustand";
 
 
 export const useEditModalStore = create((set) => ({
   showEditModal: false,
   setShowEditModal: (show) => set({ showEditModal: show }),
-  currentEditIndex: null,
-  setCurrentEditIndex: (index) => set({ currentEditIndex: index }),
 }));
