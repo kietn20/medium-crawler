@@ -78,7 +78,7 @@ export default function ImageStack() {
   };
 
   return (
-    <div className="relative w-screen h-screen overflow-hidden hover:cursor-pointer">
+    <div className="relative w-screen h-screen overflow-hidden hover:cursor-pointer bg-[#0A0B06]">
       {!loading && (
         <div className="absolute inset-0 flex items-center justify-center">
           <AnimatePresence>
