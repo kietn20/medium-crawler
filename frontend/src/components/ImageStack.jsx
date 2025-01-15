@@ -34,8 +34,7 @@ const displayMedia = [
     url: "https://store.steampowered.com/app/2358720/Black_Myth_Wukong/",
   },
   {
-    image:
-      "https://a.ltrbxd.com/resized/sm/upload/8g/5p/p4/6b/8YWirGQidtZeSEmhqvQM5FrI6N1-0-2000-0-3000-crop.jpg?v=10e3695a0f",
+    image: "src/assets/media18.png",
     url: "https://letterboxd.com/film/shin-godzilla-orthochromatic/",
   },
 ];
