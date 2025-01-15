@@ -22,6 +22,7 @@ export const Collage = () => {
   const showHelp = useHelpModalStore((state) => state.showHelp);
   const setShowHelp = useHelpModalStore((state) => state.setShowHelp);
   const [showRanking, setShowRanking] = useState(false);
+  const setPage = useHelpModalStore((state) => state.setPage);
 
   const dockElements = [
     {
@@ -43,7 +44,6 @@ export const Collage = () => {
         <ListOrdered
           onClick={() => {
             setShowRanking(!showRanking);
-            console.log("showRanking", showRanking);
           }}
           className="h-full w-full text-neutral-600 dark:text-neutral-3001 text-[#8ac847]"
         />
@@ -83,7 +83,7 @@ export const Collage = () => {
       <HelpModal />
       <SearchModal />
       <EditModal />
-      <div className="mt-10 w-[822px] h-[614px] grid grid-cols-4 gap-x-[20px] gap-y-[30px] items-center place-items-center place-content-center">
+      <div className="mt-3 w-[822px] h-[614px] grid grid-cols-4 gap-x-[20px] gap-y-[30px] items-center place-items-center place-content-between">
         {mediaItems.map((mediaItem, index) => (
           <div key={index} className="relative">
             {showRanking && mediaItem && (
