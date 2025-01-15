@@ -19,6 +19,8 @@ import { Dock, DockIcon, DockItem, DockLabel } from "./UI/Dock";
 
 export const Collage = () => {
   const mediaItems = useMediaStore((state) => state.mediaItems);
+  const showHelp = useHelpModalStore((state) => state.showHelp);
+  const setShowHelp = useHelpModalStore((state) => state.setShowHelp);
   const [showRanking, setShowRanking] = useState(false);
 
   const dockElements = [
@@ -40,7 +42,8 @@ export const Collage = () => {
       icon: (
         <ListOrdered
           onClick={() => {
-            setSetshowRanking(!setshowRanking);
+            setShowRanking(!showRanking);
+            console.log("showRanking", showRanking);
           }}
           className="h-full w-full text-neutral-600 dark:text-neutral-3001 text-[#8ac847]"
         />
@@ -83,8 +86,8 @@ export const Collage = () => {
       <div className="mt-10 w-[822px] h-[614px] grid grid-cols-4 gap-x-[20px] gap-y-[30px] items-center place-items-center place-content-center">
         {mediaItems.map((mediaItem, index) => (
           <div key={index} className="relative">
-            {(showRanking && mediaItem == null) ?? (
-              <div className="absolute text-3xl text-[#444C48] -bottom-5 -left-5 w-[50px] h-[50px] bg-white font-heading text-center rounded-lg flex justify-center items-end z-0">
+            {showRanking && (
+              <div className="absolute text-3xl text-[#444C48] -bottom-5 -left-5 w-[50px] h-[50px] bg-white font-heading text-center rounded-lg flex justify-center items-end z-10">
                 &nbsp;{index + 1}.
               </div>
             )}
