@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { Toaster } from "react-hot-toast";
-import { Link } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
 
 export const Login = () => {
 	const [isRegister, setIsRegister] = useState(false);
@@ -11,9 +10,21 @@ export const Login = () => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		if (isRegister) {
+			if (!name || !email || !password) {
+				toast.error("All fields are required for registration");
+				return;
+			}
+			// Handle registration logic
 			console.log("Registering:", { name, email, password });
+			toast.success("Registration successful");
 		} else {
+			if (!email || !password) {
+				toast.error("Email and password are required for sign in");
+				return;
+			}
+			// Handle sign-in logic
 			console.log("Signing in:", { email, password });
+			toast.success("Sign in successful");
 		}
 	};
 
