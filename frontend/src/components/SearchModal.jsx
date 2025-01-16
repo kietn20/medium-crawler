@@ -105,7 +105,6 @@ export const SearchModal = () => {
 		setMediaItem(slotIndexClicked, {
 			title: media.title,
 			imageUrl: media.posterPath,
-			description: media.description,
 			releaseDate: media.releaseDate,
 		});
 		setShowSearchModal(false);

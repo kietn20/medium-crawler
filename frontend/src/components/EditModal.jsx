@@ -163,7 +163,7 @@ export const EditModal = () => {
 			<motion.div
 				ref={editModalRef}
 				animate={controls}
-				className={`absolute top-72 w-[700px] h-[470px] bg-[B1FA63] bg-[#151518] flex-col rounded-[30px] border-8 border-lime-900 justify-center z-50 transition-opacity duration-300 font-heading text-white ${
+				className={`absolute top-56 w-[700px] h-[470px] bg-[B1FA63] bg-[#151518] flex-col rounded-[30px] border-8 border-lime-900 justify-center z-50 transition-opacity duration-300 font-heading text-white ${
 					showEditModal
 						? "opacity-100 pointer-events-auto"
 						: "opacity-0 pointer-events-none"
