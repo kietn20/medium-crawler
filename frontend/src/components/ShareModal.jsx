@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useShareModalStore } from "../store/shareModalStore";
 
 const exampleMediaItems = [
@@ -48,6 +49,8 @@ export const ShareModal = () => {
     (state) => state.setShowShareModal
   );
 
+  const [option, setOption] = useState("");
+
   const getSpreadPosition = (index) => {
     const spreadWidth = -50;
     const step = spreadWidth / (exampleMediaItems.length - 1);
@@ -69,9 +72,14 @@ export const ShareModal = () => {
         } `}
       >
         <span className="text-3xl">choose a sharing template</span>
-        <div className="w-full h-full flex justify-between items-start mt-5 ">
-          {/* TEMPLATE 1: vertical */}
-          <div className="w-[33%] h-[90%] flex flex-col items-center justify-center rounded-[20px] hover:bg-[#B1FA63] p-1 duration-200">
+        <div className="w-full h-[80%] flex justify-between items-start mt-5">
+          {/* TEMPLATE 1: collage */}
+          <div
+            className={`w-[33%] h-[90%] flex flex-col items-center justify-center rounded-[20px] bg-[#B1FA63] bg-opacity-0 hover:bg-opacity-30 p-1 duration-200 hover:cursor-pointer ${
+              option === "collage" && "bg-opacity-100"
+            }`}
+            onClick={() => setOption("collage")}
+          >
             <span className="text-xl">collage</span>
             <div className="bg-[#0A0B06] rounded-xl p-5 m-1 flex flex-col items-center justify-start text-[#f0f1ea] overflow-hidden gap-3">
               <span className="text-2xl  text-[#B1FA63]">
@@ -94,7 +102,12 @@ export const ShareModal = () => {
           </div>
 
           {/* TEMPLATE 2: vertical */}
-          <div className="w-[33%] h-[90%] flex flex-col items-center justify-start rounded-[20px] hover:bg-[#B1FA63] p-1 duration-200">
+          <div
+            className={`w-[33%] h-[93%] flex flex-col items-center justify-start rounded-[20px] bg-[#B1FA63] bg-opacity-0 hover:bg-opacity-30 p-1 duration-200 hover:cursor-pointer ${
+              option === "vertical" && "bg-opacity-100"
+            }`}
+            onClick={() => setOption("vertical")}
+          >
             <span className="text-xl">vertical</span>
             <div className="bg-[#0A0B06] rounded-xl p-5 m-1 flex flex-col items-center justify-start text-[#f0f1ea] overflow-hidden">
               <span className="text-2xl  text-[#B1FA63]">
@@ -126,7 +139,7 @@ export const ShareModal = () => {
                   <img
                     src="src/assets/media18.png"
                     alt="dune 2"
-                    className="w-[35%] h-auto rounded-[20px]"
+                    className="w-[35%] h-auto rounded-[20px] object-cover"
                   />
                   <p className="w-[50%] h-auto text-center">
                     Shin godizlla was an epic film. The way it was portrayed was
@@ -138,7 +151,12 @@ export const ShareModal = () => {
           </div>
 
           {/* TEMPLATE 3: spread */}
-          <div className="w-[33%] h-[90%] flex flex-col items-center justify-center rounded-[20px] hover:bg-[#B1FA63] p-1 duration-200">
+          <div
+            className={`w-[33%] h-[90%] flex flex-col items-center justify-center rounded-[20px] bg-[#B1FA63] bg-opacity-0 hover:bg-opacity-30 p-1 duration-200 hover:cursor-pointer ${
+              option === "spread" && "bg-opacity-100"
+            }`}
+            onClick={() => setOption("spread")}
+          >
             <span className="text-xl">spread</span>
             <div className="bg-[#0A0B06] rounded-xl px-2 py-4 m-1 flex flex-col items-center justify-start text-[#f0f1ea] overflow-hidden">
               <span className="text-2xl  text-[#B1FA63] mb-3">
@@ -170,6 +188,12 @@ export const ShareModal = () => {
               </div>
             </div>
           </div>
+        </div>
+        {/* Share Buttons */}
+        <div className="flex justify-between items-center text-black text-xl gap-5 absolute bottom-10">
+          <button className="p-3 rounded-lg bg-slate-500 text-white opacity-50 hover:opacity-100 hover:bg-[#8ac847] duration-300">copy to clipboard</button>
+          <button className="p-3 rounded-lg bg-slate-500 text-white opacity-50 hover:opacity-100 hover:bg-[#8ac847] duration-300">open image in new tab</button>
+          <button className="p-3 rounded-lg bg-slate-500 text-white opacity-50 hover:opacity-100 hover:bg-[#8ac847] duration-300">download</button>
         </div>
       </div>
     </>
