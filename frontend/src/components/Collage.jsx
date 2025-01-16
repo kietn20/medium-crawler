@@ -18,6 +18,7 @@ import { Toaster } from "react-hot-toast";
 import { Dock, DockIcon, DockItem, DockLabel } from "./UI/Dock";
 import { ShareModal } from "./ShareModal";
 import { useShareModalStore } from "../store/shareModalStore";
+import { ManageListsModal } from "./ManageListsModal";
 
 export const Collage = () => {
   const mediaItems = useMediaStore((state) => state.mediaItems);
@@ -25,8 +26,16 @@ export const Collage = () => {
   const setShowHelp = useHelpModalStore((state) => state.setShowHelp);
   const [showRanking, setShowRanking] = useState(false);
   const setPage = useHelpModalStore((state) => state.setPage);
-	const showShareModal = useShareModalStore((state) => state.showShareModal);
-	const setShowShareModal = useShareModalStore((state) => state.setShowShareModal);
+  const showShareModal = useShareModalStore((state) => state.showShareModal);
+  const setShowShareModal = useShareModalStore(
+    (state) => state.setShowShareModal
+  );
+  const showManageListsModal = useMediaStore(
+    (state) => state.showManageListsModal
+  );
+  const setShowManageListsModal = useMediaStore(
+    (state) => state.setShowManageListsModal
+  );
 
   const [mediaListTitle, setMediaListTitle] = useState("medium crawler");
 
@@ -65,9 +74,12 @@ export const Collage = () => {
       href: "#",
     },
     {
-      title: "Manage Media Lists",
+      title: "Manage Lists",
       icon: (
-        <ListFilterPlus className="h-full w-full dark:text-neutral-3001 text-[#8ac847] opacity-30 hover:opacity-100 duration-300"/>
+        <ListFilterPlus
+          onClick={() => setShowManageListsModal(!showManageListsModal)}
+          className="h-full w-full dark:text-neutral-3001 text-[#8ac847] opacity-30 hover:opacity-100 duration-300"
+        />
       ),
       href: "#",
     },
@@ -95,6 +107,7 @@ export const Collage = () => {
       <SearchModal />
       <EditModal />
       <ShareModal />
+			<ManageListsModal />
       <div className="mt-3 w-[822px] h-[614px] grid grid-cols-4 gap-x-[20px] gap-y-[30px] items-center place-items-center place-content-between">
         {mediaItems.map((mediaItem, index) => (
           <div key={index} className="relative">

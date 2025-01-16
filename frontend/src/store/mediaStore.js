@@ -15,4 +15,6 @@ export const useMediaStore = create((set) => ({
     }),
     slotIndexClicked: null,
     setSlotIndexClicked: (index) => set({ slotIndexClicked: index }),
+    showManageListsModal: false,
+    setShowManageListsModal: (show) => set({ showManageListsModal: show }),
 }));
