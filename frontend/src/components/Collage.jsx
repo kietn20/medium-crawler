@@ -39,7 +39,7 @@ export const Collage = () => {
             setShowHelp(!showHelp);
             setPage(1);
           }}
-          className="h-full w-full dark:text-neutral-3001 text-[#8ac847]"
+          className="h-full w-full dark:text-neutral-3001 text-[#8ac847] opacity-30 hover:opacity-100 duration-300"
         />
       ),
       href: "#",
@@ -49,7 +49,7 @@ export const Collage = () => {
       icon: (
         <ListOrdered
           onClick={() => setShowRanking(!showRanking)}
-          className="h-full w-full dark:text-neutral-3001 text-[#8ac847]"
+          className="h-full w-full dark:text-neutral-3001 text-[#8ac847] opacity-30 hover:opacity-100 duration-300"
         />
       ),
       href: "#",
@@ -59,7 +59,7 @@ export const Collage = () => {
       icon: (
         <Share
           onClick={() => setShowShareModal(!showShareModal)}
-          className="h-full w-full dark:text-neutral-3001 text-[#8ac847]"
+          className="h-full w-full dark:text-neutral-3001 text-[#8ac847] opacity-30 hover:opacity-100 duration-300"
         />
       ),
       href: "#",
@@ -67,7 +67,7 @@ export const Collage = () => {
     {
       title: "Manage Media Lists",
       icon: (
-        <ListFilterPlus className="h-full w-full dark:text-neutral-3001 text-[#8ac847]" />
+        <ListFilterPlus className="h-full w-full dark:text-neutral-3001 text-[#8ac847] opacity-30 hover:opacity-100 duration-300"/>
       ),
       href: "#",
     },
