@@ -20,9 +20,9 @@ import {
 import { cn } from "../../lib/utils";
 
 const DOCK_HEIGHT = 128;
-const DEFAULT_MAGNIFICATION = 80;
+const DEFAULT_MAGNIFICATION = 60;
 const DEFAULT_DISTANCE = 150;
-const DEFAULT_PANEL_HEIGHT = 64;
+const DEFAULT_PANEL_HEIGHT = 50;
 
 const DockContext = createContext(undefined);
 
