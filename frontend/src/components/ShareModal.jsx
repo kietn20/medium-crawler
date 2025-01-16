@@ -21,50 +21,137 @@ export const ShareModal = () => {
         } `}
       >
         <span className="text-3xl">choose a sharing template</span>
-        <div className="w-full h-full flex justify-between items-center">
-          <div className="w-[33%] h-[80%] bg-[#0A0B06] rounded-xl p-5 flex flex-col items-center justify-start text-[#f0f1ea] overflow-hidden">
-            <span className="text-2xl  text-[#B1FA63]">
-              kat's 2024 favorite medias
-            </span>
-            <div className="flex flex-col items-center justify-center">
-              <div className="w-[90%] h-[30%] flex justify-center items-center gap-5">
-                <img
-                  src="src/assets/media0.png"
-                  alt="dune 2"
-                  className="w-[35%] h-auto rounded-[20px]"
-                />
-                <p className="w-[50%] h-auto text-center">
-                  My favorite film this year. Denis Villeneuve is a genius.
-                </p>
-              </div>
-              <div className="w-[90%] h-[30%] flex justify-center items-center gap-5">
-                <p className="w-[50%] h-auto text-center">
-                  Perfect Blue is my first satoshi kon film. I love it. Excited
-                  to see his other works.
-                </p>
-                <img
-                  src="src/assets/media15.png"
-                  alt="perfectblue"
-                  className="w-[35%] h-auto rounded-[20px]"
-                />
-              </div>
-              <div className="w-[90%] h-[30%] flex justify-center items-center gap-5">
-                <img
-                  src="src/assets/media18.png"
-                  alt="dune 2"
-                  className="w-[35%] h-auto rounded-[20px]"
-                />
-                <p className="w-[50%] h-auto text-center">
-                  Shin godizlla was an epic film. The way it was portrayed was terrifying.
-                </p>
+        <div className="w-full h-full flex justify-between items-start mt-5 ">
+          {/* TEMPLATE 1: vertical */}
+          <div className="w-[33%] h-[90%] flex flex-col items-center justify-start rounded-[20px] hover:bg-[#B1FA63] p-1 duration-200">
+            <span className="text-xl">vertical</span>
+            <div className="bg-[#0A0B06] rounded-xl p-5 m-1 flex flex-col items-center justify-start text-[#f0f1ea] overflow-hidden">
+              <span className="text-2xl  text-[#B1FA63]">
+                kat's 2024 favorite medias
+              </span>
+              <div className="flex flex-col items-center justify-center">
+                <div className="w-[90%] h-[30%] flex justify-center items-center gap-5">
+                  <img
+                    src="src/assets/media0.png"
+                    alt="dune 2"
+                    className="w-[35%] h-auto rounded-[20px]"
+                  />
+                  <p className="w-[50%] h-auto text-center">
+                    My favorite film this year. Denis Villeneuve is a genius.
+                  </p>
+                </div>
+                <div className="w-[90%] h-[30%] flex justify-center items-center gap-5">
+                  <p className="w-[50%] h-auto text-center">
+                    Perfect Blue is my first satoshi kon film. I love it.
+                    Excited to see his other works.
+                  </p>
+                  <img
+                    src="src/assets/media15.png"
+                    alt="perfectblue"
+                    className="w-[35%] h-auto rounded-[20px]"
+                  />
+                </div>
+                <div className="w-[90%] h-[30%] flex justify-center items-center gap-5">
+                  <img
+                    src="src/assets/media18.png"
+                    alt="dune 2"
+                    className="w-[35%] h-auto rounded-[20px]"
+                  />
+                  <p className="w-[50%] h-auto text-center">
+                    Shin godizlla was an epic film. The way it was portrayed was
+                    terrifying.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
-          <div className="w-[33%] h-[80%] bg-[#0A0B06] rounded-xl p-5 flex flex-col items-center justify-start text-[#B1FA63]">
-            <span className="text-2xl">kat's 2024 favorite medias</span>
+
+          {/* TEMPLATE 2: collage */}
+          <div className="w-[33%] h-[90%] flex flex-col items-center justify-start rounded-[20px] hover:bg-[#B1FA63] p-1 duration-200">
+            <span className="text-xl">collage</span>
+            <div className="bg-[#0A0B06] rounded-xl p-5 m-1 flex flex-col items-center justify-start text-[#f0f1ea] overflow-hidden">
+              <span className="text-2xl  text-[#B1FA63]">
+                kat's 2024 favorite medias
+              </span>
+              <div className="flex flex-col items-center justify-center">
+                <div className="w-[90%] h-[30%] flex justify-center items-center gap-5">
+                  <img
+                    src="src/assets/media0.png"
+                    alt="dune 2"
+                    className="w-[35%] h-auto rounded-[20px]"
+                  />
+                  <p className="w-[50%] h-auto text-center">
+                    My favorite film this year. Denis Villeneuve is a genius.
+                  </p>
+                </div>
+                <div className="w-[90%] h-[30%] flex justify-center items-center gap-5">
+                  <p className="w-[50%] h-auto text-center">
+                    Perfect Blue is my first satoshi kon film. I love it.
+                    Excited to see his other works.
+                  </p>
+                  <img
+                    src="src/assets/media15.png"
+                    alt="perfectblue"
+                    className="w-[35%] h-auto rounded-[20px]"
+                  />
+                </div>
+                <div className="w-[90%] h-[30%] flex justify-center items-center gap-5">
+                  <img
+                    src="src/assets/media18.png"
+                    alt="dune 2"
+                    className="w-[35%] h-auto rounded-[20px]"
+                  />
+                  <p className="w-[50%] h-auto text-center">
+                    Shin godizlla was an epic film. The way it was portrayed was
+                    terrifying.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="w-[33%] h-[80%] bg-[#0A0B06] rounded-xl p-5 flex flex-col items-center justify-start text-[#B1FA63]">
-            <span className="text-2xl">kat's 2024 favorite medias</span>
+
+          {/* TEMPLATE 3: spread */}
+          <div className="w-[33%] h-[90%] flex flex-col items-center justify-start rounded-[20px] hover:bg-[#B1FA63] p-1 duration-200">
+            <span className="text-xl">spread</span>
+            <div className="bg-[#0A0B06] rounded-xl p-5 m-1 flex flex-col items-center justify-start text-[#f0f1ea] overflow-hidden">
+              <span className="text-2xl  text-[#B1FA63]">
+                kat's 2024 favorite medias
+              </span>
+              <div className="flex flex-col items-center justify-center">
+                <div className="w-[90%] h-[30%] flex justify-center items-center gap-5">
+                  <img
+                    src="src/assets/media0.png"
+                    alt="dune 2"
+                    className="w-[35%] h-auto rounded-[20px]"
+                  />
+                  <p className="w-[50%] h-auto text-center">
+                    My favorite film this year. Denis Villeneuve is a genius.
+                  </p>
+                </div>
+                <div className="w-[90%] h-[30%] flex justify-center items-center gap-5">
+                  <p className="w-[50%] h-auto text-center">
+                    Perfect Blue is my first satoshi kon film. I love it.
+                    Excited to see his other works.
+                  </p>
+                  <img
+                    src="src/assets/media15.png"
+                    alt="perfectblue"
+                    className="w-[35%] h-auto rounded-[20px]"
+                  />
+                </div>
+                <div className="w-[90%] h-[30%] flex justify-center items-center gap-5">
+                  <img
+                    src="src/assets/media18.png"
+                    alt="dune 2"
+                    className="w-[35%] h-auto rounded-[20px]"
+                  />
+                  <p className="w-[50%] h-auto text-center">
+                    Shin godizlla was an epic film. The way it was portrayed was
+                    terrifying.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
