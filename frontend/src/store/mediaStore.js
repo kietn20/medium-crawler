@@ -30,7 +30,7 @@ const clearLocalStorage = (key) => {
 };
 
 const defaultMediaObject = { title: "", rating: "", description: "", imageUrl: "" };
-const defaultMediaList = { name: "Default List", items: Array(8).fill(defaultMediaObject) };
+const defaultMediaList = { name: "medium crawler", items: Array(8).fill(defaultMediaObject) };
 
 const initialState = {
   mediaItems: loadFromLocalStorage("mediaItems") || [],

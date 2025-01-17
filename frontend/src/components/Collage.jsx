@@ -94,7 +94,7 @@ export const Collage = () => {
         <input
           type="text"
           className="font-heading text-8xl text-[#B1FA63] bg-inherit text-center placeholder:text-[#B1FA63] w-[1200px] h-[120px] border-none pb-8"
-          placeholder={mediaListTitle}
+          placeholder={currentMediaList.name}
           onClick={() => {
             setMediaListTitle("");
           }}
