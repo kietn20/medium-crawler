@@ -43,7 +43,7 @@ export const Slot = ({ index }) => {
         currentMediaList.items[index].imageUrl !== '' ? "opacity-100 border-transparent" : "opacity-35 border-[#B1FA63] border-2 border-dashed z-0"
       }`}
       style={{
-        opacity: isDragging ? 0.1 : 1,
+        opacity: isDragging ?? 0.1,
         boxShadow: currentMediaList.items[slotIndexClicked] ? "0 4px 8px rgba(0, 0, 0, 1)" : "none",
       }}
       onClick={() => {

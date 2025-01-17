@@ -30,7 +30,7 @@ const clearLocalStorage = (key) => {
 };
 
 const defaultMediaObject = { title: "", rating: "", description: "", imageUrl: "" };
-const defaultMediaList = { name: "medium crawler", items: Array(8).fill(defaultMediaObject) };
+const defaultMediaList = { name: "medium crawler", items: Array(10).fill(defaultMediaObject) };
 
 const initialState = {
   mediaItems: loadFromLocalStorage("mediaItems") || [],
@@ -76,7 +76,7 @@ export const useMediaStore = create((set) => ({
       const isSignedIn = useAuthStore.getState().isSignedIn;
       const maxLists = isSignedIn ? 5 : 2;
       if (state.mediaLists.length < maxLists) {
-        const newList = { ...list, name: `new media list ${state.mediaLists.length}`, items: Array(8).fill(defaultMediaObject) };
+        const newList = { ...list, name: `new media list ${state.mediaLists.length}`, items: Array(10).fill(defaultMediaObject) };
         const mediaLists = [...state.mediaLists, newList];
         saveToLocalStorage("mediaLists", mediaLists);
         return { mediaLists };

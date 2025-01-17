@@ -29,6 +29,7 @@ public class TMDbService {
                         .path("/search/movie")
                         .queryParam("api_key", apiKey)
                         .queryParam("query", query)
+                        .queryParam("sort_by", "release_date.desc") // Sort by most recent release date
                         .build())
                 .retrieve()
                 .bodyToMono(JsonNode.class)
@@ -42,6 +43,7 @@ public class TMDbService {
                         .path("/search/tv")
                         .queryParam("api_key", apiKey)
                         .queryParam("query", query)
+                        .queryParam("sort_by", "first_air_date.desc") // Sort by most recent first air date
                         .build())
                 .retrieve()
                     .bodyToMono(JsonNode.class)
