@@ -67,7 +67,10 @@ export const SearchModal = () => {
 			const response = await axios.post("/api/media-search", {
 				query: searchQuery,
 				type: type,
-			});
+			},
+				{
+					withCredentials: true, // Include cookies in the request
+				});
 			setSearchResults(response.data);
 			scrollToTopSearchResults();
 		} catch (error) {
@@ -77,28 +80,32 @@ export const SearchModal = () => {
 
 	const handleKeyDown = async (event) => {
 		if (event.key === "Enter") {
-			if (searchQuery.trim() === "") return;
+		if (searchQuery.trim() === "") return;
 
-			const typeMap = {
-				"Movie & TV Show": "movie",
-				"Anime & Manga": "anime",
-				"Video Game": "game",
-				Book: "book",
-			};
+		const typeMap = {
+			"Movie & TV Show": "movie",
+			"Anime & Manga": "anime",
+			"Video Game": "game",
+			Book: "book",
+		};
 
-			const type = typeMap[selectedSuggestion];
+		const type = typeMap[selectedSuggestion];
 
-			try {
-				const response = await axios.post("/api/media-search", {
-					query: searchQuery,
-					type: type,
-				});
-				setSearchResults(response.data);
-				scrollToTopSearchResults();
-			} catch (error) {
-				console.error("Error searching media:", error);
-			}
+		try {
+			const response = await axios.post("/api/media-search", {
+				query: searchQuery,
+				type: type,
+			},
+				{
+					withCredentials: true, // Include cookies in the request
+				}
+			);
+			setSearchResults(response.data);
+			scrollToTopSearchResults();
+		} catch (error) {
+			console.error("Error searching media:", error);
 		}
+	}
 	};
 
 	const handleMediaSelect = (media) => {
@@ -146,11 +153,10 @@ export const SearchModal = () => {
 			)}
 			<div
 				ref={searchModalRef}
-				className={`fixed top-80 left-1/2 transform -translate-x-1/2 w-[800px] flex-col justify-center z-50 transition-opacity duration-300 shadow-md md:min-w-[450px] bg-white rounded-xl font-heading ${
-					showSearchModal
-						? "opacity-100 pointer-events-auto"
-						: "opacity-0 pointer-events-none"
-				} `}
+				className={`fixed top-80 left-1/2 transform -translate-x-1/2 w-[800px] flex-col justify-center z-50 transition-opacity duration-300 shadow-md md:min-w-[450px] bg-white rounded-xl font-heading ${showSearchModal
+					? "opacity-100 pointer-events-auto"
+					: "opacity-0 pointer-events-none"
+					} `}
 			>
 				<div className="relative rounded-xl flex justify-between items-center">
 					<input
@@ -208,11 +214,10 @@ export const SearchModal = () => {
 						</div>
 						<div className="space-y-1">
 							<div
-								className={`flex items-center p-2 rounded-md cursor-pointer transition-colors ${
-									selectedSuggestion === "Movie & TV Show"
-										? "bg-[#B1FA63]"
-										: "hover:bg-[#B1FA63] hover:bg-opacity-50"
-								}`}
+								className={`flex items-center p-2 rounded-md cursor-pointer transition-colors ${selectedSuggestion === "Movie & TV Show"
+									? "bg-[#B1FA63]"
+									: "hover:bg-[#B1FA63] hover:bg-opacity-50"
+									}`}
 								onClick={() =>
 									handleSuggestionClick("Movie & TV Show")
 								}
@@ -230,11 +235,10 @@ export const SearchModal = () => {
 								<span className="mb-1">Movie & TV Show</span>
 							</div>
 							<div
-								className={`flex items-center p-2 rounded-md cursor-pointer transition-colors ${
-									selectedSuggestion === "Anime & Manga"
-										? "bg-[#B1FA63]"
-										: "hover:bg-[#B1FA63] hover:bg-opacity-50"
-								}`}
+								className={`flex items-center p-2 rounded-md cursor-pointer transition-colors ${selectedSuggestion === "Anime & Manga"
+									? "bg-[#B1FA63]"
+									: "hover:bg-[#B1FA63] hover:bg-opacity-50"
+									}`}
 								onClick={() =>
 									handleSuggestionClick("Anime & Manga")
 								}
@@ -250,11 +254,10 @@ export const SearchModal = () => {
 								<span className="mb-1">Anime & Manga</span>
 							</div>
 							<div
-								className={`flex items-center p-2 rounded-md cursor-pointer transition-colors ${
-									selectedSuggestion === "Video Game"
-										? "bg-[#B1FA63]"
-										: "hover:bg-[#B1FA63] hover:bg-opacity-50"
-								}`}
+								className={`flex items-center p-2 rounded-md cursor-pointer transition-colors ${selectedSuggestion === "Video Game"
+									? "bg-[#B1FA63]"
+									: "hover:bg-[#B1FA63] hover:bg-opacity-50"
+									}`}
 								onClick={() =>
 									handleSuggestionClick("Video Game")
 								}
@@ -270,11 +273,10 @@ export const SearchModal = () => {
 								<span className="mb-1">Video Game</span>
 							</div>
 							<div
-								className={`flex items-center p-2 rounded-md cursor-pointer transition-colors ${
-									selectedSuggestion === "Book"
-										? "bg-[#B1FA63]"
-										: "hover:bg-[#B1FA63] hover:bg-opacity-50"
-								}`}
+								className={`flex items-center p-2 rounded-md cursor-pointer transition-colors ${selectedSuggestion === "Book"
+									? "bg-[#B1FA63]"
+									: "hover:bg-[#B1FA63] hover:bg-opacity-50"
+									}`}
 								onClick={() => handleSuggestionClick("Book")}
 								role="button"
 								tabIndex={0}
