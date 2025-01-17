@@ -68,7 +68,8 @@ export const useMediaStore = create((set) => ({
       const isSignedIn = useAuthStore.getState().isSignedIn;
       const maxLists = isSignedIn ? 5 : 2;
       if (state.mediaLists.length < maxLists) {
-        const mediaLists = [...state.mediaLists, { ...list, items: Array(8).fill(defaultMediaObject) }];
+        const newList = { ...list, name: `new media list ${state.mediaLists.length}`, items: Array(8).fill(defaultMediaObject) };
+        const mediaLists = [...state.mediaLists, newList];
         saveToLocalStorage("mediaLists", mediaLists);
         return { mediaLists };
       } else {
@@ -86,6 +87,12 @@ export const useMediaStore = create((set) => ({
     set((state) => {
       saveToLocalStorage("currentMediaList", list);
       return { currentMediaList: list };
+    }),
+  updateMediaListName: (index, name) =>
+    set((state) => {
+      const mediaLists = state.mediaLists.map((list, i) => i === index ? { ...list, name } : list);
+      saveToLocalStorage("mediaLists", mediaLists);
+      return { mediaLists };
     }),
   clearLocalStorage: () => {
     clearLocalStorage("mediaItems");

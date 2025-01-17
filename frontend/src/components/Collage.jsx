@@ -21,22 +21,44 @@ import { useShareModalStore } from "../store/shareModalStore";
 import { ManageListsModal } from "./ManageListsModal";
 
 export const Collage = () => {
+  const mediaLists = useMediaStore((state) => state.mediaLists);
   const currentMediaList = useMediaStore((state) => state.currentMediaList);
+  const setCurrentMediaList = useMediaStore(
+    (state) => state.setCurrentMediaList
+  );
+  const updateMediaListName = useMediaStore(
+    (state) => state.updateMediaListName
+  );
   const showHelp = useHelpModalStore((state) => state.showHelp);
   const setShowHelp = useHelpModalStore((state) => state.setShowHelp);
   const [showRanking, setShowRanking] = useState(false);
   const setPage = useHelpModalStore((state) => state.setPage);
   const showShareModal = useShareModalStore((state) => state.showShareModal);
-  const setShowShareModal = useShareModalStore((state) => state.setShowShareModal);
-  const showManageListsModal = useMediaStore((state) => state.showManageListsModal);
-  const setShowManageListsModal = useMediaStore((state) => state.setShowManageListsModal);
+  const setShowShareModal = useShareModalStore(
+    (state) => state.setShowShareModal
+  );
+  const showManageListsModal = useMediaStore(
+    (state) => state.showManageListsModal
+  );
+  const setShowManageListsModal = useMediaStore(
+    (state) => state.setShowManageListsModal
+  );
 
   const [mediaListTitle, setMediaListTitle] = useState(currentMediaList.name);
 
   useEffect(() => {
     setMediaListTitle(currentMediaList.name);
-		console.log("currentMediaList", currentMediaList);
   }, [currentMediaList]);
+
+  useEffect(() => {
+    setCurrentMediaList({ ...currentMediaList, name: mediaListTitle });
+    const index = mediaLists.findIndex(
+      (list) => list.name === currentMediaList.name
+    );
+    if (index !== -1) {
+      updateMediaListName(index, mediaListTitle);
+    }
+  }, [mediaListTitle]);
 
   const dockElements = [
     {
@@ -122,7 +144,10 @@ export const Collage = () => {
       <div className="absolute bottom-2 left-1/2 max-w-full -translate-x-1/2 opacity-30 hover:opacity-100 duration-300 z-50">
         <Dock className="items-end pb-1">
           {dockElements.map((item, idx) => (
-            <DockItem key={idx} className="aspect-square rounded-full bg-gray-200 dark:bg-neutral-800 ">
+            <DockItem
+              key={idx}
+              className="aspect-square rounded-full bg-gray-200 dark:bg-neutral-800 "
+            >
               <DockLabel>{item.title}</DockLabel>
               <DockIcon>{item.icon}</DockIcon>
             </DockItem>
