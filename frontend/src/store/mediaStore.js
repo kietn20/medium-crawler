@@ -47,8 +47,12 @@ export const useMediaStore = create((set) => ({
       const mediaItems = [...state.currentMediaList.items];
       mediaItems[index] = mediaItem;
       const updatedMediaList = { ...state.currentMediaList, items: mediaItems };
+      const mediaLists = state.mediaLists.map((list) =>
+        list.name === state.currentMediaList.name ? updatedMediaList : list
+      );
       saveToLocalStorage("currentMediaList", updatedMediaList);
-      return { currentMediaList: updatedMediaList };
+      saveToLocalStorage("mediaLists", mediaLists);
+      return { currentMediaList: updatedMediaList, mediaLists };
     }),
   swapMediaItems: (index1, index2) =>
     set((state) => {
@@ -58,8 +62,12 @@ export const useMediaStore = create((set) => ({
         newMediaItems[index1],
       ];
       const updatedMediaList = { ...state.currentMediaList, items: newMediaItems };
+      const mediaLists = state.mediaLists.map((list) =>
+        list.name === state.currentMediaList.name ? updatedMediaList : list
+      );
       saveToLocalStorage("currentMediaList", updatedMediaList);
-      return { currentMediaList: updatedMediaList };
+      saveToLocalStorage("mediaLists", mediaLists);
+      return { currentMediaList: updatedMediaList, mediaLists };
     }),
   setSlotIndexClicked: (index) => set({ slotIndexClicked: index }),
   setShowManageListsModal: (show) => set({ showManageListsModal: show }),
