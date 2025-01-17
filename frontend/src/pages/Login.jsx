@@ -118,7 +118,13 @@ export const Login = () => {
             />
           </button>
           <span className="my-2">or</span>
-          <button className="w-[445px] h-[55px] text-2xl rounded-[20px] bg-white text-[#80978F] relative hover:bg-[#0A0B06] hover:text-[#B1FA63] duration-250">
+          <button
+            className="w-[445px] h-[55px] text-2xl rounded-[20px] bg-white text-[#80978F] relative hover:bg-[#0A0B06] hover:text-[#B1FA63] duration-250"
+            onClick={() =>
+              (window.location.href =
+                "http://localhost:8080/oauth2/authorization/github")
+            }
+          >
             sign in with Github
             <img
               src="src/assets/github.svg"
