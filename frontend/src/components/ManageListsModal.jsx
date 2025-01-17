@@ -55,13 +55,12 @@ export const ManageListsModal = () => {
               >
                 <span className="text-3xl">{list.name}</span>
                 <button
-                  className={`text-2xl text-white p-2 bg-red-600 bg-opacity-0 hover:bg-opacity-100 rounded-[20px] duration-300 group drop-shadow-2xl ${
-                    index == 0 && "opacity-30"
-                  }`}
+                  className={`text-2xl text-white p-2 bg-red-600 bg-opacity-0 hover:bg-opacity-100 rounded-[20px] duration-300 group drop-shadow-2xl`}
                   onClick={(e) => {
                     e.stopPropagation();
                     if (index > 0) {
                       removeMediaList(index);
+                      setCurrentMediaList(mediaLists[0]);
                     } else {
                       toast.error("Cannot delete default list");
                     }
