@@ -8,16 +8,12 @@ import { motion, useAnimation } from "framer-motion";
 export const EditModal = () => {
 	// Edit Modal State Store
 	const showEditModal = useEditModalStore((state) => state.showEditModal);
-	const setShowEditModal = useEditModalStore(
-		(state) => state.setShowEditModal
-	);
+	const setShowEditModal = useEditModalStore((state) => state.setShowEditModal);
 
 	// Media Item State Store
 	const slotIndexClicked = useMediaStore((state) => state.slotIndexClicked);
-	const setSlotIndexClicked = useMediaStore(
-		(state) => state.setSlotIndexClicked
-	);
-	const mediaItems = useMediaStore((state) => state.mediaItems);
+	const setSlotIndexClicked = useMediaStore((state) => state.setSlotIndexClicked);
+	const currentMediaList = useMediaStore((state) => state.currentMediaList);
 	const setMediaItem = useMediaStore((state) => state.setMediaItem);
 
 	// Local state for input values
@@ -25,31 +21,24 @@ export const EditModal = () => {
 	const [rating, setRating] = useState("");
 	const [description, setDescription] = useState("");
 	const [imageUrl, setImageUrl] = useState("");
+	const defaultMediaObject = { title: "", rating: "", description: "", imageUrl: "" };
+
 
 	const editModalRef = useRef(null);
 	const controls = useAnimation();
 
 	useEffect(() => {
-		const mediaItem = mediaItems[slotIndexClicked];
-		console.log(slotIndexClicked);
-		console.log(mediaItem);
+		const mediaItem = currentMediaList.items[slotIndexClicked];
 		if (mediaItem) {
 			setTitle(mediaItem.title);
 			setRating(mediaItem.rating || "");
 			setDescription(mediaItem.description || "");
 			setImageUrl(mediaItem.imageUrl || "");
 		}
-	}, [mediaItems, slotIndexClicked]);
+	}, [currentMediaList, slotIndexClicked]);
 
 	const validateTitle = (value) => {
-		if (
-			!title ||
-			title.trim() === "" ||
-			title.length === 0 ||
-			title === "" ||
-			title === null ||
-			title === undefined
-		) {
+		if (!value || value.trim() === "") {
 			toast.error("Title is required");
 			controls.start({
 				x: [0, -10, 10, -10, 10, 0],
@@ -89,33 +78,33 @@ export const EditModal = () => {
 		return true;
 	};
 
-	const handleSave = () => {
-		const isTitleValid = validateTitle(title);
-		const isRatingValid = validateRating(rating);
-		const isImageUrlValid = validateImageUrl(imageUrl);
+	// const handleSave = () => {
+	// 	const isTitleValid = validateTitle(title);
+	// 	const isRatingValid = validateRating(rating);
+	// 	const isImageUrlValid = validateImageUrl(imageUrl);
 
-		if (isTitleValid && isRatingValid && isImageUrlValid) {
-			// const updatedMediaItem = {
-			// 	...mediaItem,
-			// 	title,
-			// 	rating,
-			// 	description,
-			// 	imageUrl,
-			// };
-			// setMediaItem(currentEditIndex, updatedMediaItem);
-			// setShowEditModal(false);
-			const updatedMediaItem = {
-				...mediaItem,
-				title,
-				rating,
-				description,
-				imageUrl,
-			};
-			setMediaItem(slotIndexClicked, updatedMediaItem);
-			setShowEditModal(false);
-		}
-		resetEditStates();
-	};
+	// 	if (isTitleValid && isRatingValid && isImageUrlValid) {
+	// 		// const updatedMediaItem = {
+	// 		// 	...mediaItem,
+	// 		// 	title,
+	// 		// 	rating,
+	// 		// 	description,
+	// 		// 	imageUrl,
+	// 		// };
+	// 		// setMediaItem(currentEditIndex, updatedMediaItem);
+	// 		// setShowEditModal(false);
+	// 		const updatedMediaItem = {
+	// 			...mediaItem,
+	// 			title,
+	// 			rating,
+	// 			description,
+	// 			imageUrl,
+	// 		};
+	// 		setMediaItem(slotIndexClicked, updatedMediaItem);
+	// 		setShowEditModal(false);
+	// 	}
+	// 	resetEditStates();
+	// };
 
 	const resetEditStates = () => {
 		setTitle("");
@@ -140,14 +129,14 @@ export const EditModal = () => {
 			// setMediaItem(currentEditIndex, updatedMediaItem);
 			// setShowEditModal(false);
 			const updatedMediaItem = {
-				...mediaItems[slotIndexClicked],
+				...currentMediaList.items[slotIndexClicked],
 				title,
 				rating,
 				description,
 				imageUrl,
 			};
-			setMediaItem(slotIndexClicked, updatedMediaItem);
 			setShowEditModal(false);
+			setMediaItem(slotIndexClicked, updatedMediaItem);
 			resetEditStates();
 		}
 	};
@@ -163,11 +152,10 @@ export const EditModal = () => {
 			<motion.div
 				ref={editModalRef}
 				animate={controls}
-				className={`absolute top-56 w-[700px] h-[470px] bg-[B1FA63] bg-[#151518] flex-col rounded-[30px] border-8 border-lime-900 justify-center z-50 transition-opacity duration-300 font-heading text-white ${
-					showEditModal
-						? "opacity-100 pointer-events-auto"
-						: "opacity-0 pointer-events-none"
-				} `}
+				className={`absolute top-56 w-[700px] h-[470px] bg-[B1FA63] bg-[#151518] flex-col rounded-[30px] border-8 border-lime-900 justify-center z-50 transition-opacity duration-300 font-heading text-white ${showEditModal
+					? "opacity-100 pointer-events-auto"
+					: "opacity-0 pointer-events-none"
+					} `}
 			>
 				<div className="flex justify-start items-center w-full h-16 bg-pink-200 bg-opacity-0 px-7 text-3xl">
 					Edit Media
@@ -175,10 +163,7 @@ export const EditModal = () => {
 				<div className="flex px-7 justify-between">
 					<div className="w-[250px] h-96 bg-orange-400 bg-opacity-0 flex justify-around items-center flex-col text-[14px]">
 						<div
-							className={`w-[165px] h-[280px] rounded-[30px] flex items-center justify-center text-[#B1FA63] text-9xl font-heading cursor-pointer duration-300 overflow-hidden border-white border ${
-								mediaItems[slotIndexClicked] ??
-								"border-transparent"
-							}`}
+							className={`w-[165px] h-[280px] rounded-[30px] flex items-center justify-center text-[#B1FA63] text-9xl font-heading cursor-pointer duration-300 overflow-hidden border-white border`}
 							onClick={() =>
 								toast(
 									'Paste an image URL in the "Web Image URL" field to change the image\n ("https://www.example.com/image.jpg")\n\n ONLY [.jpg, .jpeg, .png, .gif, and .webp] images are supported',
@@ -278,17 +263,11 @@ export const EditModal = () => {
 								className="w-32 bg-red-600 bg-opacity-50 hover:bg-opacity-100 duration-150 border rounded-[30px] p-2 hover:text-black"
 								onClick={() => {
 									setShowEditModal(false);
-									setMediaItem(slotIndexClicked, null);
+									setMediaItem(slotIndexClicked, defaultMediaObject);
 								}}
 							>
 								Delete
 							</button>
-							{/* <button
-								className="w-32 bg-[#B1FA63] bg-opacity-50 hover:bg-opacity-100 duration-300 border rounded-[30px] p-2 hover:text-black"
-								onClick={handleSave}
-							>
-								Save
-							</button> */}
 						</div>
 					</div>
 				</div>
