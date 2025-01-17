@@ -12,10 +12,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("").authenticated()
-                .anyRequest().permitAll()
-            )
+            // .authorizeHttpRequests(auth -> auth
+            //     .requestMatchers("/api/**").authenticated()
+            //     .anyRequest().permitAll()
+            // )
             .oauth2Login(oauth2 -> oauth2
                 .defaultSuccessUrl("http://localhost:5175", true) // Redirect to frontend after login
             )
