@@ -63,13 +63,17 @@ public class AuthController {
             return ResponseEntity.status(401).body("User is not authenticated.");
         }
 
-        DefaultOAuth2User user = (DefaultOAuth2User) authentication.getPrincipal();
-        String email = user.getAttribute("email");
-        String name = user.getAttribute("name");
+        DefaultOAuth2User oauthUser = (DefaultOAuth2User) authentication.getPrincipal();
+        String email = oauthUser.getAttribute("email");
+
+        User user = userService.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
         return ResponseEntity.ok(Map.of(
-                "email", email,
-                "name", name));
+                "name", user.getName(),
+                "email", user.getEmail(),
+                "watchLists", user.getWatchLists() // Ensure watchLists and media are properly serialized
+        ));
     }
 
 }

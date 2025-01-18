@@ -1,6 +1,8 @@
 package com.mediumcrawler.security;
 
+import com.mediumcrawler.model.Media;
 import com.mediumcrawler.model.User;
+import com.mediumcrawler.model.WatchList;
 import com.mediumcrawler.repository.UserRepository;
 
 import org.springframework.core.ParameterizedTypeReference;
@@ -32,58 +34,36 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
   public OAuth2User loadUser(OAuth2UserRequest userRequest) {
     OAuth2User oauth2User = super.loadUser(userRequest);
 
-    // Extract user information
     String email = oauth2User.getAttribute("email");
     String name = oauth2User.getAttribute("name");
-
-    // // If email is null, fetch emails using GitHub API
-    // if (email == null) {
-    //   email = fetchEmailFromGitHub(userRequest.getAccessToken().getTokenValue());
-    // }
 
     if (email == null || name == null) {
       throw new RuntimeException("Failed to retrieve required user information from OAuth2 provider.");
     }
 
-    // Check if user exists in the database
-    Optional<User> existingUser = userRepository.findByEmail(email);
-    if (existingUser.isEmpty()) {
-      // Register new user
+    User user = userRepository.findByEmail(email).orElseGet(() -> {
       User newUser = new User();
       newUser.setEmail(email);
       newUser.setName(name);
-      userRepository.save(newUser);
-    }
+
+      // Create a default media list
+      WatchList defaultWatchList = new WatchList();
+      defaultWatchList.setName("medium crawler");
+      defaultWatchList.setDescription("Default watchlist");
+      defaultWatchList.setUser(newUser);
+      defaultWatchList.setMedia(createDefaultMediaList());
+
+      newUser.setWatchLists(List.of(defaultWatchList));
+      return userRepository.save(newUser);
+    });
 
     return new DefaultOAuth2User(oauth2User.getAuthorities(), oauth2User.getAttributes(), "email");
   }
 
-  // private String fetchEmailFromGitHub(String accessToken) {
-  //   String url = "https://api.github.com/user/emails";
-  //   RestTemplate restTemplate = new RestTemplate();
-
-  //   HttpHeaders headers = new HttpHeaders();
-  //   headers.setBearerAuth(accessToken);
-  //   HttpEntity<?> entity = new HttpEntity<>(headers);
-
-  //   try {
-  //     ResponseEntity<List<Map<String, Object>>> response = restTemplate.exchange(
-  //         url,
-  //         HttpMethod.GET,
-  //         entity,
-  //         new ParameterizedTypeReference<>() {
-  //         });
-
-  //     // Find the primary email
-  //     for (Map<String, Object> emailObj : response.getBody()) {
-  //       if (Boolean.TRUE.equals(emailObj.get("primary"))) {
-  //         return (String) emailObj.get("email");
-  //       }
-  //     }
-  //   } catch (Exception e) {
-  //     throw new RuntimeException("Failed to fetch email from GitHub API", e);
-  //   }
-
-  //   return null;
-  // }
+  private List<Media> createDefaultMediaList() {
+    Media defaultMediaObject = new Media(null, "", "", "", 0, 0, "");
+    return List.of(defaultMediaObject, defaultMediaObject, defaultMediaObject, defaultMediaObject,
+        defaultMediaObject, defaultMediaObject, defaultMediaObject, defaultMediaObject,
+        defaultMediaObject, defaultMediaObject);
+  }
 }
