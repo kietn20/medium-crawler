@@ -50,3 +50,9 @@ build/
 # Ignore OS-specific files
 .DS_Store
 Thumbs.db
+
+# Ignore sensitive configuration
+src/main/resources/application.properties
+src/main/resources/application.yml
+src/main/java/com/mediumcrawler/security/SecurityConfig.java
+src/main/java/com/mediumcrawler/security/CustomOAuth2User.java
