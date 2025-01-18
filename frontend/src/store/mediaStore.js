@@ -73,8 +73,9 @@ export const useMediaStore = create((set) => ({
   setShowManageListsModal: (show) => set({ showManageListsModal: show }),
   addMediaList: (list) =>
     set((state) => {
-      const isSignedIn = useAuthStore.getState().isSignedIn;
-      const maxLists = isSignedIn ? 5 : 2;
+      const user = useAuthStore.getState().user;
+      // Limit the number of media lists (5 mediaLists for logged in users, 2 mediaLists for guests)
+      const maxLists = user ? 5 : 2;
       if (state.mediaLists.length < maxLists) {
         const newList = { ...list, name: `new media list ${state.mediaLists.length}`, items: Array(10).fill(defaultMediaObject) };
         const mediaLists = [...state.mediaLists, newList];
@@ -91,6 +92,10 @@ export const useMediaStore = create((set) => ({
       saveToLocalStorage("mediaLists", mediaLists);
       return { mediaLists };
     }),
+  setMediaLists: (lists) => {
+    saveToLocalStorage("mediaLists", lists);
+    set({ mediaLists: lists });
+  },
   setCurrentMediaList: (list) =>
     set((state) => {
       saveToLocalStorage("currentMediaList", list);
@@ -106,6 +111,10 @@ export const useMediaStore = create((set) => ({
     clearLocalStorage("mediaItems");
     clearLocalStorage("mediaLists");
     clearLocalStorage("currentMediaList");
-    set({ mediaItems: [], mediaLists: [defaultMediaList], currentMediaList: defaultMediaList });
+    set({
+      mediaItems: [],
+      mediaLists: [defaultMediaList],
+      currentMediaList: defaultMediaList,
+    });
   },
 }));
