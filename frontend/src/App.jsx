@@ -17,7 +17,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="login" element={<Login onSignIn={handleSignIn} />} />
-        <Route path="/oauth2/callback" element={<OAuthCallback />} />
+        <Route path="oauth2/callback" element={<OAuthCallback />} />
       </Routes>
     </Router>
   );

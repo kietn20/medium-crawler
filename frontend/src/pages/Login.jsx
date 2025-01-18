@@ -97,7 +97,7 @@ export const Login = () => {
       />
       <Toaster />
       <h1 className="font-heading text-[#B1FA63] text-8xl">medium crawler</h1>
-      <div className="w-[600px] h-[700px] bg-[#142120] flex flex-col justify-around items-center rounded-[30px] text-white drop-shadow-2xl select-none">
+      <div className="w-[600px] h-[650px] bg-[#142120] flex flex-col justify-around items-center rounded-[30px] text-white drop-shadow-2xl select-none">
         <div className="flex flex-col justify-center items-center">
           <span className="text-7xl text-[#B1FA63]">
             {isRegister ? "sign up" : "sign in"}
@@ -147,7 +147,7 @@ export const Login = () => {
           </form>
         </div>
 
-        <div className="w-[500px] h-1 bg-[#545b4c] rounded-9xl my-6" />
+        <div className="w-[500px] h-1 bg-[#545b4c] rounded-9xl" />
 
         <div className="flex flex-col justify-center items-center">
           <button
@@ -164,7 +164,7 @@ export const Login = () => {
               className="w-8 h-8 absolute top-3 left-12 opacity-70"
             />
           </button>
-          <span className="my-2">or</span>
+          {/* <span className="my-2">or</span>
           <button
             className="w-[445px] h-[55px] text-2xl rounded-[20px] bg-white text-[#80978F] relative hover:bg-[#0A0B06] hover:text-[#B1FA63] duration-250"
             onClick={() =>
@@ -178,7 +178,7 @@ export const Login = () => {
               alt="github"
               className="w-8 h-8 absolute top-3 left-12 opacity-70"
             />
-          </button>
+          </button> */}
           <span className="my-5">
             {isRegister ? (
               <>
