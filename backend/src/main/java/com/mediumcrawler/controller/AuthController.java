@@ -3,6 +3,9 @@ package com.mediumcrawler.controller;
 import com.mediumcrawler.model.User;
 import com.mediumcrawler.service.UserService;
 import jakarta.validation.Valid;
+
+import java.util.Map;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -36,8 +39,13 @@ public class AuthController {
     public ResponseEntity<?> loginUser(@RequestBody User loginRequest) {
         return userService.findByEmail(loginRequest.getEmail())
                 .filter(user -> passwordEncoder.matches(loginRequest.getPassword(), user.getPassword()))
-                .map(user -> ResponseEntity.ok("Login successful"))
-                .orElse(ResponseEntity.status(401).body("Invalid email or password."));
+                .map(user -> {
+                    return ResponseEntity.ok(Map.of(
+                            "message", "Login successful",
+                            "name", user.getName(),
+                            "email", user.getEmail()));
+                })
+                .orElse(ResponseEntity.status(401).body(Map.of(
+                        "message", "Invalid email or password.")));
     }
-
 }

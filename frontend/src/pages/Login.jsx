@@ -9,7 +9,7 @@ export const Login = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { setUser } = useAuthStore();
+  const setUser = useAuthStore((state) => state.setUser);
   const navigate = useNavigate();
 
   const validateEmail = (email) => {

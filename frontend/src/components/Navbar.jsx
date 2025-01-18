@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuthStore } from "../store/authStore";
 
@@ -12,10 +12,14 @@ export const Navbar = () => {
     setIsDropdownOpen(false);
   };
 
+	useEffect(() => {
+		console.log(user);
+	}, [user]);
+
   return (
     <div className="flex justify-end items-center w-screen h-16 px-3 gap-3 relative">
       <span className="font-heading text-3xl text-[#B1FA63] pb-2">
-        {user ? { user } : "guest"}
+        {user ? ` ${user.name}` : "guest"}
       </span>
       <div className="relative">
         <img
