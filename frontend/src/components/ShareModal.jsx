@@ -192,8 +192,8 @@ export const ShareModal = () => {
         {/* Share Buttons */}
         <div className="flex justify-between items-center text-black text-xl gap-5 absolute bottom-10">
           <button className="p-3 rounded-lg bg-slate-500 text-white opacity-50 hover:opacity-100 hover:bg-[#8ac847] duration-300">copy to clipboard</button>
-          <button className="p-3 rounded-lg bg-slate-500 text-white opacity-50 hover:opacity-100 hover:bg-[#8ac847] duration-300">open image in new tab</button>
           <button className="p-3 rounded-lg bg-slate-500 text-white opacity-50 hover:opacity-100 hover:bg-[#8ac847] duration-300">download</button>
+          <button className="p-3 rounded-lg bg-slate-500 text-white opacity-50 hover:opacity-100 hover:bg-[#8ac847] duration-300">open image in new tab</button>
         </div>
       </div>
     </>
