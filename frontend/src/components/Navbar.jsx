@@ -1,20 +1,25 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store/authStore";
 
 export const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const user = useAuthStore((state) => state.user);
   const setUser = useAuthStore((state) => state.setUser);
+  const navigate = useNavigate();
 
   const handleSignOut = () => {
-    setUser(false);
+    clearLocalStorage("mediaItems");
+    clearLocalStorage("mediaLists");
+    clearLocalStorage("currentMediaList");
+    setUser(null);
     setIsDropdownOpen(false);
+    navigate("/");
   };
 
-	useEffect(() => {
-		console.log(user);
-	}, [user]);
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
 
   return (
     <div className="flex justify-end items-center w-screen h-16 px-3 gap-3 relative">

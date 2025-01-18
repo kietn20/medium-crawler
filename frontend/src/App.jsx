@@ -6,17 +6,13 @@ import { useAuthStore } from "./store/authStore";
 import { OAuthCallback } from "./components/OAuthCallback";
 
 export default function App() {
-  const setSignedIn = useAuthStore((state) => state.setSignedIn);
-
-  const handleSignIn = () => {
-    setSignedIn(true);
-  };
+  const user = useAuthStore((state) => state.user);
 
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Homepage />} />
-        <Route path="login" element={<Login onSignIn={handleSignIn} />} />
+        <Route path="login" element={<Login />} />
         <Route path="oauth2/callback" element={<OAuthCallback />} />
       </Routes>
     </Router>
