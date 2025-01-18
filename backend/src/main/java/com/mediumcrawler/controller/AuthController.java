@@ -7,7 +7,9 @@ import jakarta.validation.Valid;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -48,4 +50,20 @@ public class AuthController {
                 .orElse(ResponseEntity.status(401).body(Map.of(
                         "message", "Invalid email or password.")));
     }
+
+    @GetMapping("/me")
+    public ResponseEntity<?> getCurrentUser(Authentication authentication) {
+        if (authentication == null || !(authentication.getPrincipal() instanceof DefaultOAuth2User)) {
+            return ResponseEntity.status(401).body("User is not authenticated.");
+        }
+
+        DefaultOAuth2User user = (DefaultOAuth2User) authentication.getPrincipal();
+        String email = user.getAttribute("email");
+        String name = user.getAttribute("name");
+
+        return ResponseEntity.ok(Map.of(
+                "email", email,
+                "name", name));
+    }
+
 }
