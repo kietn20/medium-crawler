@@ -31,7 +31,6 @@ public class UserService {
         User existingUser = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
         existingUser.setName(updatedUser.getName());
         existingUser.setEmail(updatedUser.getEmail());
-        existingUser.setProfilePicture(updatedUser.getProfilePicture());
         return userRepository.save(existingUser);
     }
 

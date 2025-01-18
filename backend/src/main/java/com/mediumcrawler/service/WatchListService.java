@@ -31,15 +31,13 @@ public class WatchListService {
     public WatchList createWatchList(WatchList watchList) {
         User user = userRepository.findById(watchList.getUser().getId())
                 .orElseThrow(() -> new RuntimeException("User does not exist."));
-        int maxWatchlists = getMaxWatchlistsForUser(user);
 
         // Enforce watchlist limits
-        if (watchListRepository.countByUserId(user.getId()) >= maxWatchlists) {
+        if (watchListRepository.countByUserId(user.getId()) >= 20) {
             throw new RuntimeException("User has reached the maximum number of watchlists allowed.");
         }
 
-        int maxMediaItems = getMaxMediaItemsForUser(user);
-        if (watchList.getMedia().size() > maxMediaItems) {
+        if (watchList.getMedia().size() > 20) {
             throw new RuntimeException("Watchlist exceeds the maximum number of media items allowed.");
         }
 
@@ -55,8 +53,7 @@ public class WatchListService {
                 .orElseThrow(() -> new RuntimeException("User does not exist."));
 
         // Enforce media item limits during update
-        int maxMediaItems = getMaxMediaItemsForUser(user);
-        if (updatedWatchList.getMedia().size() > maxMediaItems) {
+        if (updatedWatchList.getMedia().size() > 20) {
             throw new RuntimeException("Watchlist exceeds the maximum number of media items allowed.");
         }
 
@@ -72,27 +69,6 @@ public class WatchListService {
         watchListRepository.deleteById(id);
     }
 
-    private int getMaxWatchlistsForUser(User user) {
-        switch (user.getRole()) {
-            case "PREMIUM":
-                return 10;
-            case "AUTHENTICATED":
-                return 5;
-            default: // GUEST
-                return 1;
-        }
-    }
-
-    private int getMaxMediaItemsForUser(User user) {
-        switch (user.getRole()) {
-            case "PREMIUM":
-                return 40;
-            case "AUTHENTICATED":
-                return 20;
-            default: // GUEST
-                return 8;
-        }
-    }
 
     public WatchList reorderMedia(Long watchListId, List<Long> newOrder) {
         WatchList watchList = watchListRepository.findById(watchListId)
