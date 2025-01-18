@@ -1,30 +1,77 @@
 import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import axios from "axios";
+import { useAuthStore } from "../store/authStore";
+import { useNavigate } from "react-router-dom";
 
 export const Login = () => {
   const [isRegister, setIsRegister] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { setUser } = useAuthStore();
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const validateEmail = (email) => {
+    const re = /\S+@\S+\.\S+/;
+    return re.test(email);
+  };
+
+  const validatePassword = (password) => {
+    return password.length >= 8;
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (isRegister) {
       if (!name || !email || !password) {
         toast.error("All fields are required for registration");
         return;
       }
-      // Handle registration logic
-      console.log("Registering:", { name, email, password });
-      toast.success("Registration successful");
+      if (!validateEmail(email)) {
+        toast.error("Invalid email format");
+        return;
+      }
+      if (!validatePassword(password)) {
+        toast.error("Password must be at least 8 characters long");
+        return;
+      }
+      try {
+        const response = await axios.post("/api/auth/register", {
+          name,
+          email,
+          password,
+        });
+        setUser(response.data);
+        toast.success("Registration successful");
+        setTimeout(() => {
+          navigate("/");
+        }, 1500);
+      } catch (error) {
+        toast.error(error.response.data || "Registration failed");
+      }
     } else {
       if (!email || !password) {
         toast.error("Email and password are required for sign in");
         return;
       }
-      // Handle sign-in logic
-      console.log("Signing in:", { email, password });
-      toast.success("Sign in successful");
+      if (!validateEmail(email)) {
+        toast.error("Invalid email format");
+        return;
+      }
+      try {
+        const response = await axios.post("/api/auth/login", {
+          email,
+          password,
+        });
+        setUser(response.data);
+        toast.success("Sign in successful");
+        setTimeout(() => {
+          navigate("/");
+        }, 1500);
+      } catch (error) {
+        toast.error(error.response.data || "Sign in failed");
+      }
     }
   };
 
