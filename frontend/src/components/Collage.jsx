@@ -130,7 +130,7 @@ export const Collage = () => {
       <EditModal />
       <ShareModal />
       <ManageListsModal />
-      <div className="mt-3 w-[50%] h-[614px] grid grid-cols-5 gap-x-[20px] gap-y-[30px] items-center place-items-center place-content-between">
+      <div className="mt-3 w-[55%] h-[614px] grid grid-cols-5 gap-x-[20px] gap-y-[30px] items-center place-items-center place-content-between">
         {currentMediaList.items.map((mediaItem, index) => (
           <div key={index} className="relative">
             {showRanking && (
