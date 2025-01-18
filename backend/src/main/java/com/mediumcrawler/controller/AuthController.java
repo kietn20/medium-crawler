@@ -30,7 +30,13 @@ public class AuthController {
             return ResponseEntity.badRequest().body("Email is already in use.");
         }
 
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        // Validate password constraints manually
+        String password = user.getPassword();
+        if (password == null || password.length() < 8) {
+            return ResponseEntity.badRequest().body("Password must be at least 8 characters long.");
+        }
+
+        user.setPassword(passwordEncoder.encode(password));
         User registeredUser = userService.registerUser(user);
 
         registeredUser.setPassword(null);
