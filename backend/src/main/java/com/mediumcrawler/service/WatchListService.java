@@ -33,7 +33,7 @@ public class WatchListService {
                 .orElseThrow(() -> new RuntimeException("User does not exist."));
 
         // Enforce watchlist limits
-        if (watchListRepository.countByUserId(user.getId()) >= 20) {
+        if (watchListRepository.countByUserId(user.getId()) >= 5) {
             throw new RuntimeException("User has reached the maximum number of watchlists allowed.");
         }
 
