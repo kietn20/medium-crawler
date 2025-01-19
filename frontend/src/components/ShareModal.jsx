@@ -1,61 +1,11 @@
 import { useState } from "react";
 import { useShareModalStore } from "../store/shareModalStore";
 
-const exampleMediaItems = [
-  {
-    title: "Dune 2",
-    imageUrl:
-      "https://a.ltrbxd.com/resized/film-poster/6/1/7/4/4/3/617443-dune-part-two-0-2000-0-3000-crop.jpg",
-  },
-  {
-    title: "Persona 3 Reload",
-    imageUrl:
-      "https://upload.wikimedia.org/wikipedia/en/6/65/Persona_3_Reload_box_art.jpg",
-  },
-  {
-    title: "Look Back",
-    imageUrl:
-      "https://a.ltrbxd.com/resized/film-poster/1/1/2/7/6/6/9/1127669-look-back-0-2000-0-3000-crop.jpg",
-  },
-  {
-    title: "Perfect Blue",
-    imageUrl:
-      "https://a.ltrbxd.com/resized/film-poster/4/6/1/7/5/46175-perfect-blue-0-2000-0-3000-crop.jpg",
-  },
-  {
-    title: "Shogun",
-    imageUrl: "https://i.ebayimg.com/images/g/5i4AAOSw3SdmVQ0l/s-l1200.jpg",
-  },
-  {
-    title: "LongLegs",
-    imageUrl:
-      "https://a.ltrbxd.com/resized/film-poster/1/1/1/0/0/5/9/1110059-longlegs-0-2000-0-3000-crop.jpg",
-  },
-  {
-    title: "Black Myth Wukong",
-    imageUrl:
-      "https://m.media-amazon.com/images/M/MV5BNGVmZTVjZDMtMzkyZi00MTczLWE4OTUtY2Y1ODBlMGFlYTAxXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
-  },
-  {
-    title: "Shin Godzilla",
-    imageUrl:
-      "https://a.ltrbxd.com/resized/sm/upload/8g/5p/p4/6b/8YWirGQidtZeSEmhqvQM5FrI6N1-0-2000-0-3000-crop.jpg",
-  },
-];
-
 export const ShareModal = () => {
   const showShareModal = useShareModalStore((state) => state.showShareModal);
-  const setShowShareModal = useShareModalStore(
-    (state) => state.setShowShareModal
-  );
+  const setShowShareModal = useShareModalStore((state) => state.setShowShareModal);
 
-  const [option, setOption] = useState("");
 
-  const getSpreadPosition = (index) => {
-    const spreadWidth = -50;
-    const step = spreadWidth / (exampleMediaItems.length - 1);
-    return (index - (exampleMediaItems.length - 1) / 2) * step;
-  };
   return (
     <>
       {showShareModal && (
@@ -65,135 +15,34 @@ export const ShareModal = () => {
         ></div>
       )}
       <div
-        className={`absolute top-4 w-[95%] m-10 h-[80%] bg-[#f0f1ea] flex flex-col rounded-[30px] border-8 border-lime-900 z-50 transition-opacity duration-300 items-center setShowShareModal p-2 font-heading ${
-          showShareModal
-            ? "opacity-100 pointer-events-auto"
-            : "opacity-0 pointer-events-none"
-        } `}
+        className={`fixed top-0 w-[50%] m-5 h-[80%] bg-[#f0f1ea] flex flex-col rounded-[30px] border-8 border-lime-900 z-50 transition-opacity duration-300 items-center setShowShareModal p-2 font-heading ${showShareModal
+          ? "opacity-100 pointer-events-auto"
+          : "opacity-0 pointer-events-none"
+          } `}
       >
-        <span className="text-3xl">choose a sharing template</span>
-        <div className="w-full h-[80%] flex justify-between items-start mt-5">
-          {/* TEMPLATE 1: collage */}
-          <div
-            className={`w-[33%] h-[90%] flex flex-col items-center justify-center rounded-[20px] bg-[#B1FA63] bg-opacity-0 hover:bg-opacity-30 p-1 duration-200 hover:cursor-pointer ${
-              option === "collage" && "bg-opacity-100"
-            }`}
-            onClick={() => setOption("collage")}
-          >
-            <span className="text-xl">collage</span>
-            <div className="bg-[#0A0B06] rounded-xl p-5 m-1 flex flex-col items-center justify-start text-[#f0f1ea] overflow-hidden gap-3">
-              <span className="text-2xl  text-[#B1FA63]">
-                kat's 2024 favorite medias
-              </span>
-              <div className="flex flex-col items-center justify-center">
-                <div className="w-[90%] h-auto grid grid-cols-4 gap-x-[15px] gap-y-[15px] items-center place-items-center place-content-between">
-                  {exampleMediaItems.map((exampleMedia, index) => (
-                    <div key={index} className="relative">
-                      <img
-                        src={exampleMedia.imageUrl}
-                        alt={exampleMedia.title}
-                        className="rounded-[10px] object-cover"
-                      />
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* TEMPLATE 2: vertical */}
-          <div
-            className={`w-[33%] h-[93%] flex flex-col items-center justify-start rounded-[20px] bg-[#B1FA63] bg-opacity-0 hover:bg-opacity-30 p-1 duration-200 hover:cursor-pointer ${
-              option === "vertical" && "bg-opacity-100"
-            }`}
-            onClick={() => setOption("vertical")}
-          >
-            <span className="text-xl">vertical</span>
-            <div className="bg-[#0A0B06] rounded-xl p-5 m-1 flex flex-col items-center justify-start text-[#f0f1ea] overflow-hidden">
-              <span className="text-2xl  text-[#B1FA63]">
-                kat's 2024 favorite medias
-              </span>
-              <div className="flex flex-col items-center justify-center">
-                <div className="w-[90%] h-[30%] flex justify-center items-center gap-5">
-                  <img
-                    src="src/assets/media0.png"
-                    alt="dune 2"
-                    className="w-[35%] h-auto rounded-[20px]"
-                  />
-                  <p className="w-[50%] h-auto text-center">
-                    My favorite film this year. Denis Villeneuve is a genius.
-                  </p>
-                </div>
-                <div className="w-[90%] h-[30%] flex justify-center items-center gap-5">
-                  <p className="w-[50%] h-auto text-center">
-                    Perfect Blue is my first satoshi kon film. I love it.
-                    Excited to see his other works.
-                  </p>
-                  <img
-                    src="src/assets/media15.png"
-                    alt="perfectblue"
-                    className="w-[35%] h-auto rounded-[20px]"
-                  />
-                </div>
-                <div className="w-[90%] h-[30%] flex justify-center items-center gap-5">
-                  <img
-                    src="src/assets/media18.png"
-                    alt="dune 2"
-                    className="w-[35%] h-auto rounded-[20px] object-cover"
-                  />
-                  <p className="w-[50%] h-auto text-center">
-                    Shin godizlla was an epic film. The way it was portrayed was
-                    terrifying.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* TEMPLATE 3: spread */}
-          <div
-            className={`w-[33%] h-[90%] flex flex-col items-center justify-center rounded-[20px] bg-[#B1FA63] bg-opacity-0 hover:bg-opacity-30 p-1 duration-200 hover:cursor-pointer ${
-              option === "spread" && "bg-opacity-100"
-            }`}
-            onClick={() => setOption("spread")}
-          >
-            <span className="text-xl">spread</span>
-            <div className="bg-[#0A0B06] rounded-xl px-2 py-4 m-1 flex flex-col items-center justify-start text-[#f0f1ea] overflow-hidden">
-              <span className="text-2xl  text-[#B1FA63] mb-3">
-                kat's 2024 favorite medias
-              </span>
-              <div className="flex flex-col items-center justify-center">
-                <div className="relative w-[100%] h-auto overflow-hidden">
-                  <div className=" flex items-center justify-center">
-                    {exampleMediaItems.map((exampleMedia, index) => (
-                      <div
-                        key={exampleMedia.title}
-                        className="w-full h-auto"
-                        style={{
-                          transform: `translateX(calc(${getSpreadPosition(
-                            index
-                          )}%)) rotate(-15deg)`,
-                          zIndex: index,
-                        }}
-                      >
-                        <img
-                          src={exampleMedia.imageUrl}
-                          alt={exampleMedia.title}
-                          className="object-cover w-full h-full shadow-lg rounded-[10px]"
-                        />
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+        <span className="text-3xl">Choose a sharing method</span>
+        <div className="w-full h-auto flex justify-center my-4">
+          <img src="" alt="Collage Screenshot" className="rounded-lg" />
         </div>
-        {/* Share Buttons */}
-        <div className="flex justify-between items-center text-black text-xl gap-5 absolute bottom-10">
-          <button className="p-3 rounded-lg bg-slate-500 text-white opacity-50 hover:opacity-100 hover:bg-[#8ac847] duration-300">copy to clipboard</button>
-          <button className="p-3 rounded-lg bg-slate-500 text-white opacity-50 hover:opacity-100 hover:bg-[#8ac847] duration-300">download</button>
-          <button className="p-3 rounded-lg bg-slate-500 text-white opacity-50 hover:opacity-100 hover:bg-[#8ac847] duration-300">open image in new tab</button>
+        <div className="flex justify-between items-center text-black text-xl gap-5 bottom-10 pt-5">
+          <button
+            onClick={() => handleShare('clipboard')}
+            className="p-3 rounded-lg bg-slate-500 text-white opacity-50 hover:opacity-100 hover:bg-[#8ac847] duration-300"
+          >
+            Copy to Clipboard
+          </button>
+          <button
+            onClick={() => handleShare('download')}
+            className="p-3 rounded-lg bg-slate-500 text-white opacity-50 hover:opacity-100 hover:bg-[#8ac847] duration-300"
+          >
+            Download
+          </button>
+          <button
+            onClick={() => handleShare('newTab')}
+            className="p-3 rounded-lg bg-slate-500 text-white opacity-50 hover:opacity-100 hover:bg-[#8ac847] duration-300"
+          >
+            Open Image in New Tab
+          </button>
         </div>
       </div>
     </>

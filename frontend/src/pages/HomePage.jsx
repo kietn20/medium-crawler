@@ -12,7 +12,7 @@ export const Homepage = () => {
             <div className="snap-center h-screen flex items-center justify-center">
                 <ImageStack />
             </div>
-            <div className="snap-center h-screen flex items-center justify-center">
+            <div className="snap-center h-auto flex items-center justify-center">
                 <Collage />
             </div>
         </div>

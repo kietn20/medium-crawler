@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { useAuthStore } from "./authStore";
+import toast from "react-hot-toast";
 
 // Helper functions to interact with local storage
 const loadFromLocalStorage = (key) => {
@@ -85,6 +86,39 @@ export const useMediaStore = create((set) => ({
         console.warn("Media list limit reached");
         return state;
       }
+    }),
+  addMediaItem: () =>
+    set((state) => {
+      if (state.currentMediaList.items.length >= 25) {
+        toast.error("Media list is full");
+        return state;
+      }
+      const newMediaItem = { title: "", rating: "", description: "", imageUrl: "" };
+      const updatedMediaList = {
+        ...state.currentMediaList,
+        items: [...state.currentMediaList.items, newMediaItem],
+      };
+      const mediaLists = state.mediaLists.map((list) =>
+        list.name === state.currentMediaList.name ? updatedMediaList : list
+      );
+      saveToLocalStorage("currentMediaList", updatedMediaList);
+      saveToLocalStorage("mediaLists", mediaLists);
+      return { currentMediaList: updatedMediaList, mediaLists };
+    }),
+  deleteMediaItem: (index) =>
+    set((state) => {
+      if (index < 10) {
+        toast.error("Cannot delete the first 10 media items");
+        return state;
+      }
+      const updatedMediaItems = state.currentMediaList.items.filter((_, i) => i !== index);
+      const updatedMediaList = { ...state.currentMediaList, items: updatedMediaItems };
+      const mediaLists = state.mediaLists.map((list) =>
+        list.name === state.currentMediaList.name ? updatedMediaList : list
+      );
+      saveToLocalStorage("currentMediaList", updatedMediaList);
+      saveToLocalStorage("mediaLists", mediaLists);
+      return { currentMediaList: updatedMediaList, mediaLists };
     }),
   removeMediaList: (index) =>
     set((state) => {

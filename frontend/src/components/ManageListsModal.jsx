@@ -31,7 +31,7 @@ export const ManageListsModal = () => {
         ></div>
       )}
       <div
-        className={`absolute top-40 w-[680px] h-auto bg-[#1E2528] flex flex-col justify-between items-center gap-5 rounded-[30px] z-50 transition-opacity duration-300 font-heading px-2 py-5 drop-shadow-2xl ${
+        className={`fixed top-40 w-[680px] h-auto bg-[#1E2528] flex flex-col justify-between items-center gap-5 rounded-[30px] z-50 transition-opacity duration-300 font-heading px-2 py-5 drop-shadow-2xl ${
           showManageListsModal
             ? "opacity-100 pointer-events-auto"
             : "opacity-0 pointer-events-none"
